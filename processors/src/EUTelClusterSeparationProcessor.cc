@@ -52,6 +52,7 @@ EUTelClusterSeparationProcessor::EUTelClusterSeparationProcessor () :Processor("
                            "Cluster collection name ",
                            _clusterCollectionName, string ("cluster"));
 
+
   // and the output collection
   registerOutputCollection (LCIO::TRACKERPULSE, "ClusterOutputCollectionName",
                             "Cluster output collection name",
@@ -99,6 +100,7 @@ void EUTelClusterSeparationProcessor::processEvent (LCEvent * event) {
   }
 
   LCCollectionVec * clusterCollectionVec;
+
 
   try {
     clusterCollectionVec  =  dynamic_cast <LCCollectionVec *> (evt->getCollection(_clusterCollectionName));

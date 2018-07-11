@@ -55,6 +55,7 @@ protected:
   int _nNoiseMaskClusters;
   int _nDeadColumnClusters;
   int _sectorWidth;
+  int _chipVersion;
   double _energy;
   EVENT::StringVec _chipID;
   EVENT::StringVec _irradiation;
@@ -79,10 +80,13 @@ private:
   int _nLayer;
   int _xPixel;
   int _yPixel;
+//	int _sparseMinDistanceSquaredComparison;
   std::map<int,TH1I*> clusterWidthXHisto;
   std::map<int,TH1I*> clusterWidthYHisto;
   std::map<int,TH1I*> clusterSizeHisto;
   TH1I* timeStampHisto;
+ // TH1I* GeneratedClustersHisto;
+ // TH1I* MissingClusterHisto;
   TH2I* hotpixelHisto;
   TH2I* deadColumnHisto;
   TH2I* circularClusterHistos;

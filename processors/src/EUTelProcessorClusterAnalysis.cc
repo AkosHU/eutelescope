@@ -58,7 +58,9 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
   _hotPixelCollectionName(""),
   _nLayer(0),
   _xPixel(),
-  _yPixel()
+  _yPixel(),
+  _chipVersion(4),
+  //_sparseMinDistanceSquaredComparison(4)
 
   {
     _description="Analysing cluster properties such as cluster shape and average cluster size.";
@@ -97,15 +99,27 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
                              _irradiation, _stringVecExample );
     registerOptionalParameter("Rate","Data taking rate",
                              _rate, static_cast< string > ( "" ) );
+  registerOptionalParameter("ChipVersion", "Chip Version",
+                            _chipVersion, static_cast<int>(4) );
     _isFirstEvent = true;
   }
 
 void EUTelProcessorClusterAnalysis::init() {
   _nLayer = geo::gGeometry().nPlanes();
   const std::vector<int>& _planeID = geo::gGeometry().sensorIDsVec();
+cout<<"Here I am."<<endl;
+
+cout<<_dutID<<endl;
   for(int iz=0; iz < _nLayer ; iz++)
 	  if(_planeID[iz]==_dutID)
 		  _layerIndex = iz;
+  if (_chipVersion < 3)     _nSectors = 4;
+  else if (_chipVersion==3) _nSectors = 8;
+  else if (_chipVersion==5) _nSectors = 4;
+  else                      _nSectors = 1;
+cout<<"Here I am."<<endl;
+cout<<_chipVersion<<endl;
+cout<<_nSectors<<endl;
  
   //beware, sometimes dutID is 3, sometimes it is 6
   int iLayer = _dutID;
@@ -320,6 +334,115 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 					pix.push_back(Y[iPixel]);
 					pixVector.push_back(pix);
 				}
+/*
+//This part is to analysis the effect of the distance square between the pixels in one cluste
+if(true)
+{		
+			bool samecluster(true);
+
+			//Cluster mycluster;
+			
+            std::vector<EUTelGenericSparsePixel> hitPixelVec = sparseData->getPixels();
+
+            std::vector<EUTelGenericSparsePixel> newlyAdded;
+
+			int firsthclustersize=hitPixelVec.size();
+            //We now cluster those hits together
+            while( !hitPixelVec.empty() )
+            {
+
+
+                std::vector<EUTelGenericSparsePixel> cluCandidate;
+
+                //First we need to take any pixel, so let's take the first one
+                //Add it to the cluster as well as the newly added pixels
+                newlyAdded.push_back( hitPixelVec.front() );
+                //sparseCluster->push_back( &(hitPixelVec.front()) );
+                cluCandidate.push_back( hitPixelVec.front() );
+                //And remove it from the original collection
+                hitPixelVec.erase( hitPixelVec.begin() );
+
+                //Now process all newly added pixels, initially this is the just previously added one
+                //but in the process of neighbour finding we continue to add new pixels
+                while( !newlyAdded.empty() )
+                {
+                    bool newlyDone = true;
+                    int  x1, x2, y1, y2, dX, dY;
+
+                    //check against all pixels in the hitPixelVec
+                    for( std::vector<EUTelGenericSparsePixel>::iterator hitVec = hitPixelVec.begin(); hitVec != hitPixelVec.end(); ++hitVec )
+                    {
+                        //get the relevant infos from the newly added pixel
+                        x1 = newlyAdded.front().getXCoord();
+                        y1 = newlyAdded.front().getYCoord();
+
+                        //and the pixel we test against
+                        x2 = hitVec->getXCoord();
+                        y2 = hitVec->getYCoord();
+
+                        dX = x1 - x2;
+                        dY = y1 - y2;
+                        int distance = dX*dX+dY*dY;
+                        //if they pass the spatial and temporal cuts, we add them
+
+                        if( distance <= _sparseMinDistanceSquaredComparison )
+                        {
+                            //add them to the cluster as well as to the newly added ones
+                            newlyAdded.push_back( *hitVec );
+                            cluCandidate.push_back( *hitVec );
+                            //	sparseCluster->push_back( &(*hitVec) );
+                            //and remove it from the original collection
+                            hitPixelVec.erase( hitVec );
+                            //for the pixel we test there might be other neighbours, we still have to check
+                            newlyDone = false;
+                            break;
+                        }
+                    }
+
+                    //if no neighbours are found, we can delete the pixel from the newly added
+                    //we tested against _ALL_ non cluster pixels, there are no other pixels
+                    //which could be neighbours
+                    if(newlyDone) newlyAdded.erase( newlyAdded.begin() );
+                }
+
+				if(firsthclustersize!=cluCandidate.size())
+				{
+					samecluster=false;
+					GeneratedClustersHisto->fill(cluCandidate.size());
+				}
+/*
+				vector<int> X(clusterSize);
+				vector<int> Y(clusterSize);
+
+  				int iforX=0;
+                while(!cluCandidate.empty())
+                {
+					X[iforX]=cluCandidate.fornt()..getXCoord();
+					Y[iforX]=cluCandidate.fornt()..getYCoord();
+                    cluCandidate.erase( cluCandidate.begin() );
+					iforX++;
+                }
+
+				mycluster.set_values(clusterSize,X,Y);
+*/
+
+			}
+			
+
+			if(!samecluster)
+			{
+				MissingClusterHisto->fill(firsthclustersize);
+			}
+
+}
+
+
+//The end of the part folr distance analysis
+*/
+
+
+
+
 				streamlog_out ( DEBUG5 ) << "This is a DEBUG output to see whether the program gets here. The number X[0] is " << X[0] << " and _sectorWidth is " << _sectorWidth << endl; 
 				//now, since all pixels are from the same sector, the sector number can be set.
 				int index = X[0]/_sectorWidth;
@@ -390,9 +513,9 @@ void EUTelProcessorClusterAnalysis::bookHistos()
       AIDAProcessor::tree(this)->mkdir(Form("Sector_%d",iSector));
       AIDAProcessor::tree(this)->cd(Form("Sector_%d",iSector));
 
-      clusterWidthXHisto[iSector]  = new TH1I(Form("clusterWidthXHisto_%d",iSector),Form("Cluster width in X in sector %d;Cluster width X (pixel);a.u.",iSector),15,0.5,15.5);
-      clusterWidthYHisto[iSector]  = new TH1I(Form("clusterWidthYHisto_%d",iSector),Form("Cluster width in Y in sector %d;Cluster width Y (pixel);a.u.",iSector),15,0.5,15.5);
-      clusterSizeHisto[iSector]  = new TH1I(Form("clusterSizeHisto_%d",iSector),Form("Cluster size_%d;Cluster size (pixel);a.u.",iSector),20,0.5,20.5);
+      clusterWidthXHisto[iSector]  = new TH1I(Form("clusterWidthXHisto_%d",iSector),Form("Cluster width in X in sector %d;Cluster width X (pixel);a.u.",iSector),50,0.5,50.5);
+      clusterWidthYHisto[iSector]  = new TH1I(Form("clusterWidthYHisto_%d",iSector),Form("Cluster width in Y in sector %d;Cluster width Y (pixel);a.u.",iSector),50,0.5,50.5);
+      clusterSizeHisto[iSector]  = new TH1I(Form("clusterSizeHisto_%d",iSector),Form("Cluster size_%d;Cluster size (pixel);a.u.",iSector),200,0.5,200.5);
       clusterShapeHistoSector[iSector] = new TH1I(Form("clusterShapeHisto_%d",iSector),Form("Cluster shape (all rotations separately) Sector %d;Cluster shape ID;a.u.",iSector),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
       clusterShapeHistoGroupedSector[iSector] = new TH1I(Form("clusterShapeHistoGrouped_%d",iSector),Form("Cluster shape (all rotations treated together) Sector %d;Cluster shape ID;a.u.",iSector),symmetryGroups.size(),-0.5,symmetryGroups.size()-0.5);
     }

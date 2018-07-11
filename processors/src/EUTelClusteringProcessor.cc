@@ -67,6 +67,7 @@ using namespace marlin;
 using namespace eutelescope;
 
 static const int  MAXCLUSTERSIZE = 4096;
+int akosexample=0;
 
 
 EUTelClusteringProcessor::EUTelClusteringProcessor ()
@@ -213,6 +214,8 @@ EUTelClusteringProcessor::EUTelClusteringProcessor ()
 
     registerProcessorParameter("SparseMinDistanceSquared","Minimum distance squared between sparsified pixel ( touching == 2) ",
                                _sparseMinDistanceSquared, static_cast<int>(2) );
+	//_sparseMinDistanceSquared=4;
+    cout<<"_sparseMinDistanceSquared: "<<_sparseMinDistanceSquared<<endl;
 
     registerProcessorParameter("SparseMinDistance","Minimum distance between sparsified pixel ( touching == sqrt(2)) ",
                                _sparseMinDistance, static_cast<float > (0.0 ) );
@@ -2029,6 +2032,11 @@ void EUTelClusteringProcessor::sparseClustering(LCEvent* evt, LCCollectionVec* p
                         dY = y1 - y2;
                         int distance = dX*dX+dY*dY;
                         //if they pass the spatial and temporal cuts, we add them
+			if(akosexample==0)
+			{
+			cout<<"_sparseMinDistanceSquared(in real): "<<_sparseMinDistanceSquared<<endl;
+			akosexample++;
+			}
                         if( distance <= _sparseMinDistanceSquared )
                         {
                             //add them to the cluster as well as to the newly added ones
@@ -3369,6 +3377,7 @@ void EUTelClusteringProcessor::bookHistos() {
                                                                       xBin, xMin, xMax,yBin, yMin, yMax);
         _hitMapHistos.insert(make_pair(sensorID, hitMapHisto));
         hitMapHisto->setTitle("Hit map");
+
 
         tempHistoName = _eventMultiplicityHistoName + "_d" + to_string( sensorID );
         int     eventMultiNBin  = 60;
