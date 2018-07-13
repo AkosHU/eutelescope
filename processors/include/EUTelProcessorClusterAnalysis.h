@@ -87,6 +87,7 @@ private:
   TH1I* timeStampHisto;
   TH1I* GeneratedClustersHisto;
   TH1I* MissingClusterHisto;
+  TH1I* HowManyClusterGeneratedFromOneCluster;
   TH2I* hotpixelHisto;
   TH2I* deadColumnHisto;
   TH2I* circularClusterHistos;

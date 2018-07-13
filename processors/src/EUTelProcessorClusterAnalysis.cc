@@ -339,6 +339,9 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 				if(true)
 				{		
 					bool samecluster(true);
+					int howmanyclustergeneratedfromonecluster(0);
+					int AllGeneratedPixel(0);
+					int AllMissingPixel(0);
 
 					//Cluster mycluster;
 			
@@ -371,76 +374,93 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 
                     					//check against all pixels in the hitPixelVec
                     					for( std::vector<EUTelGenericSparsePixel>::iterator hitVec = hitPixelVec.begin(); hitVec != hitPixelVec.end(); ++hitVec )
-                    {
-                        				//get the relevant infos from the newly added pixel
-                        				x1 = newlyAdded.front().getXCoord();
-                        				y1 = newlyAdded.front().getYCoord();
+                    					{
+      		                  				//get the relevant infos from the newly added pixel
+                	        				x1 = newlyAdded.front().getXCoord();
+                	        				y1 = newlyAdded.front().getYCoord();
+	
+                	        				//and the pixel we test against
+                	        				x2 = hitVec->getXCoord();
+                	        				y2 = hitVec->getYCoord();
+	
+                	        				dX = x1 - x2;
+                	        				dY = y1 - y2;
+                	        				int distance = dX*dX+dY*dY;
+                	        				//if they pass the spatial and temporal cuts, we add them
+	
+                	        				if( distance <= _sparseMinDistanceSquaredComparison )
+                	        				{
+                		            				//add them to the cluster as well as to the newly added ones
+                		           				newlyAdded.push_back( *hitVec );
+                		            				cluCandidate.push_back( *hitVec );
+                		          				//	sparseCluster->push_back( &(*hitVec) );
+                		            				//and remove it from the original collection
+                		            				hitPixelVec.erase( hitVec );
+                		            				//for the pixel we test there might be other neighbours, we still have to check
+                		            				newlyDone = false;
+                		            				break;
+                		        			}
+                		    			}
 
-                        				//and the pixel we test against
-                        				x2 = hitVec->getXCoord();
-                        				y2 = hitVec->getYCoord();
+       						        //if no neighbours are found, we can delete the pixel from the newly added
+					                //we tested against _ALL_ non cluster pixels, there are no other pixels
+ 					                //which could be neighbours
+                					if(newlyDone) 
+							{
+								newlyAdded.erase( newlyAdded.begin() );
+							}
+             					}
 
-                        				dX = x1 - x2;
-                        				dY = y1 - y2;
-                        				int distance = dX*dX+dY*dY;
-                        				//if they pass the spatial and temporal cuts, we add them
+						if(firsthclustersize!=cluCandidate.size())
+						{
+							samecluster=false;
+							howmanyclustergeneratedfromonecluster++;
+							AllGeneratedPixel+=cluCandidate.size();
+							GeneratedClustersHisto->Fill(cluCandidate.size());
+							//cout<<"I filled GeneratedClustersHisto with: "<<cluCandidate.size()<<endl;
+						}
+						/*
+						vector<int> X(clusterSize);
+						vector<int> Y(clusterSize);
 
-                        				if( distance <= _sparseMinDistanceSquaredComparison )
-                        				{
-                            				//add them to the cluster as well as to the newly added ones
-                           				 newlyAdded.push_back( *hitVec );
-                            				cluCandidate.push_back( *hitVec );
-                          				  //	sparseCluster->push_back( &(*hitVec) );
-                            				//and remove it from the original collection
-                            				hitPixelVec.erase( hitVec );
-                            				//for the pixel we test there might be other neighbours, we still have to check
-                            				newlyDone = false;
-                            				break;
-                        			}
-                    			}
+  						int iforX=0;
+                				while(!cluCandidate.empty())
+                				{
+							X[iforX]=cluCandidate.fornt()..getXCoord();
+							Y[iforX]=cluCandidate.fornt()..getYCoord();
+                    					cluCandidate.erase( cluCandidate.begin() );
+							iforX++;
+                				}
 
-                    //if no neighbours are found, we can delete the pixel from the newly added
-                    //we tested against _ALL_ non cluster pixels, there are no other pixels
-                    //which could be neighbours
-                    if(newlyDone) newlyAdded.erase( newlyAdded.begin() );
-                }
+						mycluster.set_values(clusterSize,X,Y);
+						*/
 
-				if(firsthclustersize!=cluCandidate.size())
-				{
-					samecluster=false;
-					GeneratedClustersHisto->Fill(cluCandidate.size());
-					cout<<"I filled GeneratedClustersHisto with: "<<cluCandidate.size()<<endl;
-				}
-/*
-				vector<int> X(clusterSize);
-				vector<int> Y(clusterSize);
-
-  				int iforX=0;
-                while(!cluCandidate.empty())
-                {
-					X[iforX]=cluCandidate.fornt()..getXCoord();
-					Y[iforX]=cluCandidate.fornt()..getYCoord();
-                    cluCandidate.erase( cluCandidate.begin() );
-					iforX++;
-                }
-
-				mycluster.set_values(clusterSize,X,Y);
-*/
-
-			}
+					}
 			
 
-			if(!samecluster)
-			{
-				MissingClusterHisto->Fill(firsthclustersize);
-				cout<<"I filled MissingClusterHisto with: "<<firsthclustersize<<endl;
-			}
+					if(!samecluster)
+					{
+						MissingClusterHisto->Fill(firsthclustersize);
+						HowManyClusterGeneratedFromOneCluster->Fill(howmanyclustergeneratedfromonecluster);
+						howmanyclustergeneratedfromonecluster=0;
+						AllMissingPixel=firsthclustersize;
+						//cout<<"I filled MissingClusterHisto with: "<<firsthclustersize<<endl;
+					}
 
-//cout<<"I have done the "<<idetector<<"th cluster"<<endl;
-}
+					//cout<<"I have done the "<<idetector<<"th cluster"<<endl;
+
+					if(AllGeneratedPixel!=AllMissingPixel)
+					{
+						cout<<"ERROR: AllMissingPixel!=AllMissingPixel"<<endl;
+						cout<<"AllMissingPixel: "<<AllMissingPixel<<endl;
+						cout<<"AllGeneratedPixel: "<<AllGeneratedPixel<<endl;
+					}
+					AllMissingPixel=0;
+					AllGeneratedPixel=0;
+				}
 
 
-//The end of the part folr distance analysis
+				//The end of the part folr distance analysis
 
 
 
@@ -523,6 +543,7 @@ void EUTelProcessorClusterAnalysis::bookHistos()
       clusterShapeHistoGroupedSector[iSector] = new TH1I(Form("clusterShapeHistoGrouped_%d",iSector),Form("Cluster shape (all rotations treated together) Sector %d;Cluster shape ID;a.u.",iSector),symmetryGroups.size(),-0.5,symmetryGroups.size()-0.5);
       GeneratedClustersHisto = new TH1I(Form("GeneratedClustersHisto"),Form("GeneratedClustersHisto;Cluster size (pixel);a.u."),200,0.5,200.5); 
       MissingClusterHisto = new TH1I(Form("MissingClusterHisto"),Form("MissingClusterHisto;Cluster size (pixel);a.u."),200,0.5,200.5);
+      HowManyClusterGeneratedFromOneCluster = new TH1I(Form("HowManyClusterGeneratedFromOneCluster"),Form("HowManyClusterGeneratedFromOneCluster;Cluster size (pixel);a.u."),20,0.5,20.5);
     }
   streamlog_out ( DEBUG5 )  << "end of Booking histograms " << endl;
 }
