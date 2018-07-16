@@ -64,7 +64,8 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
   _sparseMinDistanceSquaredComparison(1),
   howmanypdf(0),
   _numberofGeneratedInterestingCluster(0),
-  _numberofMissingInterestingCluster(0)
+  _numberofMissingInterestingCluster(0),
+  _number_emptyMiddle(0)
 
 
   {
@@ -112,9 +113,9 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
 void EUTelProcessorClusterAnalysis::init() {
   _nLayer = geo::gGeometry().nPlanes();
   const std::vector<int>& _planeID = geo::gGeometry().sensorIDsVec();
-cout<<"Here I am."<<endl;
+//cout<<"Here I am."<<endl;
 
-cout<<_dutID<<endl;
+//cout<<_dutID<<endl;
   for(int iz=0; iz < _nLayer ; iz++)
 	  if(_planeID[iz]==_dutID)
 		  _layerIndex = iz;
@@ -122,9 +123,9 @@ cout<<_dutID<<endl;
   else if (_chipVersion==3) _nSectors = 8;
   else if (_chipVersion==5) _nSectors = 4;
   else                      _nSectors = 1;
-cout<<"Here I am."<<endl;
+/*cout<<"Here I am."<<endl;
 cout<<_chipVersion<<endl;
-cout<<_nSectors<<endl;
+cout<<_nSectors<<endl;*/
  
   //beware, sometimes dutID is 3, sometimes it is 6
   int iLayer = _dutID;
@@ -150,6 +151,14 @@ cout<<_nSectors<<endl;
   if (newFile) settingsFile << "Run number;Energy;Chip ID;Chip Version;Irradiation level(0-nonIrradiated,1-2.5e12,2-1e13,3-700krad,4-combined:1e13+700krad);Rate;BB;Ithr;Idb;Vcasn;Vcasn2;Vclip;Vcasp;VresetP;VresetD;Threshold and their RMS for all eight sectors;Noise and their RMS for all eight sectors;Readout delay;Trigger delay;Strobe length;StrobeB length;Data (1) or noise (0);Number of events;Efficiency,Number of tracks,Number of tracks with associated hit for all sectors" << endl;
 
 }
+
+
+
+
+
+
+
+
 
 void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 {
@@ -519,6 +528,32 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 
 				//The end of the part folr distance analysis
 
+				//This par looking for holey clusters
+
+				EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
+
+				if(true)
+				{
+					//The next line check, if the cluster empty middled
+					if(mypalpide->emptyMiddle(pixVector))
+					{
+						//It fill, the holey clusters histo
+						emptyMiddleClustersHisto->Fill(clusterSize);
+						//It select holey clusters, to see them.
+						int xMin = *min_element(X.begin(), X.end());
+						int xMax = *max_element(X.begin(), X.end());
+						int yMin = *min_element(Y.begin(), Y.end());
+						int yMax = *max_element(Y.begin(), Y.end());
+						int Xshift= (xMin+xMax)/2 - 50/2;
+						int Yshift= (yMin+yMax)/2 - 50/2;
+						for(int i_emptyMiddle=0; i_emptyMiddle<pixVector.size()&&_number_emptyMiddle<100; i_emptyMiddle++)
+						{
+							emptyMiddleClusters[_number_emptyMiddle]->Fill(pixVector[i_emptyMiddle][0]-Xshift, pixVector[i_emptyMiddle][1]-Yshift);
+						}
+						_number_emptyMiddle++;
+					}
+				}
+
 
 
 
@@ -603,6 +638,7 @@ void EUTelProcessorClusterAnalysis::bookHistos()
       HowManyClusterGeneratedFromOneCluster = new TH1I(Form("HowManyClusterGeneratedFromOneCluster"),Form("HowManyClusterGeneratedFromOneCluster;Cluster size (pixel);a.u."),20,0.5,20.5);
       GeneratedClusterShapeHisto = new TH1I(Form("GeneratedClusterShapeHisto"),Form("GeneratedClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
       MissingClusterShapeHisto = new TH1I(Form("MissingClusterShapeHisto"),Form("MissingClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
+	emptyMiddleClustersHisto = new TH1I(Form("emptyMiddleClustersHisto"),Form("emptyMiddleClustersHisto;Cluster size (pixel);Number of Clusters"),200,0.5,200.5);
 	for(int nInterestingCluster=0; nInterestingCluster<100; nInterestingCluster++)
 	{
       AIDAProcessor::tree(this)->mkdir(Form("GeneratedInterestingCluster%d",iSector));
@@ -611,6 +647,9 @@ void EUTelProcessorClusterAnalysis::bookHistos()
       AIDAProcessor::tree(this)->mkdir(Form("MissingInterestingCluster%d",iSector));
       AIDAProcessor::tree(this)->cd(Form("MissingInterestingCluster%d",iSector));
 		MissingInterestingCluster[nInterestingCluster]  = new TH2I(Form("MissingInterestingCluster%d",nInterestingCluster),Form(" Missing cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
+      AIDAProcessor::tree(this)->mkdir(Form("emptyMiddleClusters%d",iSector));
+      AIDAProcessor::tree(this)->cd(Form("emptyMiddleClusters%d",iSector));
+		emptyMiddleClusters[nInterestingCluster]  = new TH2I(Form("emptyMiddleClusters%d",nInterestingCluster),Form(" Holey cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
 	}
     }
   streamlog_out ( DEBUG5 )  << "end of Booking histograms " << endl;

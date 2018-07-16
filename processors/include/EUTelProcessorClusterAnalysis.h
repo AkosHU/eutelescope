@@ -58,6 +58,7 @@ protected:
   int _chipVersion;
   int _numberofGeneratedInterestingCluster;
   int _numberofMissingInterestingCluster;
+  int _number_emptyMiddle;
   double _energy;
   EVENT::StringVec _chipID;
   EVENT::StringVec _irradiation;
@@ -90,12 +91,14 @@ private:
   std::map<int,TH1I*> clusterSizeHisto;
   std::map<int,TH2I*> GeneratedInterestingCluster;
   std::map<int,TH2I*> MissingInterestingCluster;
+  std::map<int,TH2I*> emptyMiddleClusters;
   TH1I* timeStampHisto;
   TH1I* GeneratedClustersHisto;
   TH1I* MissingClusterHisto;
   TH1I* HowManyClusterGeneratedFromOneCluster;
   TH1I* GeneratedClusterShapeHisto;
   TH1I* MissingClusterShapeHisto;
+  TH1I* emptyMiddleClustersHisto;
   TH2I* hotpixelHisto;
   TH2I* deadColumnHisto;
   TH2I* circularClusterHistos;
