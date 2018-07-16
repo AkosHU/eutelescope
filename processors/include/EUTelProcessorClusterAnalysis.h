@@ -56,6 +56,8 @@ protected:
   int _nDeadColumnClusters;
   int _sectorWidth;
   int _chipVersion;
+  int _numberofGeneratedInterestingCluster;
+  int _numberofMissingInterestingCluster;
   double _energy;
   EVENT::StringVec _chipID;
   EVENT::StringVec _irradiation;
@@ -65,6 +67,7 @@ protected:
   bool _hotpixelAvailable;
   bool _noiseMaskAvailable;
   bool _deadColumnAvailable;
+  bool samecluster;
   std::string _hotPixelCollectionName;
   std::string _deadColumnCollectionName;
   std::string _noiseMaskFileName;
@@ -80,14 +83,19 @@ private:
   int _nLayer;
   int _xPixel;
   int _yPixel;
+  int howmanypdf;
 	int _sparseMinDistanceSquaredComparison;
   std::map<int,TH1I*> clusterWidthXHisto;
   std::map<int,TH1I*> clusterWidthYHisto;
   std::map<int,TH1I*> clusterSizeHisto;
+  std::map<int,TH2I*> GeneratedInterestingCluster;
+  std::map<int,TH2I*> MissingInterestingCluster;
   TH1I* timeStampHisto;
   TH1I* GeneratedClustersHisto;
   TH1I* MissingClusterHisto;
   TH1I* HowManyClusterGeneratedFromOneCluster;
+  TH1I* GeneratedClusterShapeHisto;
+  TH1I* MissingClusterShapeHisto;
   TH2I* hotpixelHisto;
   TH2I* deadColumnHisto;
   TH2I* circularClusterHistos;

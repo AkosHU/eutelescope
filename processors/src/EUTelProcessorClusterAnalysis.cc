@@ -3,6 +3,7 @@
 #include "EUTelAlignmentConstant.h"
 #include "EUTelGeometryTelescopeGeoDescription.h"
 #include "EUTelTrackerDataInterfacerImpl.h"
+#include "EUTelProcessorAnalysisPALPIDEfs.h"
 
 #include "marlin/Global.h"
 #include "marlin/AIDAProcessor.h"
@@ -60,7 +61,11 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
   _xPixel(),
   _yPixel(),
   _chipVersion(4),
-  _sparseMinDistanceSquaredComparison(1)
+  _sparseMinDistanceSquaredComparison(1),
+  howmanypdf(0),
+  _numberofGeneratedInterestingCluster(0),
+  _numberofMissingInterestingCluster(0)
+
 
   {
     _description="Analysing cluster properties such as cluster shape and average cluster size.";
@@ -338,7 +343,7 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 				//This part is to analysis the effect of the distance square between the pixels in one cluste
 				if(true)
 				{		
-					bool samecluster(true);
+					samecluster=true;
 					int howmanyclustergeneratedfromonecluster(0);
 					int AllGeneratedPixel(0);
 					int AllMissingPixel(0);
@@ -346,8 +351,11 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 					//Cluster mycluster;
 			
            				std::vector<EUTelGenericSparsePixel> hitPixelVec = sparseData.getPixels();
+           				std::vector<EUTelGenericSparsePixel> hitPixelVec2 = sparseData.getPixels();
 
 				        std::vector<EUTelGenericSparsePixel> newlyAdded;
+
+
 
 					int firsthclustersize=hitPixelVec.size();
 			 	        //We now cluster those hits together
@@ -394,7 +402,6 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
                 		           				newlyAdded.push_back( *hitVec );
                 		            				cluCandidate.push_back( *hitVec );
                 		          				//	sparseCluster->push_back( &(*hitVec) );
-                		            				//and remove it from the original collection
                 		            				hitPixelVec.erase( hitVec );
                 		            				//for the pixel we test there might be other neighbours, we still have to check
                 		            				newlyDone = false;
@@ -418,22 +425,52 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 							AllGeneratedPixel+=cluCandidate.size();
 							GeneratedClustersHisto->Fill(cluCandidate.size());
 							//cout<<"I filled GeneratedClustersHisto with: "<<cluCandidate.size()<<endl;
+						
+
+
+							int intrestingClusterSize=cluCandidate.size();
+							Cluster interestingCluster;
+							vector<int> X(intrestingClusterSize);
+							vector<int> Y(intrestingClusterSize);
+
+
+  							int iforX=0, Xmax=0,Ymax=0,Xmin=10000,Ymin=10000,Xshift=0,Yshift=0;
+                					while(!cluCandidate.empty())
+                					{
+								X[iforX]=cluCandidate.front().getXCoord();
+								Y[iforX]=cluCandidate.front().getYCoord();
+                    						cluCandidate.erase( cluCandidate.begin() );
+								if(X[iforX]<Xmin) Xmin=X[iforX];
+								if(Y[iforX]<Ymin) Ymin=Y[iforX];
+								if(X[iforX]>Xmax) Xmax=X[iforX];
+								if(Y[iforX]>Ymax) Ymax=Y[iforX];
+
+								iforX++;
+                					}
+
+							interestingCluster.set_values(intrestingClusterSize,X,Y);
+							GeneratedClusterShapeHisto->Fill(interestingCluster.WhichClusterShape(interestingCluster, clusterVec));
+
+							Xshift=(Xmax+Xmin)/2-50/2;
+							Yshift=(Ymax+Ymin)/2-50/2;
+							for(int iforY=0; iforY<Y.size()&&_numberofGeneratedInterestingCluster<100; iforY++)
+							{
+								GeneratedInterestingCluster[_numberofGeneratedInterestingCluster]->Fill(X[iforY]-Xshift, Y[iforY]-Yshift);
+							//cout<<"_numberofGeneratedInterestingCluster: "<<_numberofGeneratedInterestingCluster<<" X: "<<X[iforY]-Xshift<<" Y: "<<Y[iforY]-Yshift<<endl;
+							}
+							_numberofGeneratedInterestingCluster++;
+
+							
+
+
+
+
+
+
+
+
 						}
-						/*
-						vector<int> X(clusterSize);
-						vector<int> Y(clusterSize);
-
-  						int iforX=0;
-                				while(!cluCandidate.empty())
-                				{
-							X[iforX]=cluCandidate.fornt()..getXCoord();
-							Y[iforX]=cluCandidate.fornt()..getYCoord();
-                    					cluCandidate.erase( cluCandidate.begin() );
-							iforX++;
-                				}
-
-						mycluster.set_values(clusterSize,X,Y);
-						*/
+						
 
 					}
 			
@@ -444,14 +481,34 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 						HowManyClusterGeneratedFromOneCluster->Fill(howmanyclustergeneratedfromonecluster);
 						howmanyclustergeneratedfromonecluster=0;
 						AllMissingPixel=firsthclustersize;
+
 						//cout<<"I filled MissingClusterHisto with: "<<firsthclustersize<<endl;
+
+	  					int Xmax=0,Ymax=0,Xmin=10000,Ymin=10000,Xshift=0,Yshift=0;					
+						
+						for( std::vector<EUTelGenericSparsePixel>::iterator hitVecSparseData = hitPixelVec2.begin(); hitVecSparseData != hitPixelVec2.end()&&_numberofMissingInterestingCluster<100; ++hitVecSparseData )
+						{
+							if(hitVecSparseData->getXCoord()<Xmin) Xmin=hitVecSparseData->getXCoord();
+							if(hitVecSparseData->getYCoord()<Ymin) Ymin=hitVecSparseData->getYCoord();
+							if(hitVecSparseData->getXCoord()>Xmax) Xmax=hitVecSparseData->getXCoord();
+							if(hitVecSparseData->getYCoord()>Ymax) Ymax=hitVecSparseData->getYCoord();
+						}
+						Xshift=(Xmax+Xmin)/2-50/2;
+						Yshift=(Ymax+Ymin)/2-50/2;
+
+						for( std::vector<EUTelGenericSparsePixel>::iterator hitVecSparseData = hitPixelVec2.begin(); hitVecSparseData != hitPixelVec2.end()&&_numberofMissingInterestingCluster<100; ++hitVecSparseData )
+						{
+							MissingInterestingCluster[_numberofMissingInterestingCluster]->Fill(hitVecSparseData->getXCoord()-Xshift, hitVecSparseData->getYCoord()-Yshift);
+						}
+						_numberofMissingInterestingCluster++;
+
 					}
 
 					//cout<<"I have done the "<<idetector<<"th cluster"<<endl;
 
 					if(AllGeneratedPixel!=AllMissingPixel)
 					{
-						cout<<"ERROR: AllMissingPixel!=AllMissingPixel"<<endl;
+						cerr<<"ERROR: AllMissingPixel!=AllMissingPixel"<<endl;
 						cout<<"AllMissingPixel: "<<AllMissingPixel<<endl;
 						cout<<"AllGeneratedPixel: "<<AllGeneratedPixel<<endl;
 					}
@@ -544,6 +601,17 @@ void EUTelProcessorClusterAnalysis::bookHistos()
       GeneratedClustersHisto = new TH1I(Form("GeneratedClustersHisto"),Form("GeneratedClustersHisto;Cluster size (pixel);a.u."),200,0.5,200.5); 
       MissingClusterHisto = new TH1I(Form("MissingClusterHisto"),Form("MissingClusterHisto;Cluster size (pixel);a.u."),200,0.5,200.5);
       HowManyClusterGeneratedFromOneCluster = new TH1I(Form("HowManyClusterGeneratedFromOneCluster"),Form("HowManyClusterGeneratedFromOneCluster;Cluster size (pixel);a.u."),20,0.5,20.5);
+      GeneratedClusterShapeHisto = new TH1I(Form("GeneratedClusterShapeHisto"),Form("GeneratedClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
+      MissingClusterShapeHisto = new TH1I(Form("MissingClusterShapeHisto"),Form("MissingClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
+	for(int nInterestingCluster=0; nInterestingCluster<100; nInterestingCluster++)
+	{
+      AIDAProcessor::tree(this)->mkdir(Form("GeneratedInterestingCluster%d",iSector));
+      AIDAProcessor::tree(this)->cd(Form("GeneratedInterestingCluster%d",iSector));
+		GeneratedInterestingCluster[nInterestingCluster]  = new TH2I(Form("GeneratedInterestingCluster%d",nInterestingCluster),Form(" Generated cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
+      AIDAProcessor::tree(this)->mkdir(Form("MissingInterestingCluster%d",iSector));
+      AIDAProcessor::tree(this)->cd(Form("MissingInterestingCluster%d",iSector));
+		MissingInterestingCluster[nInterestingCluster]  = new TH2I(Form("MissingInterestingCluster%d",nInterestingCluster),Form(" Missing cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
+	}
     }
   streamlog_out ( DEBUG5 )  << "end of Booking histograms " << endl;
 }
