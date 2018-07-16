@@ -155,7 +155,7 @@ cout<<_nSectors<<endl;*/
 
 
 
-
+EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
 
 
 
@@ -530,7 +530,7 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 
 				//This par looking for holey clusters
 
-				EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
+				//EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
 
 				if(true)
 				{

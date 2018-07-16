@@ -1814,36 +1814,83 @@ int EUTelProcessorAnalysisPALPIDEfs::AddressToRow(int AAddress)
 
 bool EUTelProcessorAnalysisPALPIDEfs::emptyMiddle(vector<vector<int> > pixVector)
 {
-  bool holeX = false;
-  bool holeY = false;
-  for (size_t i=0; i<pixVector.size(); i++)
-  {
-    bool touchingX = false;
-    bool lastX = true;
-    for (size_t j=0; j<pixVector.size(); j++)
-    {
-      if (i==j) continue;
-      if (pixVector[i][1] != pixVector[j][1]) continue;
-      if (pixVector[i][0]+1 == pixVector[j][0]) {/*cerr << "Touching in x" << endl;*/ touchingX = true; break;}
-      if (pixVector[i][0] <  pixVector[j][0]) {/*cerr << "Smaller in x"  << endl;*/ lastX  = false;}
-    }
-    if (!touchingX && !lastX) {/*cerr << "Hole in X" << endl;*/ holeX = true; break;}
-  }
-  for (size_t i=0; i<pixVector.size(); i++)
-  {
-    bool touchingY = false;
-    bool lastY = true;
-    for (size_t j=0; j<pixVector.size(); j++)
-    {
-      if (i==j) continue;
-      if (pixVector[i][0] != pixVector[j][0]) continue;
-      if (pixVector[i][1]+1 == pixVector[j][1]) {/*cerr << "Touching in y" << endl;*/ touchingY = true; break;}
-      if (pixVector[i][1] <  pixVector[j][1]) {/*cerr << "Smaller in y"  << endl;*/ lastY  = false;}
-    }
-    if (!touchingY && !lastY) {/*cerr << "Hole in Y" << endl;*/ holeY = true; break;}
-  }
-  if (holeX && holeY) return true;
-  else return false;
+	int type_of_emptyMiddle=1;
+
+if(type_of_emptyMiddle==1)
+	{
+		bool holeX = false;
+		bool holeY = false;
+		for (size_t i=0; i<pixVector.size(); i++)
+	  {
+	    bool touchingX = false;
+	    bool lastX = true;
+	    for (size_t j=0; j<pixVector.size(); j++)
+	    {
+	      if (i==j) continue;
+	      if (pixVector[i][1] != pixVector[j][1]) continue;
+	      if (pixVector[i][0]+1 == pixVector[j][0]) { touchingX = true; break;}
+	      if (pixVector[i][0] <  pixVector[j][0]) { lastX  = false;}
+	    }
+	    if (!touchingX && !lastX) { holeX = true; break;}
+	  }
+	  for (size_t i=0; i<pixVector.size(); i++)
+	  {
+	    bool touchingY = false;
+	    bool lastY = true;
+	    for (size_t j=0; j<pixVector.size(); j++)
+	    {
+	      if (i==j) continue;
+	      if (pixVector[i][0] != pixVector[j][0]) continue;
+	      if (pixVector[i][1]+1 == pixVector[j][1]) { touchingY = true; break;}
+	      if (pixVector[i][1] <  pixVector[j][1]) { lastY  = false;}
+	    }
+	    if (!touchingY && !lastY) { holeY = true; break;}
+	  }
+	  if (holeX && holeY) return true;
+	  else return false;
+	}
+
+
+	if(type_of_emptyMiddle==2)
+	{
+	  int xMax=0, yMax=0, xMin=10000, yMin=10000;
+	  bool higherX=false, lowerX=false, higherY=false, lowerY=false;
+	
+	  for (size_t i=0; i<pixVector.size(); i++)
+	  {
+			if(pixVector[i][0]>xMax) xMax=pixVector[i][0];
+			if(pixVector[i][0]<xMin) xMin=pixVector[i][0];
+			if(pixVector[i][1]>yMax) yMax=pixVector[i][1];
+			if(pixVector[i][1]<yMin) yMin=pixVector[i][1];
+		}
+	
+	//cout<<"xMax: "<<xMax<<"xMin: "<<xMin<<"yMax: "<<yMax<<"yMin: "<<yMin<<endl;
+		bool stop=false;
+		for(int i=xMin; i<=xMax&&!stop; i++)
+		{
+			for(int j=yMin; j<=yMax&&!stop;j++)
+			{
+			higherX=false; lowerX=false; higherY=false; lowerY=false;
+				for(int n=0; n<pixVector.size();n++)
+				{
+					if(pixVector[n][0]==i&&pixVector[n][1]==j) { higherX=false; lowerX=false; higherY=false; lowerY=false; break; }
+					if(pixVector[n][0]==i&&pixVector[n][1]<j) lowerY=true;
+					if(pixVector[n][0]==i&&pixVector[n][1]>j) higherY=true;
+					if(pixVector[n][0]<i&&pixVector[n][1]==j) lowerX=true;
+					if(pixVector[n][0]>i&&pixVector[n][1]==j) higherX=true;
+				}
+				if(higherX&&lowerX&&higherY&&lowerY) stop=true;
+			}
+		}
+	if(higherX && lowerX && higherY && lowerY) return true;
+	else return false;
+	}
+
+
+if(type_of_emptyMiddle==3)
+	{
+
+	}
 }
 
 bool EUTelProcessorAnalysisPALPIDEfs::RemoveAlign(LCCollectionVec * preAlignmentCollectionVec, LCCollectionVec * alignmentCollectionVec, LCCollectionVec * alignmentPAlpideCollectionVec, double* fitpos, double& xposfit, double& yposfit)
