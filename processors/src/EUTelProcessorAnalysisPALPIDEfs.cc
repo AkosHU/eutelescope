@@ -1814,9 +1814,9 @@ int EUTelProcessorAnalysisPALPIDEfs::AddressToRow(int AAddress)
 
 bool EUTelProcessorAnalysisPALPIDEfs::emptyMiddle(vector<vector<int> > pixVector)
 {
-	int type_of_emptyMiddle=1;
+	int type_of_emptyMiddle=3;
 
-if(type_of_emptyMiddle==1)
+	if(type_of_emptyMiddle==1)
 	{
 		bool holeX = false;
 		bool holeY = false;
@@ -1887,8 +1887,107 @@ if(type_of_emptyMiddle==1)
 	}
 
 
-if(type_of_emptyMiddle==3)
+	if(type_of_emptyMiddle==3)
 	{
+
+
+           	std::vector<EUTelGenericSparsePixel> hitPixelVec;
+
+	        std::vector<EUTelGenericSparsePixel> newlyAdded;
+
+		//int firsthclustersize=hitPixelVec.size();
+		int xMax=0, yMax=0, xMin=10000, yMin=10000;
+		for (size_t i=0; i<pixVector.size(); i++)
+		{
+			if(pixVector[i][0]>xMax) xMax=pixVector[i][0];
+			if(pixVector[i][0]<xMin) xMin=pixVector[i][0];
+			if(pixVector[i][1]>yMax) yMax=pixVector[i][1];
+			if(pixVector[i][1]<yMin) yMin=pixVector[i][1];
+		}
+		for(int n=xMin-1; n<=xMax+1; n++)
+		{
+			for(int m=yMin-1; m<=yMax+1; m++)
+			{
+				bool empty_pixel=true;
+				for (size_t i=0; i<pixVector.size(); i++)
+				{
+					if(n==pixVector[i][0]&&m==pixVector[i][1]) { empty_pixel=false; break; }
+				}
+				if(empty_pixel)
+				{
+					EUTelGenericSparsePixel pixel;
+					pixel.setXCoord(n);
+					pixel.setYCoord(m);
+					hitPixelVec.push_back(pixel);
+				}
+			}
+		}
+	
+	        //We now cluster those hits together
+		//while( !hitPixelVec.empty() )
+            	{
+
+	
+                	std::vector<EUTelGenericSparsePixel> cluCandidate;
+
+                	//First we need to take any pixel, so let's take the first one
+                	//Add it to the cluster as well as the newly added pixels
+                	newlyAdded.push_back( hitPixelVec.front() );
+                	//sparseCluster->push_back( &(hitPixelVec.front()) );
+                	cluCandidate.push_back( hitPixelVec.front() );
+                	//And remove it from the original collection
+                	hitPixelVec.erase( hitPixelVec.begin() );
+
+                	//Now process all newly added pixels, initially this is the just previously added one
+                	//but in the process of neighbour finding we continue to add new pixels
+                	while( !newlyAdded.empty() )
+                	{
+                    		bool newlyDone = true;
+                    		int  x1, x2, y1, y2, dX, dY;
+
+                    		//check against all pixels in the hitPixelVec
+                    		for( std::vector<EUTelGenericSparsePixel>::iterator hitVec = hitPixelVec.begin(); hitVec != hitPixelVec.end(); ++hitVec )
+                    		{
+      		                  	//get the relevant infos from the newly added pixel
+                	        	x1 = newlyAdded.front().getXCoord();
+                	        	y1 = newlyAdded.front().getYCoord();
+	
+                	        	//and the pixel we test against
+                	        	x2 = hitVec->getXCoord();
+                	        	y2 = hitVec->getYCoord();
+	
+                	        	dX = x1 - x2;
+                	        	dY = y1 - y2;
+                	        	int distance = dX*dX+dY*dY;
+                	        	//if they pass the spatial and temporal cuts, we add them
+					
+					int _sparseMinDistanceSquaredComparison=1;
+                	        	if( distance <= _sparseMinDistanceSquaredComparison )
+                	        	{
+                		            	//add them to the cluster as well as to the newly added ones
+                		           	newlyAdded.push_back( *hitVec );
+                		            	cluCandidate.push_back( *hitVec );
+                		          	//	sparseCluster->push_back( &(*hitVec) );
+                		            	hitPixelVec.erase( hitVec );
+                		            	//for the pixel we test there might be other neighbours, we still have to check
+                		            	newlyDone = false;
+                		            	break;
+                		        }
+                		}
+
+       				//if no neighbours are found, we can delete the pixel from the newly added
+				//we tested against _ALL_ non cluster pixels, there are no other pixels
+ 				//which could be neighbours
+                		if(newlyDone) 
+				{
+					newlyAdded.erase( newlyAdded.begin() );
+				}
+             		}
+		}
+		if( !hitPixelVec.empty() ) return true;
+		else return false;
+
+
 
 	}
 }

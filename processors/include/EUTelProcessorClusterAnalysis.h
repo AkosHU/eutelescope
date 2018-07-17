@@ -59,6 +59,7 @@ protected:
   int _numberofGeneratedInterestingCluster;
   int _numberofMissingInterestingCluster;
   int _number_emptyMiddle;
+  int cuttingSize;
   double _energy;
   EVENT::StringVec _chipID;
   EVENT::StringVec _irradiation;
@@ -99,10 +100,14 @@ private:
   TH1I* GeneratedClusterShapeHisto;
   TH1I* MissingClusterShapeHisto;
   TH1I* emptyMiddleClustersHisto;
+  TH1I* NumberOfHits;
+  TH1I* TypeOfTheEvent;
   TH2I* hotpixelHisto;
   TH2I* deadColumnHisto;
   TH2I* circularClusterHistos;
   TH2I* largeClusterHistos;
+  TH2I* smallerClustersHitmap;
+  TH2I* biggerClustersHitmap;
   TH3I* clusterShapeMap;
   std::map<int,TH1I*> clusterShapeHistoSector;
   std::map<int,TH1I*> clusterShapeHistoGroupedSector;

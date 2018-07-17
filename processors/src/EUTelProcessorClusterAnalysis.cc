@@ -65,7 +65,8 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
   howmanypdf(0),
   _numberofGeneratedInterestingCluster(0),
   _numberofMissingInterestingCluster(0),
-  _number_emptyMiddle(0)
+  _number_emptyMiddle(0),
+  cuttingSize(38)
 
 
   {
@@ -247,8 +248,13 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 
   if (_clusterAvailable)
   {
+	int numberOfHitsInAnEvent=0;
+	int numberOfSmallClusters=0;
+	int numberOfBigClusters=0;
+//cerr<<"IDETECTOR"<<endl;
 	for ( size_t idetector=0 ; idetector<zsInputDataCollectionVec->size(); idetector++)
 	{
+//cerr<<"idetector: "<<idetector<<endl;
 		CellIDDecoder<TrackerDataImpl> cellDecoder( zsInputDataCollectionVec );
 		TrackerDataImpl * zsData = dynamic_cast< TrackerDataImpl * > ( zsInputDataCollectionVec->getElementAt(idetector) );
 		SparsePixelType   type   = static_cast<SparsePixelType> ( static_cast<int> (cellDecoder( zsData )["sparsePixelType"]) );
@@ -554,8 +560,28 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 					}
 				}
 
+				//The end of the holey clusters part
 
+				//This plot the clusters withe a cut in size
 
+				if(true)
+				{
+					if(pixVector.size()<cuttingSize) numberOfSmallClusters++;
+					if(pixVector.size()>=cuttingSize) numberOfBigClusters++;
+					for(int i_cuttingSize=0; pixVector.size()<cuttingSize&&i_cuttingSize<pixVector.size(); i_cuttingSize++)
+					{
+						smallerClustersHitmap->Fill(pixVector[i_cuttingSize][0], pixVector[i_cuttingSize][1]);
+					}
+
+					for(int i_cuttingSize=0; pixVector.size()>=cuttingSize&&i_cuttingSize<pixVector.size(); i_cuttingSize++)
+					{
+						biggerClustersHitmap->Fill(pixVector[i_cuttingSize][0], pixVector[i_cuttingSize][1]);
+					}
+
+				}
+
+				//This line is to check how many pixel fired in an event.
+				numberOfHitsInAnEvent+=pixVector.size();
 
 
 				streamlog_out ( DEBUG5 ) << "This is a DEBUG output to see whether the program gets here. The number X[0] is " << X[0] << " and _sectorWidth is " << _sectorWidth << endl; 
@@ -599,6 +625,16 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 	nextCluster: ;
 	//End cluster for loop  
 	}
+	//How many pixel fired in one event
+	NumberOfHits->Fill(numberOfHitsInAnEvent);
+
+	//What type of event
+	if(numberOfSmallClusters==0&&numberOfBigClusters==0) TypeOfTheEvent->Fill(0);
+	if(numberOfSmallClusters>0&&numberOfBigClusters==0) TypeOfTheEvent->Fill(1);
+	if(numberOfSmallClusters>0&&numberOfBigClusters==1) TypeOfTheEvent->Fill(2);
+	if(numberOfSmallClusters>0&&numberOfBigClusters>1) TypeOfTheEvent->Fill(3);
+	if(numberOfSmallClusters==0&&numberOfBigClusters>0) TypeOfTheEvent->Fill(4);
+	//cerr<<"BigClusters: "<<numberOfBigClusters<<", SmallClusters: "<<numberOfSmallClusters<<endl;
   }
 
   //write the end event expression to the file, which is a linebreak
@@ -639,6 +675,13 @@ void EUTelProcessorClusterAnalysis::bookHistos()
       GeneratedClusterShapeHisto = new TH1I(Form("GeneratedClusterShapeHisto"),Form("GeneratedClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
       MissingClusterShapeHisto = new TH1I(Form("MissingClusterShapeHisto"),Form("MissingClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
 	emptyMiddleClustersHisto = new TH1I(Form("emptyMiddleClustersHisto"),Form("emptyMiddleClustersHisto;Cluster size (pixel);Number of Clusters"),200,0.5,200.5);
+	smallerClustersHitmap = new TH2I(Form("smallerClustersHitmap"),Form("smallerClustersHitmap;X (pixel);Y (pixel)"),1024,0,1024,512,0,512);
+	biggerClustersHitmap = new TH2I(Form("biggerClustersHitmap"),Form("biggerClustersHitmap;X (pixel);Y (pixel)"),1024,0,1024,512,0,512);
+	NumberOfHits = new TH1I(Form("NumberOfHits"),Form("NumberOfHits;n_Hits;Number"),500,0.5,500.5);
+	TypeOfTheEvent = new TH1I(Form("TypeOfTheEvent"),Form("TypeOfTheEvent;Type;Number"),5,-0.5,4.5);
+	TypeOfTheEvent->SetMarkerStyle(21);
+
+
 	for(int nInterestingCluster=0; nInterestingCluster<100; nInterestingCluster++)
 	{
       AIDAProcessor::tree(this)->mkdir(Form("GeneratedInterestingCluster%d",iSector));
