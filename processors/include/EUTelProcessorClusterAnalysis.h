@@ -60,6 +60,7 @@ protected:
   int _numberofMissingInterestingCluster;
   int _number_emptyMiddle;
   int cuttingSize;
+  int numberRandomEvent;
   double _energy;
   EVENT::StringVec _chipID;
   EVENT::StringVec _irradiation;
@@ -93,6 +94,7 @@ private:
   std::map<int,TH2I*> GeneratedInterestingCluster;
   std::map<int,TH2I*> MissingInterestingCluster;
   std::map<int,TH2I*> emptyMiddleClusters;
+  std::map<int,TH2I*> RandomEvent;
   TH1I* timeStampHisto;
   TH1I* GeneratedClustersHisto;
   TH1I* MissingClusterHisto;

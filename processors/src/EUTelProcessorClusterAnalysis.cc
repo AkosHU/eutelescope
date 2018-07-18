@@ -66,7 +66,8 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
   _numberofGeneratedInterestingCluster(0),
   _numberofMissingInterestingCluster(0),
   _number_emptyMiddle(0),
-  cuttingSize(38)
+  cuttingSize(5),
+  numberRandomEvent(0)
 
 
   {
@@ -538,7 +539,7 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 
 				//EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
 
-				if(true)
+				if(false)
 				{
 					//The next line check, if the cluster empty middled
 					if(mypalpide->emptyMiddle(pixVector))
@@ -578,6 +579,24 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 						biggerClustersHitmap->Fill(pixVector[i_cuttingSize][0], pixVector[i_cuttingSize][1]);
 					}
 
+				}
+
+				//This part to plot events to see, the events.
+
+				if(true)
+				{
+					bool INeedThisEvent=false;
+					int nRandomEvent=0;
+					if(numberRandomEvent<10) { INeedThisEvent=true; nRandomEvent=numberRandomEvent; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
+					if(numberRandomEvent>=1000000&&numberRandomEvent<1000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-1000000+10; cerr<<"I save the event: "<<numberRandomEvent<<" the number of plot: "<<nRandomEvent<<")"<<endl; }
+					if(numberRandomEvent>=2000000&&numberRandomEvent<2000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-2000000+20; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
+					if(numberRandomEvent>=3000000&&numberRandomEvent<3000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-3000000+30; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
+					if(numberRandomEvent>=4000000&&numberRandomEvent<4000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-4000000+40; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
+
+					for(int nnRandomEvent=0; nnRandomEvent<pixVector.size()&&INeedThisEvent; nnRandomEvent++)
+					{
+						RandomEvent[nRandomEvent]->Fill(pixVector[nnRandomEvent][0], pixVector[nnRandomEvent][1]);
+					}
 				}
 
 				//This line is to check how many pixel fired in an event.
@@ -635,6 +654,9 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 	if(numberOfSmallClusters>0&&numberOfBigClusters>1) TypeOfTheEvent->Fill(3);
 	if(numberOfSmallClusters==0&&numberOfBigClusters>0) TypeOfTheEvent->Fill(4);
 	//cerr<<"BigClusters: "<<numberOfBigClusters<<", SmallClusters: "<<numberOfSmallClusters<<endl;
+
+	//It is for genereat some hitmap for an exsample event
+	numberRandomEvent++;
   }
 
   //write the end event expression to the file, which is a linebreak
@@ -693,6 +715,14 @@ void EUTelProcessorClusterAnalysis::bookHistos()
       AIDAProcessor::tree(this)->mkdir(Form("emptyMiddleClusters%d",iSector));
       AIDAProcessor::tree(this)->cd(Form("emptyMiddleClusters%d",iSector));
 		emptyMiddleClusters[nInterestingCluster]  = new TH2I(Form("emptyMiddleClusters%d",nInterestingCluster),Form(" Holey cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
+	}
+
+	for(int nRandomEvent=0; nRandomEvent<50; nRandomEvent++)
+	{
+      	AIDAProcessor::tree(this)->mkdir(Form("RandomEvent%d",iSector));
+      	AIDAProcessor::tree(this)->cd(Form("RandomEvent%d",iSector));
+	RandomEvent[nRandomEvent]  = new TH2I(Form("RandomEvent%d",nRandomEvent),Form(" An Event for Demonstration %d;Cluster width X (pixel);Cluster width Y (pixel)",nRandomEvent),1024,0,1024,512,0,512);
+	//cerr<<"I SAVE an event"<<endl;
 	}
     }
   streamlog_out ( DEBUG5 )  << "end of Booking histograms " << endl;
