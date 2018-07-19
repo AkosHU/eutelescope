@@ -61,6 +61,8 @@ protected:
   int _number_emptyMiddle;
   int cuttingSize;
   int numberRandomEvent;
+  int number_fireing_event;
+  std::vector<std::vector<int>>before_event_memory;
   double _energy;
   EVENT::StringVec _chipID;
   EVENT::StringVec _irradiation;
@@ -71,6 +73,12 @@ protected:
   bool _noiseMaskAvailable;
   bool _deadColumnAvailable;
   bool samecluster;
+  bool I_Need_Distance_Square_Analysis;
+  bool I_Need_Empty_Middle_Analysis;
+  bool I_Need_Plote_Size_Cut_Hitmap;
+  bool I_Need_Plot_Example_Events;
+  bool I_Need_Fireing_Probability_Analysis;
+  bool I_Need_How_Many_Pixels_Fire_In_An_Event;
   std::string _hotPixelCollectionName;
   std::string _deadColumnCollectionName;
   std::string _noiseMaskFileName;
@@ -95,6 +103,7 @@ private:
   std::map<int,TH2I*> MissingInterestingCluster;
   std::map<int,TH2I*> emptyMiddleClusters;
   std::map<int,TH2I*> RandomEvent;
+  std::map<int,TH2I*> Double_Fireing_Events_Hitmap;
   TH1I* timeStampHisto;
   TH1I* GeneratedClustersHisto;
   TH1I* MissingClusterHisto;
@@ -110,6 +119,7 @@ private:
   TH2I* largeClusterHistos;
   TH2I* smallerClustersHitmap;
   TH2I* biggerClustersHitmap;
+  TH2I* Fireing_Probability;
   TH3I* clusterShapeMap;
   std::map<int,TH1I*> clusterShapeHistoSector;
   std::map<int,TH1I*> clusterShapeHistoGroupedSector;
