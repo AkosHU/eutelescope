@@ -96,7 +96,7 @@
   <!--This is the name of the hot pixel collection to be saved into the output slcio file-->
   <!--parameter name="HotPixelCollectionName" type="string" value="hotpixel_apix"/-->
   <!--If there are more then this number of correlated hits (planes->track candidate) (default=5)-->
-  <parameter name="MinNumberOfCorrelatedHits" type="int" value="6"/>
+  <parameter name="MinNumberOfCorrelatedHits" type="int" value="3"/>
   <!--reference hit collection name -->
   <parameter name="ReferenceCollection" type="string" value="refhit"/>
   <!--Maximal values of the hit residuals in the X direction for a correlation band. Note: these numbers are ordered according to the z position of the sensors and NOT according to the sensor id.-->

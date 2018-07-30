@@ -1899,12 +1899,12 @@ if(jhit>=0){
 	//no slope of beam, only extrapolation in z-direction
 	double slopevec[3]={0,0,1};
 
-	/*if(!_isActive[ipl]){
-		cerr << "Slope for DUT applied." << endl;
+	if(!_isActive[ipl]){
+		//cerr << "Slope for DUT applied." << endl;
 		slopevec[0] = fittedX[_nTelPlanes*ifit+(ipl+1)]-fittedX[_nTelPlanes*ifit+(ipl-1)];
 		slopevec[1] = fittedY[_nTelPlanes*ifit+(ipl+1)]-fittedY[_nTelPlanes*ifit+(ipl-1)];
 		slopevec[2] = _siPlaneCenter[ipl+1][2]-_siPlaneCenter[ipl-1][2];
-	}//this gives the possibility of inserting a proper slope*/
+	}//this gives the possibility of inserting a proper slope
 
         getImpactPoint(pos[0], pos[1], pos[2], slopevec[0], slopevec[1], slopevec[2]);
         //getFastTrackImpactPoint(pos[0], pos[1], pos[2], 0, 0); // old function, does the same as new one, new one is numerically more stable

@@ -109,19 +109,27 @@
   <parameter name="Rate" type="string" value="@Rate@"/>
   <!--parameter name="Verbosity" type="string" value="DEBUG"/-->
   <!--I_Need_Distance_Square_Analysis-->
-  <parameter name="I_Need_Distance_Square_Analysis" type="bool" value="false"/>
+  <parameter name="I_Need_Distance_Square_Analysis" type="bool" value="true"/>
   <!--I_Need_Empty_Middle_Analysis-->
-  <parameter name="I_Need_Empty_Middle_Analysis" type="bool" value="false"/>
+  <parameter name="I_Need_Empty_Middle_Analysis" type="bool" value="true"/>
   <!--I_Need_Plote_Size_Cut_Hitmap-->
-  <parameter name="I_Need_Plote_Size_Cut_Hitmap" type="bool" value="false"/>
+  <parameter name="I_Need_Plote_Size_Cut_Hitmap" type="bool" value="true"/>
   <!--I_Need_Plot_Example_Events-->
-  <parameter name="I_Need_Plot_Example_Events" type="bool" value="false"/>
-  <!--I_Need_Fireing_Probability_Analysis-->
-  <parameter name="I_Need_Fireing_Probability_Analysis" type="bool" value="true"/>
+  <parameter name="I_Need_Plot_Example_Events" type="bool" value="true"/>
+  <!--I_Need_Double_Fireing_Analysis-->
+  <parameter name="I_Need_Double_Fireing_Analysis" type="bool" value="true"/>
   <!--I_Need_How_Many_Pixels_Fire_In_An_Event-->
   <parameter name="I_Need_How_Many_Pixels_Fire_In_An_Event" type="bool" value="true"/>
+  <!--I_need_a_hitmap-->
+  <parameter name="I_need_a_hitmap" type="bool" value="true"/>
   <!--_sparseMinDistanceSquaredComparison-->
   <parameter name="_sparseMinDistanceSquaredComparison" type="int" value="1"/>
+  <!--_chipVersion-->
+  <parameter name="ChipVersion" type="int" value="@whichChip@"/>
+  <!--This cluster size is the border between the small and the big clusters-->
+  <parameter name="cuttingSize" type="int" value="5"/>
+
+
 
 </processor>
 

@@ -67,14 +67,16 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
   _numberofMissingInterestingCluster(0),
   _number_emptyMiddle(0),
   cuttingSize(5),
-  numberRandomEvent(0),
   I_Need_Distance_Square_Analysis(true),
   I_Need_Empty_Middle_Analysis(true),
   I_Need_Plote_Size_Cut_Hitmap(true),
   I_Need_Plot_Example_Events(true),
-  I_Need_Fireing_Probability_Analysis(true),
+  I_Need_Double_Firing_Analysis(true),
   I_Need_How_Many_Pixels_Fire_In_An_Event(true),
-  number_fireing_event(0)
+  I_need_a_hitmap(true),
+  number_firing_event(0),
+  _layerIndex(-1),
+  savedRandomEvents(0)
 
 
   {
@@ -124,12 +126,17 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
                             I_Need_Plote_Size_Cut_Hitmap, static_cast<bool>(true) );
   registerOptionalParameter("I_Need_Plot_Example_Events", "I Need Plot Example Events",
                             I_Need_Plot_Example_Events, static_cast<bool>(true) );
-  registerOptionalParameter("I_Need_Fireing_Probability_Analysis", "I Need Fireing Probability Analysis",
-                            I_Need_Fireing_Probability_Analysis, static_cast<bool>(true) );
+  registerOptionalParameter("I_Need_Double_Firing_Analysis", "I Need Double Firing Analysis",
+                            I_Need_Double_Firing_Analysis, static_cast<bool>(true) );
   registerOptionalParameter("I_Need_How_Many_Pixels_Fire_In_An_Event", "I Need How Many Pixels Fire In An Event",
                             I_Need_How_Many_Pixels_Fire_In_An_Event, static_cast<bool>(true) );
+  registerOptionalParameter("I_need_a_hitmap", "I Need A Hitmap",
+                            I_need_a_hitmap, static_cast<bool>(true) );
   registerOptionalParameter("_sparseMinDistanceSquaredComparison", "Sparse Min Distance Squared Comparison",
                             _sparseMinDistanceSquaredComparison, static_cast<int>(1) );
+  // This cluster size is the border between the small and the big clusters:
+  registerOptionalParameter("cuttingSize", "cuttingSize",
+                            cuttingSize, static_cast<int>(5) );
     _isFirstEvent = true;
 
   }
@@ -137,19 +144,18 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
 void EUTelProcessorClusterAnalysis::init() {
   _nLayer = geo::gGeometry().nPlanes();
   const std::vector<int>& _planeID = geo::gGeometry().sensorIDsVec();
-//cout<<"Here I am."<<endl;
 
-//cout<<_dutID<<endl;
   for(int iz=0; iz < _nLayer ; iz++)
 	  if(_planeID[iz]==_dutID)
 		  _layerIndex = iz;
+  if(_layerIndex==-1) { cerr<<"Wrong DUT ID. Exiting."<<endl; return; }
+  
+  
   if (_chipVersion < 3)     _nSectors = 4;
   else if (_chipVersion==3) _nSectors = 8;
   else if (_chipVersion==5) _nSectors = 4;
   else                      _nSectors = 1;
-/*cout<<"Here I am."<<endl;
-cout<<_chipVersion<<endl;
-cout<<_nSectors<<endl;*/
+
  
   //beware, sometimes dutID is 3, sometimes it is 6
   int iLayer = _dutID;
@@ -174,16 +180,14 @@ cout<<_nSectors<<endl;*/
   settingsFile.open (_outputSettingsFileName.c_str(), ios::out | ios::app );
   if (newFile) settingsFile << "Run number;Energy;Chip ID;Chip Version;Irradiation level(0-nonIrradiated,1-2.5e12,2-1e13,3-700krad,4-combined:1e13+700krad);Rate;BB;Ithr;Idb;Vcasn;Vcasn2;Vclip;Vcasp;VresetP;VresetD;Threshold and their RMS for all eight sectors;Noise and their RMS for all eight sectors;Readout delay;Trigger delay;Strobe length;StrobeB length;Data (1) or noise (0);Number of events;Efficiency,Number of tracks,Number of tracks with associated hit for all sectors" << endl;
 
-	//cerr<<"I_Need_Distance_Square_Analysis: "<<I_Need_Distance_Square_Analysis<<endl<<"I_Need_Empty_Middle_Analysis: "<<I_Need_Empty_Middle_Analysis<<endl<<"I_Need_Plote_Size_Cut_Hitmap: "<<I_Need_Plote_Size_Cut_Hitmap<<endl<<"I_Need_Plot_Example_Events: "<<I_Need_Plot_Example_Events<<endl<<"I_Need_Fireing_Probability_Analysis: "<<I_Need_Fireing_Probability_Analysis<<endl<<"I_Need_How_Many_Pixels_Fire_In_An_Event: "<<I_Need_How_Many_Pixels_Fire_In_An_Event<<endl;
+	//cerr<<"I_Need_Distance_Square_Analysis: "<<I_Need_Distance_Square_Analysis<<endl<<"I_Need_Empty_Middle_Analysis: "<<I_Need_Empty_Middle_Analysis<<endl<<"I_Need_Plote_Size_Cut_Hitmap: "<<I_Need_Plote_Size_Cut_Hitmap<<endl<<"I_Need_Plot_Example_Events: "<<I_Need_Plot_Example_Events<<endl<<"I_Need_Double_Firing_Analysis: "<<I_Need_Double_Firing_Analysis<<endl<<"I_Need_How_Many_Pixels_Fire_In_An_Event: "<<I_Need_How_Many_Pixels_Fire_In_An_Event<<endl;
 
 
 }
 
 
-
-
-EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
-
+//This line is needed, because EUTelProcessorAnalysisPALPIDEfs will check if the cluster is empty middle, or not.
+//EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
 
 
 
@@ -192,7 +196,7 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 // INIT, DEAD COLOUMN AND HOT PIXEL CHECKS -----------------------------------------------------------------------------------------------------------------
 //
 //
-
+  if(_layerIndex==-1) { return; }
   int nClusterPerEvent = 0;
   if (_isFirstEvent)
   {
@@ -382,6 +386,10 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 					pixVector.push_back(pix);
 				}
 
+				streamlog_out ( DEBUG5 ) << "This is a DEBUG output to see whether the program gets here. The number X[0] is " << X[0] << " and _sectorWidth is " << _sectorWidth << endl; 
+				//now, since all pixels are from the same sector, the sector number can be set.
+				int index = X[0]/_sectorWidth;
+
 				//This part is to analysis the effect of the distance square between the pixels in one cluste
 				if(I_Need_Distance_Square_Analysis)
 				{		
@@ -465,7 +473,7 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 							samecluster=false;
 							howmanyclustergeneratedfromonecluster++;
 							AllGeneratedPixel+=cluCandidate.size();
-							GeneratedClustersHisto->Fill(cluCandidate.size());
+							GeneratedClustersHisto[index]->Fill(cluCandidate.size());
 							//cout<<"I filled GeneratedClustersHisto with: "<<cluCandidate.size()<<endl;
 						
 
@@ -476,7 +484,7 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 							vector<int> Y(intrestingClusterSize);
 
 
-  							int iforX=0, Xmax=0,Ymax=0,Xmin=10000,Ymin=10000,Xshift=0,Yshift=0;
+  							int iforX=0, Xmax=0,Ymax=0,Xmin=1000000,Ymin=1000000,Xshift=0,Yshift=0;
                 					while(!cluCandidate.empty())
                 					{
 								X[iforX]=cluCandidate.front().getXCoord();
@@ -491,7 +499,7 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
                 					}
 
 							interestingCluster.set_values(intrestingClusterSize,X,Y);
-							GeneratedClusterShapeHisto->Fill(interestingCluster.WhichClusterShape(interestingCluster, clusterVec));
+							GeneratedClusterShapeHisto[index]->Fill(interestingCluster.WhichClusterShape(interestingCluster, clusterVec));
 
 							Xshift=(Xmax+Xmin)/2-50/2;
 							Yshift=(Ymax+Ymin)/2-50/2;
@@ -519,14 +527,14 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 
 					if(!samecluster)
 					{
-						MissingClusterHisto->Fill(firsthclustersize);
-						HowManyClusterGeneratedFromOneCluster->Fill(howmanyclustergeneratedfromonecluster);
+						MissingClusterHisto[index]->Fill(firsthclustersize);
+						HowManyClusterGeneratedFromOneCluster[index]->Fill(howmanyclustergeneratedfromonecluster);
 						howmanyclustergeneratedfromonecluster=0;
 						AllMissingPixel=firsthclustersize;
 
 						//cout<<"I filled MissingClusterHisto with: "<<firsthclustersize<<endl;
 
-	  					int Xmax=0,Ymax=0,Xmin=10000,Ymin=10000,Xshift=0,Yshift=0;					
+	  					int Xmax=0,Ymax=0,Xmin=1000000,Ymin=1000000,Xshift=0,Yshift=0;					
 						
 						for( std::vector<EUTelGenericSparsePixel>::iterator hitVecSparseData = hitPixelVec2.begin(); hitVecSparseData != hitPixelVec2.end()&&_numberofMissingInterestingCluster<100; ++hitVecSparseData )
 						{
@@ -550,9 +558,9 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 
 					if(AllGeneratedPixel!=AllMissingPixel)
 					{
-						cerr<<"ERROR: AllMissingPixel!=AllMissingPixel"<<endl;
-						cout<<"AllMissingPixel: "<<AllMissingPixel<<endl;
-						cout<<"AllGeneratedPixel: "<<AllGeneratedPixel<<endl;
+						cerr<<"AllMissingPixel!=AllMissingPixel"<<endl;
+						cerr<<"AllMissingPixel: "<<AllMissingPixel<<endl;
+						cerr<<"AllGeneratedPixel: "<<AllGeneratedPixel<<endl;
 					}
 					AllMissingPixel=0;
 					AllGeneratedPixel=0;
@@ -563,15 +571,17 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 
 				//This par looking for holey clusters
 
-				//EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
-
 				if(I_Need_Empty_Middle_Analysis)
 				{
+
+					//This line is needed, because EUTelProcessorAnalysisPALPIDEfs will check if the cluster is empty middle, or not.
+					EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
+
 					//The next line check, if the cluster empty middled
 					if(mypalpide->emptyMiddle(pixVector))
 					{
 						//It fill, the holey clusters histo
-						emptyMiddleClustersHisto->Fill(clusterSize);
+						emptyMiddleClustersHisto[index]->Fill(pixVector.size());
 						//It select holey clusters, to see them.
 						int xMin = *min_element(X.begin(), X.end());
 						int xMax = *max_element(X.begin(), X.end());
@@ -585,6 +595,7 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 						}
 						_number_emptyMiddle++;
 					}
+					delete mypalpide;
 				}
 
 				//The end of the holey clusters part
@@ -607,21 +618,23 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 
 				}
 
-				//This part to plot events to see, the events.
+				//This part is for the hitmap
+
+				if(I_need_a_hitmap)
+				{
+					for(int i_HITMAP=0; i_HITMAP<pixVector.size(); i_HITMAP++)
+					{
+						HIT_MAP->Fill(pixVector[i_HITMAP][0],pixVector[i_HITMAP][1]);
+					}
+				}
+
+				//This part to plots random events to see.
 
 				if(I_Need_Plot_Example_Events)
 				{
-					bool INeedThisEvent=false;
-					int nRandomEvent=0;
-					if(numberRandomEvent<10) { INeedThisEvent=true; nRandomEvent=numberRandomEvent; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
-					if(numberRandomEvent>=1000000&&numberRandomEvent<1000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-1000000+10; cerr<<"I save the event: "<<numberRandomEvent<<" the number of plot: "<<nRandomEvent<<")"<<endl; }
-					if(numberRandomEvent>=2000000&&numberRandomEvent<2000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-2000000+20; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
-					if(numberRandomEvent>=3000000&&numberRandomEvent<3000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-3000000+30; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
-					if(numberRandomEvent>=4000000&&numberRandomEvent<4000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-4000000+40; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
-
-					for(int nnRandomEvent=0; nnRandomEvent<pixVector.size()&&INeedThisEvent; nnRandomEvent++)
+					for(int i_random=0; i_random<pixVector.size()&&savedRandomEvents<100; i_random++)
 					{
-						RandomEvent[nRandomEvent]->Fill(pixVector[nnRandomEvent][0], pixVector[nnRandomEvent][1]);
+						RandomEvent[savedRandomEvents]->Fill(pixVector[i_random][0], pixVector[i_random][1]);
 					}
 				}
 
@@ -629,7 +642,7 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 
 				//This part is to analysis if a pixel fires, will it fire higher probability the nex event?
 				
-				if(I_Need_Fireing_Probability_Analysis)
+				if(I_Need_Double_Firing_Analysis)
 				{
 					for(int i_event_memory=0; i_event_memory<pixVector.size(); i_event_memory++)
 					{					
@@ -641,9 +654,9 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 				if(I_Need_How_Many_Pixels_Fire_In_An_Event) numberOfHitsInAnEvent+=pixVector.size();
 
 
-				streamlog_out ( DEBUG5 ) << "This is a DEBUG output to see whether the program gets here. The number X[0] is " << X[0] << " and _sectorWidth is " << _sectorWidth << endl; 
-				//now, since all pixels are from the same sector, the sector number can be set.
-				int index = X[0]/_sectorWidth;
+
+
+
 				
 				//set the cluster
 				cluster.set_values(clusterSize,X,Y);
@@ -700,45 +713,43 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 	//It is for genereat some hitmap for an exsample event
 	if(I_Need_Plot_Example_Events)
 	{
-		numberRandomEvent++;
+		savedRandomEvents++;
 	}
 
 	//This part is to analysis if a pixel fires, will it fire higher probability the nex event?
-	if(I_Need_Fireing_Probability_Analysis)
+	if(I_Need_Double_Firing_Analysis)
 	{
-		//int xMax=0, yMax=0, xMin=10000, yMin=10000;
 		bool interestin_event=false;
 		for(int i_event_memory=0; i_event_memory<event_memory.size(); i_event_memory++)
 		{
-			bool there_is_a_double_fireing=false;
+			bool there_is_a_double_firing=false;
 			for(int j_event_memory=0; j_event_memory<before_event_memory.size(); j_event_memory++)
 			{
-				if(event_memory[i_event_memory][0]==before_event_memory[j_event_memory][0]&&event_memory[i_event_memory][1]==before_event_memory[j_event_memory][1]) { there_is_a_double_fireing=true; interestin_event=true; break; }
+				if(event_memory[i_event_memory][0]==before_event_memory[j_event_memory][0]&&event_memory[i_event_memory][1]==before_event_memory[j_event_memory][1]) { there_is_a_double_firing=true; interestin_event=true; break; }
 			}
-			if(there_is_a_double_fireing)
+			if(there_is_a_double_firing)
 			{
-				Fireing_Probability->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
-				//if(event_memory[i_event_memory][0]>xMax) xMax=event_memory[i_event_memory][0];
-				//if(event_memory[i_event_memory][0]<xMin) xMin=event_memory[i_event_memory][0];
-				//if(event_memory[i_event_memory][1]>yMax) yMax=event_memory[i_event_memory][1];
-				//if(event_memory[i_event_memory][1]>yMin) yMin=event_memory[i_event_memory][1];
+				doubleFiringPixels->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
 			}
 		}
+		//In the next step, it is going to create some hitmap from the double firing event couples. If you see a pixel in the hitmap, which has:
+		// 1 entrie, it just fired in the firsth event.
+		// 2 entries, it just fired in the second event.
+		// 3 entries, it fired in both of the events.
+
 		if(interestin_event)
 		{
-			for(int i_event_memory=0; i_event_memory<event_memory.size()&&number_fireing_event<100; i_event_memory++)
+
+			for(int i_event_memory=0; i_event_memory<event_memory.size()&&number_firing_event<100; i_event_memory++)
 			{
-				Double_Fireing_Events_Hitmap[number_fireing_event]->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
-				Double_Fireing_Events_Hitmap[number_fireing_event]->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
+				Double_Firing_Events_Hitmap[number_firing_event]->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
+				Double_Firing_Events_Hitmap[number_firing_event]->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
 			}
-			for(int i_event_memory=0; i_event_memory<before_event_memory.size()&&number_fireing_event<100; i_event_memory++)
+			for(int i_event_memory=0; i_event_memory<before_event_memory.size()&&number_firing_event<100; i_event_memory++)
 			{
-				Double_Fireing_Events_Hitmap[number_fireing_event]->Fill(before_event_memory[i_event_memory][0], before_event_memory[i_event_memory][1]);
+				Double_Firing_Events_Hitmap[number_firing_event]->Fill(before_event_memory[i_event_memory][0], before_event_memory[i_event_memory][1]);
 			}
-			//Double_Fireing_Events_Hitmap[number_fireing_event]->Draw("colz");
-			//Double_Fireing_Events_Hitmap[number_fireing_event]->GetYaxis()->SetRange(22,23);
-			//Double_Fireing_Events_Hitmap[number_fireing_event]->SetAxisRange(yMin, yMax,"Y");
-			number_fireing_event++;
+			number_firing_event++;
 		}
 		before_event_memory=event_memory;
 	}
@@ -747,6 +758,7 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
   //write the end event expression to the file, which is a linebreak
   clusterAnalysisOutput << endl;
   //Increment number of events
+	//cerr<<"getEventNumber(): "<<evt->getEventNumber()<<endl;
   _nEvents++;
 }
 
@@ -775,65 +787,79 @@ void EUTelProcessorClusterAnalysis::bookHistos()
       clusterWidthYHisto[iSector]  = new TH1I(Form("clusterWidthYHisto_%d",iSector),Form("Cluster width in Y in sector %d;Cluster width Y (pixel);a.u.",iSector),50,0.5,50.5);
       clusterSizeHisto[iSector]  = new TH1I(Form("clusterSizeHisto_%d",iSector),Form("Cluster size_%d;Cluster size (pixel);a.u.",iSector),200,0.5,200.5);
       clusterShapeHistoSector[iSector] = new TH1I(Form("clusterShapeHisto_%d",iSector),Form("Cluster shape (all rotations separately) Sector %d;Cluster shape ID;a.u.",iSector),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
-      clusterShapeHistoGroupedSector[iSector] = new TH1I(Form("clusterShapeHistoGrouped_%d",iSector),Form("Cluster shape (all rotations treated together) Sector %d;Cluster shape ID;a.u.",iSector),symmetryGroups.size(),-0.5,symmetryGroups.size()-0.5);
-      GeneratedClustersHisto = new TH1I(Form("GeneratedClustersHisto"),Form("GeneratedClustersHisto;Cluster size (pixel);a.u."),200,0.5,200.5); 
+      clusterShapeHistoGroupedSector[iSector] = new TH1I(Form("clusterShapeHistoGrouped_%d",iSector),Form("Cluster shape (all rotations treated together) Sector %d;Cluster shape ID;a.u.",iSector),symmetryGroups.size(),-0.5,symmetryGroups.size()-0.5); 
 	if(I_Need_Distance_Square_Analysis)
 	{
-      		MissingClusterHisto = new TH1I(Form("MissingClusterHisto"),Form("MissingClusterHisto;Cluster size (pixel);a.u."),200,0.5,200.5);
-      		HowManyClusterGeneratedFromOneCluster = new TH1I(Form("HowManyClusterGeneratedFromOneCluster"),Form("HowManyClusterGeneratedFromOneCluster;Cluster size (pixel);a.u."),20,0.5,20.5);
-      		GeneratedClusterShapeHisto = new TH1I(Form("GeneratedClusterShapeHisto"),Form("GeneratedClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
-      		MissingClusterShapeHisto = new TH1I(Form("MissingClusterShapeHisto"),Form("MissingClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
+		AIDAProcessor::tree(this)->mkdir(Form("Sector_%d/CompareHistogramsIfReduced_sparseMinDistanceSquared=%d",iSector,_sparseMinDistanceSquaredComparison));
+      		AIDAProcessor::tree(this)->cd(Form("Sector_%d/CompareHistogramsIfReduced_sparseMinDistanceSquared=%d",iSector,_sparseMinDistanceSquaredComparison));
+      		GeneratedClustersHisto[iSector] = new TH1I(Form("GeneratidClustersFromAnother_%d",iSector),Form("Generated clusters, if reduced _sparseMinDistanceSquared=%d, Sector %d;Cluster size (pixel);Number of clusters", _sparseMinDistanceSquaredComparison , iSector),200,0.5,200.5);
+      		MissingClusterHisto[iSector] = new TH1I(Form("DisintegratingClusters_%d",iSector),Form("Disintegrating clusters, if reduced _sparseMinDistanceSquared=%d, Sector %d;Cluster size (pixel);Number of clusters", _sparseMinDistanceSquaredComparison , iSector),200,0.5,200.5);
+      		HowManyClusterGeneratedFromOneCluster[iSector] = new TH1I(Form("HowManyClusterGeneratedFromOneCluster_%d",iSector),Form("How many cluster generated from one cluster if reduce _sparseMinDistanceSquared=%d, Sector %d;Number of generated clusters from one disintegrating cluster; number of missing clusters",_sparseMinDistanceSquaredComparison),20,0.5,20.5);
+      		GeneratedClusterShapeHisto[iSector] = new TH1I(Form("GeneratedClustersShape_%d",iSector),Form("These clusters generated, if reduced _sparseMinDistanceSquared=%d, Sector %d;Cluster size (pixel);Number of clusters", _sparseMinDistanceSquaredComparison , iSector),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
+		//The next line will use, if the Cluster Shape finder process can work with clusters, which have pixels touch with corner.
+      		//MissingClusterShapeHisto[iSector] = new TH1I(Form("MissingClusterShapeHisto_%d",iSector),Form("MissingClusterShapeHisto;Type of the cluster shape;Number of clusters"),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
 	}
-	if(I_Need_Empty_Middle_Analysis) emptyMiddleClustersHisto = new TH1I(Form("emptyMiddleClustersHisto"),Form("emptyMiddleClustersHisto;Cluster size (pixel);Number of Clusters"),200,0.5,200.5);
-	if(I_Need_Plote_Size_Cut_Hitmap) smallerClustersHitmap = new TH2I(Form("smallerClustersHitmap"),Form("smallerClustersHitmap;X (pixel);Y (pixel)"),1024,0,1024,512,0,512);
-	if(I_Need_Plote_Size_Cut_Hitmap) biggerClustersHitmap = new TH2I(Form("biggerClustersHitmap"),Form("biggerClustersHitmap;X (pixel);Y (pixel)"),1024,0,1024,512,0,512);
-	if(I_Need_How_Many_Pixels_Fire_In_An_Event) NumberOfHits = new TH1I(Form("NumberOfHits"),Form("NumberOfHits;n_Hits;Number"),500,0.5,500.5);
-	if(I_Need_Plote_Size_Cut_Hitmap) TypeOfTheEvent = new TH1I(Form("TypeOfTheEvent"),Form("TypeOfTheEvent;Type;Number"),5,-0.5,4.5);
-	if(I_Need_Plote_Size_Cut_Hitmap) TypeOfTheEvent->SetMarkerStyle(21);
-	if(I_Need_Fireing_Probability_Analysis) Fireing_Probability = new TH2I(Form("Fireing_Probability"),Form("Double fireing pixels;X (pixel);Y (pixel)"),1024,0,1024,512,0,512);
+      	AIDAProcessor::tree(this)->cd(Form("Sector_%d",iSector));
+	if(I_Need_Empty_Middle_Analysis) emptyMiddleClustersHisto[iSector] = new TH1I(Form("emptyMiddleClustersHisto_%d",iSector),Form("Empty middle clusters histo in sector %d;Cluster size (pixel);Number of Clusters", iSector),200,0.5,200.5);
 
+    }
+    AIDAProcessor::tree(this)->cd("");
+    if(I_Need_Plote_Size_Cut_Hitmap) smallerClustersHitmap = new TH2I(Form("smallerClustersHitmap"),Form("This hitmap is filled withe clusters, which smaller than %d;X (pixel);Y (pixel)",cuttingSize),1024,0,1024,512,0,512);
+    if(I_Need_Plote_Size_Cut_Hitmap) biggerClustersHitmap = new TH2I(Form("biggerClustersHitmap"),Form("This hitmap is filled withe clusters, which equal or bigger than %d;X (pixel);Y (pixel)",cuttingSize),1024,0,1024,512,0,512);
+    if(I_Need_How_Many_Pixels_Fire_In_An_Event) NumberOfHits = new TH1I(Form("NumberOfHits"),Form("Number of hits in an event;n_Hits;Number of events"),500,0.5,500.5);
+    //0: There was no hit.
+    //1: There was just smaller clusters than cuttingSize.
+    //2: There was one cluster bigger or equal than cuttingSize and there was smaller clusters than cuttingSize.
+    //3: There was more than one cluster bigger or equal than cuttingSize and there was smaller clusters than cuttingSize.
+    //4: There was just bigger or equal clusters than cuttingSize.
+    if(I_Need_Plote_Size_Cut_Hitmap) TypeOfTheEvent = new TH1I(Form("TypeOfTheEvent"),Form("Type of the event;Type;Number of events"),5,-0.5,4.5);
+    //if(I_Need_Plote_Size_Cut_Hitmap) TypeOfTheEvent->SetMarkerStyle(21);
+    if(I_Need_Double_Firing_Analysis) doubleFiringPixels = new TH2I(Form("doubleFiringPixels"),Form("Double firing pixels;X (pixel);Y (pixel)"),1024,0,1024,512,0,512);
+    if(I_need_a_hitmap) HIT_MAP = new TH2I("hitMap",Form("HitMap;X (pixel); Y(pixel)"),1024,0,1024,512,0,512);
 
-	for(int nInterestingCluster=0; nInterestingCluster<100; nInterestingCluster++)
+    AIDAProcessor::tree(this)->mkdir(Form("First100Example"));
+    for(int nInterestingCluster=0; nInterestingCluster<100; nInterestingCluster++)
+    {
+    	if(I_Need_Distance_Square_Analysis)
 	{
-		if(I_Need_Distance_Square_Analysis)
-		{
-		      	AIDAProcessor::tree(this)->mkdir(Form("GeneratedInterestingCluster%d",iSector));
-	      		AIDAProcessor::tree(this)->cd(Form("GeneratedInterestingCluster%d",iSector));
-			GeneratedInterestingCluster[nInterestingCluster]  = new TH2I(Form("GeneratedInterestingCluster%		d",nInterestingCluster),Form(" Generated cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
-	      		AIDAProcessor::tree(this)->mkdir(Form("MissingInterestingCluster%d",iSector));
-	      		AIDAProcessor::tree(this)->cd(Form("MissingInterestingCluster%d",iSector));
-			MissingInterestingCluster[nInterestingCluster]  = new TH2I(Form("MissingInterestingCluster%d",nInterestingCluster),Form	(" Missing cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
-		}
-		if(I_Need_Empty_Middle_Analysis)
-		{
-		      	AIDAProcessor::tree(this)->mkdir(Form("emptyMiddleClusters%d",iSector));
-	      		AIDAProcessor::tree(this)->cd(Form("emptyMiddleClusters%d",iSector));
-			emptyMiddleClusters[nInterestingCluster]  = new TH2I(Form("emptyMiddleClusters%d",nInterestingCluster),Form(" Holey cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
-		}
+      		AIDAProcessor::tree(this)->mkdir(Form("First100Example/GeneratedClustersFromADisintegratingCluster"));
+      		AIDAProcessor::tree(this)->cd(Form("First100Example/GeneratedClustersFromADisintegratingCluster"));
+		GeneratedInterestingCluster[nInterestingCluster]  = new TH2I(Form("GeneratedClustersFromADisintegratingCluster_%d",nInterestingCluster),Form(" Generated cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
+      		AIDAProcessor::tree(this)->mkdir(Form("First100Example/DisintegratingCluster"));
+      		AIDAProcessor::tree(this)->cd(Form("First100Example/DisintegratingCluster"));
+		MissingInterestingCluster[nInterestingCluster]  = new TH2I(Form("MissingInterestingCluster_%d",nInterestingCluster),Form	(" Missing cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
 	}
-
-	for(int nRandomEvent=0; nRandomEvent<50&&I_Need_Plot_Example_Events; nRandomEvent++)
+	if(I_Need_Empty_Middle_Analysis)
 	{
-      		AIDAProcessor::tree(this)->mkdir(Form("RandomEvent%d",iSector));
-	      	AIDAProcessor::tree(this)->cd(Form("RandomEvent%d",iSector));
-		RandomEvent[nRandomEvent]  = new TH2I(Form("RandomEvent%d",nRandomEvent),Form(" An Event for Demonstration %d;Cluster width X (pixel);Cluster width Y (pixel)",nRandomEvent),1024,0,1024,512,0,512);
-		//cerr<<"I SAVE an event"<<endl;
-	}
-
-	for(int nRandomEvent=0; nRandomEvent<100&&I_Need_Fireing_Probability_Analysis; nRandomEvent++)
-	{
-      		AIDAProcessor::tree(this)->mkdir(Form("Double_Fireing_Events_Hitmap%d",iSector));
-	      	AIDAProcessor::tree(this)->cd(Form("Double_Fireing_Events_Hitmap%d",iSector));
-		Double_Fireing_Events_Hitmap[nRandomEvent]  = new TH2I(Form("Double_Fireing_Events_Hitmap%d",nRandomEvent),Form(" Double Fireing Events Hitmap %d;Cluster width X (pixel);Cluster width Y (pixel)",nRandomEvent),1024,0,1024,512,0,512);
-		//cerr<<"I SAVE an event"<<endl;
-	}
-
+	      	AIDAProcessor::tree(this)->mkdir(Form("First100Example/emptyMiddleClusters"));
+      		AIDAProcessor::tree(this)->cd(Form("First100Example/emptyMiddleClusters"));
+		emptyMiddleClusters[nInterestingCluster]  = new TH2I(Form("emptyMiddleClusters_%d",nInterestingCluster),Form(" Holey cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
+	} 
+        if(I_Need_Plot_Example_Events)
+        {
+            AIDAProcessor::tree(this)->mkdir(Form("First100Example/RandomEvent"));
+	    AIDAProcessor::tree(this)->cd(Form("First100Example/RandomEvent"));
+	    RandomEvent[nInterestingCluster]  = new TH2I(Form("RandomEvent_%d",nInterestingCluster),Form(" An Event for Demonstration %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),1024,0,1024,512,0,512);
+	    //cerr<<"I SAVE an event"<<endl;
+        }
+	//In the next step, it is going to create some hitmap from the double firing event couples. If you see a pixel in the hitmap, which has:
+	// 1 entrie, it just fired in the firsth event.
+	// 2 entries, it just fired in the second event.
+	// 3 entries, it fired in both of the events.
+        if(I_Need_Double_Firing_Analysis)
+        {
+            AIDAProcessor::tree(this)->mkdir(Form("First100Example/Double_Firing_Events"));
+      	    AIDAProcessor::tree(this)->cd(Form("First100Example/Double_Firing_Events"));
+	    Double_Firing_Events_Hitmap[nInterestingCluster]  = new TH2I(Form("Double_Firing_Events_Hitmap_%d",nInterestingCluster),Form(" Double Firing Events Hitmap %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),1024,0,1024,512,0,512);
+	    //cerr<<"I SAVE an event"<<endl;
+        }
     }
   streamlog_out ( DEBUG5 )  << "end of Booking histograms " << endl;
 }
 
 void EUTelProcessorClusterAnalysis::end()
 {
+  if(_layerIndex==-1) { return; }
   for (int iSector=0; iSector<_nSectors; iSector++)
     {		
       for (unsigned int i=0; i<symmetryGroups.size(); i++)
@@ -858,6 +884,19 @@ void EUTelProcessorClusterAnalysis::end()
     }
   }
   //
+  if(true)
+  {
+    bool DistanceSquareWarning=true;
+    for(int i_sector=0; i_sector<_nSectors; i_sector++)
+    {
+      if(GeneratedClustersHisto[i_sector]->GetEntries()!=0)  DistanceSquareWarning=false;
+      if(MissingClusterHisto[i_sector]->GetEntries()!=0)  DistanceSquareWarning=false;
+    }
+    if(DistanceSquareWarning)
+    {
+      streamlog_out ( WARNING ) << "The histograms of the analysis disintegrating clusters are empty! It could mean you runned the clusterAnalysis with same, or higher _sparseMinDistanceSquaredComparison than the _sparseMinDistanceSquared was in clustering." << endl;
+    }
+  }
   streamlog_out ( MESSAGE4 ) << "The amount of processed events was " << _nEvents << endl;
   streamlog_out ( MESSAGE4 ) << "The amount of ignored clusters, because they were at an x-border of a sector were: " << _nTouchingBorderSectorClusters << endl;
   streamlog_out ( MESSAGE4 ) << "The amount of ignored clusters, because they were at a y-border of the chip were: " << _nTouchingBorderYClusters << endl;

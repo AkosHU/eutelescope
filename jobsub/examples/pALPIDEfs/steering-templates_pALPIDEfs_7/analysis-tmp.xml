@@ -159,7 +159,7 @@
   <!--This is the maximum number of planes that can have more than one hit-->
   <parameter name="nPlanesWithMoreHits" type="int" value="3"/>
   <!--More tracks are allowed in one event-->
-  <parameter name="MoreTracks" type="bool" value="false"/>
+  <parameter name="MoreTracks" type="bool" value="true"/>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <!--parameter name="Verbosity" type="string" value="MESSAGE2"/-->
     <!--This is the name of the hotpixel collection-->
