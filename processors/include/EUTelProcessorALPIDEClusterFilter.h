@@ -55,7 +55,8 @@ namespace eutelescope {
     std::vector<std::vector<std::vector<std::vector<int>>>>PixelsOfEvents;
     int _nDeep;
     float _Range;
-      
+
+
   public:
 
 
@@ -81,11 +82,19 @@ namespace eutelescope {
 
     virtual void end();
 
+    virtual void readCollections(LCEvent *evt);
+
+    virtual void writeCollection();
+
+    
+
 
    
     
   protected:
 
+
+    std::vector<LCEvent *>evtVec;
     //! Pulse collection size
     size_t _initialPulseCollectionSize;
 
