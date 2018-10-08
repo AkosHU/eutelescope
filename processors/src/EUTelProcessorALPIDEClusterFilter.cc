@@ -130,10 +130,13 @@ bool EUTelProcessorALPIDEClusterFilter::SameCluster(int iEvent, int iCluster, in
 			if(PixelsOfEvents[iEvent][iCluster][iPixel]==PixelsOfEvents[jEvent][jCluster][jPixel])
 			{
 				nSame++;
+			if(PixelsOfEvents[iEvent][iCluster][iPixel]==PixelsOfEvents[jEvent][jCluster][jPixel])
+				//cerr<<"("<<PixelsOfEvents[iEvent][iCluster][iPixel][2]<<","<<PixelsOfEvents[jEvent][jCluster][jPixel][2]<<")";
 				break;
 			}
 		}
 	}
+	//cerr<<endl;
 	if(nSame>PixelsOfEvents[iEvent][iCluster].size() * _Range || nSame>PixelsOfEvents[jEvent][jCluster].size() * _Range) return true;
 	return false;
 }
@@ -159,45 +162,7 @@ void EUTelProcessorALPIDEClusterFilter::DeletCluster(int jEvent, int jCluster){
 	PixelsOfEvents[jEvent].erase(PixelsOfEvents[jEvent].begin()+jCluster);
 }
 
-void EUTelProcessorALPIDEClusterFilter::readCollections (LCEvent * evt) {
-
-	//In this step we can not handbe, if pulseCollection is alredy exist, so if it is exist, we skip all of the event.
-    try
-    {
-        LCCollectionVec * pulseCollection = dynamic_cast< LCCollectionVec * > ( evt->getCollection( _pulseCollectionName ) );
-		streamlog_out ( WARNING5 ) << "pulseCollection is exist. We can not handle this situation, so we skip this event." << endl;
-		//throw SkipEventException( this );
-    }
-    catch ( lcio::DataNotAvailableException& e )
-    {
-		//Don't do anything.
-    }
-
-	//In this step we can not handbe, if sparseClusterCollectionVec is alredy exist, so if it is exist, we skip all of the event.
-    try
-    {
-        LCCollectionVec * sparseClusterCollectionVec = dynamic_cast< LCCollectionVec* > ( evt->getCollection( "oOriginal_zsdata") );
-		streamlog_out ( WARNING5 ) << "sparseClusterCollectionVec is exist. We can not handle this situation, so we skip this event." << endl;
-		throw SkipEventException( this );
-    }
-    catch (lcio::DataNotAvailableException& e)
-    {
-        //Don't do anything.
-    }
-
-	//In this step we can not handbe, if zsInputDataCollectionVec is not available, so we skip all of the event, when it is not available.
-	try {
-	    zsInputDataCollectionVec = dynamic_cast< LCCollectionVec * > ( evt->getCollection( "original_zsdata" ) ) ;
-	    streamlog_out ( DEBUG5 ) << "zsInputDataCollectionVec: " << _zsDataCollectionName.c_str() << " found " << endl;
-		cerr<<"zsInputDataCollectionVec AVAILABLE!"<<endl;
-  	}
-	catch ( lcio::DataNotAvailableException ) {
-	    streamlog_out ( WARNING5 ) << "zsInputDataCollectionVec: " << _zsDataCollectionName.c_str() << " not found " << endl;
-		cerr<<"zsInputDataCollectionVec NOT AVAILABLE!"<<endl;
-		throw SkipEventException( this );
-  	}
-	notDouvbleCluster++;
-
+void EUTelProcessorALPIDEClusterFilter::readCollections (LCCollectionVec * zsInputDataCollectionVec) {
     vector<vector<vector<int>>>EventPixels;
     cerr<<"EVENT"<<endl;
 	cerr<<"zsData size: "<<zsInputDataCollectionVec->size()<<endl;
@@ -225,33 +190,106 @@ void EUTelProcessorALPIDEClusterFilter::readCollections (LCEvent * evt) {
 				pix.push_back(Y[iPixel]);
 				//pix[2] will be the sensor id.
 				pix.push_back((int)cellDecoder(zsData)["sensorID"]);
+				pix.push_back((int)cellDecoder( zsData )["sparsePixelType"]);
 				pixVector.push_back(pix);
 			}
 			EventPixels.push_back(pixVector);
 		}
 	}
-	PixelsOfEvents.push_back(EventPixels);
-	evtVec.push_back(evt);
-	if(PixelsOfEvents.size()!=evtVec.size()) {
-		streamlog_out ( WARNING6 ) << "PixelsOfEvents.size()!=evtVec.size() !!!! We will enpty both of them!!!!" << endl;
-		while(PixelsOfEvents.size()!=0) PixelsOfEvents.erase(PixelsOfEvents.begin());
-		while(evtVec.size()!=0) evtVec.erase(evtVec.begin());
+
+	if(EventPixels.size()!=0) {
+		PixelsOfEvents.push_back(EventPixels);
+ 	}
+	if(false) {
+
 	}
+	cerr<<"END OF READ"<<endl;
 }
 
-void EUTelProcessorALPIDEClusterFilter::writeCollection () {
-	
+void EUTelProcessorALPIDEClusterFilter::writeCollection (LCCollectionVec * sparseClusterCollectionVec, LCCollectionVec * pulseCollection) {
+	CellIDEncoder<TrackerDataImpl> idZSClusterEncoder( EUTELESCOPE::ZSCLUSTERDEFAULTENCODING, sparseClusterCollectionVec );
+	CellIDEncoder<TrackerPulseImpl> idZSPulseEncoder(EUTELESCOPE::PULSEDEFAULTENCODING, pulseCollection);
+	if(PixelsOfEvents.size()>_nDeep) {
+		for(int iCluster=0; iCluster<PixelsOfEvents[0].size();iCluster++) {
+			// prepare a TrackerData to store the cluster candidate
+    	    auto zsCluster = std::make_unique<TrackerDataImpl>();
+        	// prepare a reimplementation of sparsified cluster
+        	auto sparseCluster = std::make_unique<EUTelSparseClusterImpl<EUTelGenericSparsePixel>>(zsCluster.get());
+			int sensorID;
+			int TYPE;
+
+			//cerr<<"CHECK POINT 3"<<endl;
+			//cerr<<PixelsOfEvents.size()<<"; "<<PixelsOfEvents[0].size()<<"; "<<PixelsOfEvents[0][iCluster].size()<<"; "<<PixelsOfEvents[0][iCluster][0].size()<<endl;
+			while(PixelsOfEvents[0][iCluster].size()>0)
+			{
+				cerr<<"CHECK POINT PixelsOfEvents[0][iCluster].size()>0"<<endl;
+				// get the noise matrix with the right detectorID
+        		//TrackerDataImpl* noise  = dynamic_cast<TrackerDataImpl*>   (noiseCollectionVec->getElementAt( _ancillaryIndexMap[ sensorID ] ));
+        		// prepare the matrix decoder
+        		//EUTelMatrixDecoder matrixDecoder( noiseDecoder , noise );
+        		// prepare a vector to store the noise values
+        		//vector<float> noiseValueVec;
+
+
+				/*while(!cluCandidate.empty())
+        		{
+        	    EUTelGenericSparsePixel pixel = cluCandidate.front();
+        	   	cluCandidate.erase( cluCandidate.begin() );
+        	   	int index = matrixDecoder.getIndexFromXY( pixel.getXCoord(), pixel.getYCoord() );
+        	   	if( _hitIndexMapVec[idetector].find( index ) != _hitIndexMapVec[idetector].end() )
+        	   	{
+        	   	    // do nothing
+        	   	}
+        	   	else
+        	   	{
+        	   	    sparseCluster->push_back( pixel );
+        	   	    //noiseValueVec.push_back(noise->getChargeValues()[ index ]);
+        	   	}
+       			}*/
+
+				EUTelGenericSparsePixel Pixel;
+				Pixel.setXCoord(PixelsOfEvents[0][iCluster][0][0]);
+				Pixel.setYCoord(PixelsOfEvents[0][iCluster][0][1]);
+				sensorID=PixelsOfEvents[0][iCluster][0][2];
+				TYPE=PixelsOfEvents[0][iCluster][0][3];
+				PixelsOfEvents[0][iCluster].erase(PixelsOfEvents[0][iCluster].begin());
+				sparseCluster->push_back( Pixel );
+			}
+			cerr<<"CHECK POINT 4"<<endl;
+			if ( sparseCluster->size() > 0)
+			{
+				cerr<<"CHECK POINT  sparseCluster->size() > 0"<<endl;
+				// set the ID for this zsCluster
+    	        idZSClusterEncoder["sensorID"] = static_cast<int >(sensorID);
+    	        //idZSClusterEncoder["sparsePixelType"] = static_cast<int> (type);		//cout<<"TIPE: "<<type<<endl;
+				idZSClusterEncoder["sparsePixelType"]= static_cast<int >(TYPE);
+    	        idZSClusterEncoder["quality"] = 0;
+    	        idZSClusterEncoder.setCellID( zsCluster.get() );
+    	        zsCluster->setTime(iCluster);
+
+				// add it to the cluster collection
+    	        sparseClusterCollectionVec->push_back( zsCluster.get() );
+
+				// prepare a pulse for this cluster
+    	        auto zsPulse = std::make_unique<TrackerPulseImpl>();
+    	        idZSPulseEncoder["sensorID"] = static_cast<int >(sensorID);
+    	        idZSPulseEncoder["type"] = static_cast<int>(kEUTelSparseClusterImpl);
+    	        idZSPulseEncoder.setCellID( zsPulse.get() );
+    	        zsPulse->setTime(iCluster);
+    	        //zsPulse->setCharge( sparseCluster->getTotalCharge() );
+    	        zsPulse->setTrackerData( zsCluster.release() );
+    	        pulseCollection->push_back( zsPulse.release() );
+			}
+		}
+		PixelsOfEvents.erase(PixelsOfEvents.begin());
+	}
+	//if(sparseClusterCollectionVec->size()>0) notDouvbleCluster++;
 }
-		
 
-void EUTelProcessorALPIDEClusterFilter::processEvent (LCEvent * evt) {
-	cerr<<"IN PROCESSEVENT"<<endl;
-	allCluster++;
-	readCollections(evt);
-
-	//Search double firing pixels in PixelsOfEvents	
+void EUTelProcessorALPIDEClusterFilter::filter () {
 	if(PixelsOfEvents.size()>_nDeep)
 	{
+		cerr<<"	IN NDEEP"<<endl;
 		for(int iCluster=0; iCluster<PixelsOfEvents[0].size();iCluster++)
 		{
 			//notDouvbleCluster++;
@@ -270,9 +308,103 @@ void EUTelProcessorALPIDEClusterFilter::processEvent (LCEvent * evt) {
 				if(!wasSameCluster) break;
 			}
 		}
-		writeCollection();
-		PixelsOfEvents.erase(PixelsOfEvents.begin());
 	}
+}
+
+void EUTelProcessorALPIDEClusterFilter::processEvent (LCEvent * evt) {
+	bool isDummyAlreadyExisting = false;
+  	LCCollectionVec * sparseClusterCollectionVec = NULL;
+  	ID = 0;
+  	int TYPE=0;
+    try
+    {
+        sparseClusterCollectionVec = dynamic_cast< LCCollectionVec* > ( evt->getCollection( "oOriginal_zsdata") );
+        isDummyAlreadyExisting = true ;
+		cerr<<"sparseClusterCollection Vec AVAILABLE!"<<endl;
+    }
+    catch (lcio::DataNotAvailableException& e)
+    {
+        sparseClusterCollectionVec = new LCCollectionVec(LCIO::TRACKERDATA);
+        isDummyAlreadyExisting = false;
+		cerr<<"sparseClusterCollection Vec DONE!"<<endl;
+    }
+	LCCollectionVec * pulseCollection;
+    bool pulseCollectionExists = false;
+    _initialPulseCollectionSize = 0;
+    try
+    {
+        pulseCollection = dynamic_cast< LCCollectionVec * > ( evt->getCollection( _pulseCollectionName ) );
+        pulseCollectionExists = true;
+        _initialPulseCollectionSize = pulseCollection->size();
+		cerr<<"pulseCollection AVAILABLE!"<<endl;
+    }
+    catch ( lcio::DataNotAvailableException& e )
+    {
+        pulseCollection = new LCCollectionVec(LCIO::TRACKERPULSE);
+		cerr<<"pulseCollection DONE!"<<endl;
+    }
+	    // prepare an encoder also for the pulse collection
+	noiseCollectionVec = 0;
+    try
+    {
+        noiseCollectionVec  = dynamic_cast < LCCollectionVec * > (evt->getCollection( _noiseCollectionName ));
+        streamlog_out ( DEBUG4 ) << "noiseCollectionName: " << _noiseCollectionName.c_str() << " found " << endl;
+    }
+    catch (lcio::DataNotAvailableException& e )
+    {
+        streamlog_out ( DEBUG4 ) << "No noise pixel DB collection found in the event" << endl;
+    }
+
+  	_clusterAvailable = true;
+  	try {
+	    zsInputDataCollectionVec = dynamic_cast< LCCollectionVec * > ( evt->getCollection( "original_zsdata" ) ) ;
+	    streamlog_out ( DEBUG5 ) << "zsInputDataCollectionVec: " << _zsDataCollectionName.c_str() << " found " << endl;
+		cerr<<"zsInputDataCollectionVec AVAILABLE!"<<endl;
+		allCluster++;
+  	} catch ( lcio::DataNotAvailableException ) {
+	    streamlog_out ( DEBUG5 ) << "zsInputDataCollectionVec: " << _zsDataCollectionName.c_str() << " not found " << endl;
+	    _clusterAvailable = false;
+		cerr<<"zsInputDataCollectionVec NOT AVAILABLE!"<<endl;
+  	}
+	if(_clusterAvailable) {
+		readCollections(zsInputDataCollectionVec);
+		filter();
+		writeCollection(sparseClusterCollectionVec, pulseCollection);
+	}
+	if ( ! isDummyAlreadyExisting )
+    {
+		cerr<<"CHECK POINT ! isDummyAlreadyExisting"<<endl;
+        if ( sparseClusterCollectionVec->size() != 0 )
+        {
+			notDouvbleCluster+=sparseClusterCollectionVec->size();
+			cerr<<"CHECK POINT sparseClusterCollectionVec"<<endl;
+            evt->addCollection( sparseClusterCollectionVec, "oOriginal_zsdata" );
+        }
+        else
+        {
+            delete sparseClusterCollectionVec;
+        }
+    }
+	cerr<<"CHECK POINT 7"<<endl;
+	// if the pulseCollection is not empty add it to the event
+    if ( ! pulseCollectionExists && ( pulseCollection->size() != _initialPulseCollectionSize ))
+    {
+        evt->addCollection( pulseCollection, _pulseCollectionName );
+    }
+
+    /*if ( pulseCollection->size() != _initialPulseCollectionSize )
+    {
+#if defined(USE_AIDA) || defined(MARLIN_USE_AIDA)
+        if ( _fillHistos ) fillHistos(event);
+#endif
+    }*/
+    if ( ! pulseCollectionExists && ( pulseCollection->size() == _initialPulseCollectionSize ) )
+    {
+        delete pulseCollection;
+    }
+
+    _isFirstEvent = false;
+	cerr<<"CHECK POINT 8"<<endl;
 }
 
 void EUTelProcessorALPIDEClusterFilter::end() 

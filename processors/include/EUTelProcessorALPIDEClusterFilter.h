@@ -14,6 +14,7 @@
 #ifdef USE_GEAR
 // eutelescope includes ".h"
 #include "EUTelUtility.h"
+#include "EUTelEventImpl.h"
 
 // marlin includes ".h"
 #include "marlin/Processor.h"
@@ -82,9 +83,11 @@ namespace eutelescope {
 
     virtual void end();
 
-    virtual void readCollections(LCEvent *evt);
+    virtual void readCollections(LCCollectionVec * zsInputDataCollectionVec);
 
-    virtual void writeCollection();
+    virtual void writeCollection(LCCollectionVec * sparseClusterCollectionVec, LCCollectionVec * pulseCollection);
+
+    virtual void filter();
 
     
 
@@ -94,7 +97,7 @@ namespace eutelescope {
   protected:
 
 
-    std::vector<LCEvent *>evtVec;
+    
     //! Pulse collection size
     size_t _initialPulseCollectionSize;
 
