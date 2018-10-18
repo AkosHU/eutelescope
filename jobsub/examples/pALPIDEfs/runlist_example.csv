@@ -1,6 +1,17 @@
 RunNumber,BeamEnergy,GearGeoFile,DUTNumbers,ChipIDs,IrradiationLevel,Rate
-467,0.22106,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
-468,0.20011,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
-469,0.04812,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
-440,0.15011,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
-6073,6.0,gear_pALPIDE-3_example_withoutCarrierMaterial_Xe_1_plane.xml,0,W1-18,0,PS
+446,0.2205,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes_plus_Al.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+447,0.05057,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes_plus_Al.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+453,0.20038,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes_plus_Al.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+454,0.15011,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes_plus_Al.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+455,0.10019,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes_plus_Al.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+429,0.2205,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+435,0.20038,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+438,0.05057,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+439,0.10019,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+440,0.15011,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+461,0.22106,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes_plus_Al.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+463,0.20011,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes_plus_Al.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+466,0.04812,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes_plus_Al.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+467,0.22106,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+468,0.20011,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+469,0.04812,gear_pALPIDE-3_example_withoutCarrierMaterial_He_3_planes.xml,1,W1-18 W2-18 W3-18,0 0 0,PS

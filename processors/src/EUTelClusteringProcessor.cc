@@ -2032,11 +2032,11 @@ void EUTelClusteringProcessor::sparseClustering(LCEvent* evt, LCCollectionVec* p
                         dY = y1 - y2;
                         int distance = dX*dX+dY*dY;
                         //if they pass the spatial and temporal cuts, we add them
-			if(akosexample==0)
-			{
-			cout<<"_sparseMinDistanceSquared(in real): "<<_sparseMinDistanceSquared<<endl;
-			akosexample++;
-			}
+			            if(akosexample==0)
+			            {
+			                cout<<"_sparseMinDistanceSquared(in real): "<<_sparseMinDistanceSquared<<endl;
+			                akosexample++;
+			            }
                         if( distance <= _sparseMinDistanceSquared )
                         {
                             //add them to the cluster as well as to the newly added ones

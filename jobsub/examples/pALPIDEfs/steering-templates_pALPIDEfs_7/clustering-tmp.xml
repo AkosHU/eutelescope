@@ -68,19 +68,19 @@
   <!--Pixel status collection-->
   <parameter name="StatusCollectionName" type="string" lcioOutType="TrackerRawData"> pALPIDEfs_status </parameter>
   <!--The initial value of noise (one value for detector)-->
-  <parameter name="InitNoiseValue" type="FloatVec"> 1 1 1 1 1 1 1 </parameter>
+  <parameter name="InitNoiseValue" type="FloatVec"> 1 1 1 </parameter>
   <!--The initial value of pedestal (one value for detector)-->
-  <parameter name="InitPedestalValue" type="FloatVec"> 0 0 0 0 0 0 0 </parameter>
+  <parameter name="InitPedestalValue" type="FloatVec"> 0 0 0 </parameter>
   <!--The maximum pixel along x (default 255, one value per detector)-->
-  <parameter name="MaxXVector" type="IntVec"> 1023 1023 1023 1023 1023 1023 1023 </parameter>
+  <parameter name="MaxXVector" type="IntVec"> 1023 1023 1023 </parameter>
   <!--The maximum pixel along y (default 255, one value per detector)-->
-  <parameter name="MaxYVector" type="IntVec"> 511 511 511 511 511 511 511 </parameter>
+  <parameter name="MaxYVector" type="IntVec"> 511 511 511 </parameter>
   <!--The minimum pixel along x (default 0, one value per detector)-->
-  <parameter name="MinXVector" type="IntVec"> 0 0 0 0 0 0 0 </parameter>
+  <parameter name="MinXVector" type="IntVec"> 0 0 0 </parameter>
   <!--The minimum pixel along y (default 0, one value per detector)-->
-  <parameter name="MinYVector" type="IntVec"> 0 0 0 0 0 0 0 </parameter>
+  <parameter name="MinYVector" type="IntVec"> 0 0 0 </parameter>
   <!--The sensorID for the generated collection (one per detector)-->
-  <parameter name="SensorIDVec" type="IntVec"> 0 1 2 3 4 5 6 </parameter>
+  <parameter name="SensorIDVec" type="IntVec"> 0 1 2 </parameter>
   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
   <!--parameter name="Verbosity" type="string" value=""/-->
 </processor>

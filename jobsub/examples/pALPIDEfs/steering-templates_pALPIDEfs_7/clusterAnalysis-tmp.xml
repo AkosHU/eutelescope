@@ -24,7 +24,7 @@
    </execute>
 
    <global>
-      <parameter name="LCIOInputFiles"> @LcioPath@/run@RunNumber@-clustering.slcio </parameter>
+      <parameter name="LCIOInputFiles"> @LcioPath@/run@RunNumber@-filtering.slcio </parameter>
       <parameter name="GearXMLFile" value="@GearFilePath@/@GearFile@"/>
       <parameter name="MaxRecordNumber" value="@MaxRecordNumber@"/>
       <parameter name="SkipNEvents" value="@SkipNEvents@"/>
@@ -78,7 +78,7 @@
 
 <processor name="clusterAnalysis" type="EUTelProcessorClusterAnalysis">
    <!--parameter name="NZSDataCollectionName" type="string" lcioInType="TrackerData"> data </parameter-->
-  <parameter name="ZSDataCollectionName" type="string" lcioInType="TrackerData"> original_zsdata </parameter>
+  <parameter name="ZSDataCollectionName" type="string" lcioInType="TrackerData"> filtered_zsdata </parameter>
    <!--Switch on or off the histogram filling-->
   <parameter name="HistogramFilling" type="bool" value="true"/>
   <!--This is the name of the histogram information file-->
@@ -125,7 +125,7 @@
   <!--_sparseMinDistanceSquaredComparison-->
   <parameter name="_sparseMinDistanceSquaredComparison" type="int" value="1"/>
   <!--_chipVersion-->
-  <parameter name="ChipVersion" type="int" value="@whichChip@"/>
+  <parameter name="ChipVersion" type="int" value="4"/>
   <!--This cluster size is the border between the small and the big clusters-->
   <parameter name="cuttingSize" type="int" value="5"/>
 

@@ -1,0 +1,2676 @@
+diff --git a/eutelescope_difference b/eutelescope_difference
+new file mode 100644
+index 0000000..6e20258
+--- /dev/null
++++ b/eutelescope_difference
+@@ -0,0 +1,1337 @@
++diff --git a/eutelescope_difference b/eutelescope_difference
++deleted file mode 100644
++index d7be384..0000000
++--- a/eutelescope_difference
+++++ /dev/null
++@@ -1,701 +0,0 @@
++-diff --git a/jobsub/examples/pALPIDEfs/config_pALPIDEfs_7.cfg b/jobsub/examples/pALPIDEfs/config_pALPIDEfs_7.cfg
++-index 7cc7165..be3c13d 100644
++---- a/jobsub/examples/pALPIDEfs/config_pALPIDEfs_7.cfg
++-+++ b/jobsub/examples/pALPIDEfs/config_pALPIDEfs_7.cfg
++-@@ -49,7 +49,7 @@ HotpixelRunNumber	= @RunNumber@
++- SkipNEvents		= 0
++- 
++- # Limit processing of a run to a certain number of events
++--MaxRecordNumber		= 10000000
++-+MaxRecordNumber		= 100000
++- 
++- # The verbosity used by the EUTelescope producers (i.e. MESSAGE, DEBUG, ERROR
++- # with appended level from 0..9, e.g. MESSAGE5). If you set this to DEBUG0 but
++-diff --git a/jobsub/examples/pALPIDEfs/gear_ALPIDE_oldsetup.xml b/jobsub/examples/pALPIDEfs/gear_ALPIDE_oldsetup.xml
++-index 916afc6..d4ec1f8 100644
++---- a/jobsub/examples/pALPIDEfs/gear_ALPIDE_oldsetup.xml
++-+++ b/jobsub/examples/pALPIDEfs/gear_ALPIDE_oldsetup.xml
++-@@ -30,7 +30,7 @@
++- 	<!--pALPIDEfs Plane 1 -->
++- 	<layer>
++- 	  <ladder 	ID="1" 
++--			positionX="0"		positionY="0"		positionZ="19.7" 
++-+			positionX="0"		positionY="0"		positionZ="19.6" 
++- 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++- 			sizeX="28.672"		sizeY="14.336"		thickness="1.6" 
++- 			radLength="159.225"
++-@@ -48,7 +48,7 @@
++- 	<!--pALPIDEfs Plane 2 -->
++- 	<layer>
++- 	  <ladder 	ID="2" 
++--			positionX="0"		positionY="0"		positionZ="39.4" 
++-+			positionX="0"		positionY="0"		positionZ="39.2" 
++- 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++- 			sizeX="28.672"		sizeY="14.336"		thickness="1.6" 
++- 			radLength="159.225"
++-@@ -66,7 +66,7 @@
++- 	<!--pALPIDEfs Plane 3 position : 71.9 correct-->
++- 	<layer> 
++- 	  <ladder 	ID="3" 
++--			positionX="0"		positionY="0"		positionZ="68.9" 
++-+			positionX="0"		positionY="0"		positionZ="58.8" 
++- 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++- 			sizeX="29.94176"	sizeY="13.76256"	thickness="1.6" 
++- 			radLength="159.225"
++-@@ -84,7 +84,7 @@
++- 	<!--pALPIDEfs Plane 4 -->
++- 	<layer>
++- 	  <ladder 	ID="4" 
++--			positionX="0"		positionY="0"		positionZ="104.4" 
++-+			positionX="0"		positionY="0"		positionZ="78.4" 
++- 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++- 			sizeX="28.672"		sizeY="14.336"		thickness="1.6" 
++- 			radLength="159.225"
++-@@ -102,7 +102,7 @@
++- 	<!--pALPIDEfs Plane 5 -->
++- 	<layer>
++- 	  <ladder 	ID="5" 
++--	  		positionX="0"		positionY="0"		positionZ="124.1" 
++-+	  		positionX="0"		positionY="0"		positionZ="98" 
++- 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++- 			sizeX="28.672"		sizeY="14.336"		thickness="1.6" 
++- 			radLength="159.225"
++-@@ -120,7 +120,7 @@
++- 	<!--pALPIDEfs Plane 6 -->
++- 	<layer>
++- 	  <ladder 	ID="6" 
++--			positionX="0"		positionY="0"		positionZ="143.8" 
++-+			positionX="0"		positionY="0"		positionZ="117,6" 
++- 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++- 			sizeX="28.672"	sizeY="14.336"	thickness="1.6" 
++- 			radLength="159.225"
++-@@ -138,4 +138,4 @@
++-       </layers>
++-     </detector>
++-   </detectors>
++--</gear>
++-+</gear>	
++-diff --git a/jobsub/examples/pALPIDEfs/gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml b/jobsub/examples/pALPIDEfs/gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml
++-new file mode 100644
++-index 0000000..4901843
++---- /dev/null
++-+++ b/jobsub/examples/pALPIDEfs/gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml
++-@@ -0,0 +1,141 @@
++-+<gear>
++-+  <!--GEAR file for ITS upgrade pALPIDEfs usual setup (18 mm spacers between layers, meaning 19.6 mm distance not including material of carrier card) -->
++-+  <global detectorName="EUTelescope"/>
++-+  <BField type="ConstantBField" x="0.0" y="0.0" z="0.0"/>
++-+  <detectors>
++-+    <detector name="SiPlanes" geartype="SiPlanesParameters">
++-+      <siplanesID ID="0"/>
++-+      <siplanesType type="TelescopeWithoutDUT"/>
++-+      <siplanesNumber number="1"/>
++-+      <!-- z along beam -->
++-+      <layers>
++-+	<!--pALPIDEfs Plane 0 -->
++-+	<layer>
++-+	  <ladder 	ID="0" 
++-+			positionX="0.00"	positionY="0.00"	positionZ="0" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"		thickness="0.432" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="0" 
++-+			positionX="0.00"	positionY="0.00"	positionZ="0" 
++-+			sizeX="29.94176"	sizeY="13.76256"		thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.02924"	pitchY="0.02688" 		resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 1 -->
++-+	<layer>
++-+	  <ladder 	ID="1" 
++-+			positionX="0"		positionY="0"		positionZ="20.0" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"		thickness="0.032" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="1" 
++-+			positionX="0"		positionY="0"		positionZ="20.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"		thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.02924"	pitchY="0.02688" 		resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 2 -->
++-+	<layer>
++-+	  <ladder 	ID="2" 
++-+			positionX="0"		positionY="0"		positionZ="40.0" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"		thickness="0.032" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="2" 
++-+			positionX="0"		positionY="0"		positionZ="40.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"		thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.02924"	pitchY="0.02688" 		resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 3 -->
++-+	<layer>
++-+	  <ladder 	ID="3" 
++-+			positionX="0"		positionY="0"		positionZ="60.0" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"		thickness="0.032" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="3" 
++-+			positionX="0"   	positionY="0"		positionZ="60.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"		thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.02924"	pitchY="0.02688" 		resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 4 -->
++-+	<layer>
++-+	  <ladder 	ID="4" 
++-+			positionX="0"		positionY="0"		positionZ="80.0" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"	thickness="0.032" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="4" 
++-+			positionX="0"		positionY="0"		positionZ="80.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"	thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.02924"	pitchY="0.02688"	resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 5 -->
++-+	<layer>
++-+	  <ladder 	ID="5" 
++-+			positionX="0"		positionY="0"		positionZ="100.0" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"	thickness="0.032" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="5" 
++-+			positionX="0"		positionY="0"		positionZ="100.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"	thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.02924"	pitchY="0.02688"	resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 6 -->
++-+	<layer>
++-+	  <ladder 	ID="6" 
++-+			positionX="0"		positionY="0"		positionZ="120.0" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"	thickness="0.432" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="6" 
++-+			positionX="0"		positionY="0"		positionZ="120.0" 
++-+			sizeX="29.94176"	sizeY="13.76256"	thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.02924"	pitchY="0.02688"	resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+      </layers>
++-+    </detector>
++-+  </detectors>
++-+</gear>
++-diff --git a/jobsub/examples/pALPIDEfs/gear_pALPIDEfs_example_withoutCarrierMaterial.xml b/jobsub/examples/pALPIDEfs/gear_pALPIDEfs_example_withoutCarrierMaterial.xml
++-new file mode 100644
++-index 0000000..3ed9404
++---- /dev/null
++-+++ b/jobsub/examples/pALPIDEfs/gear_pALPIDEfs_example_withoutCarrierMaterial.xml
++-@@ -0,0 +1,141 @@
++-+<gear>
++-+  <!--GEAR file for ITS upgrade pALPIDEfs usual setup (18 mm spacers between layers, meaning 19.6 mm distance not including material of carrier card) -->
++-+  <global detectorName="EUTelescope"/>
++-+  <BField type="ConstantBField" x="0.0" y="0.0" z="0.0"/>
++-+  <detectors>
++-+    <detector name="SiPlanes" geartype="SiPlanesParameters">
++-+      <siplanesID ID="0"/>
++-+      <siplanesType type="TelescopeWithoutDUT"/>
++-+      <siplanesNumber number="7"/>
++-+      <!-- z along beam -->
++-+      <layers>
++-+	<!--pALPIDEfs Plane 0 -->
++-+	<layer>
++-+	  <ladder 	ID="0" 
++-+			positionX="0.00"	positionY="0.00"	positionZ="0" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.432" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="0" 
++-+			positionX="0.00"	positionY="0.00"	positionZ="0" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 1 -->
++-+	<layer>
++-+	  <ladder 	ID="1" 
++-+			positionX="0"		positionY="0"		positionZ="19.6" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.032" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="1" 
++-+			positionX="0"		positionY="0"		positionZ="19.6" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 2 -->
++-+	<layer>
++-+	  <ladder 	ID="2" 
++-+			positionX="0"		positionY="0"		positionZ="39.2" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.032" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="2" 
++-+			positionX="0"		positionY="0"		positionZ="39.2" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 3 -->
++-+	<layer>
++-+	  <ladder 	ID="3" 
++-+			positionX="0"		positionY="0"		positionZ="58.8" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.032" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="3" 
++-+			positionX="0"   	positionY="0"		positionZ="58.8" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 4 -->
++-+	<layer>
++-+	  <ladder 	ID="4" 
++-+			positionX="0"		positionY="0"		positionZ="78.4" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.032" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="4" 
++-+			positionX="0"		positionY="0"		positionZ="78.4" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 5 -->
++-+	<layer>
++-+	  <ladder 	ID="5" 
++-+			positionX="0"		positionY="0"		positionZ="98" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.032" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="5" 
++-+			positionX="0"		positionY="0"		positionZ="98" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+	<!--pALPIDEfs Plane 6 -->
++-+	<layer>
++-+	  <ladder 	ID="6" 
++-+			positionX="0"		positionY="0"		positionZ="117.6" 
++-+			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.432" 
++-+			radLength="93.660734"
++-+			/>
++-+	  <sensitive 	ID="6" 
++-+			positionX="0"		positionY="0"		positionZ="117.6" 
++-+			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++-+			npixelX="1024"		npixelY="512"
++-+			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++-+			rotation1="-1.0"	rotation2="0.0"
++-+			rotation3="0.0" 	rotation4="-1.0" 
++-+			radLength="93.660734"
++-+			/>
++-+	</layer>
++-+      </layers>
++-+    </detector>
++-+  </detectors>
++-+</gear>
++-diff --git a/jobsub/examples/pALPIDEfs/runlist_example.csv b/jobsub/examples/pALPIDEfs/runlist_example.csv
++-index 9ce8afd..8cc2900 100644
++---- a/jobsub/examples/pALPIDEfs/runlist_example.csv
++-+++ b/jobsub/examples/pALPIDEfs/runlist_example.csv
++-@@ -1,2 +1,3 @@
++- RunNumber,BeamEnergy,GearGeoFile,DUTNumbers,ChipIDs,IrradiationLevel,Rate
++--23,6.0,gear_pALPIDEfs3_example_withCarrierMaterial_data.xml,3,W1-18 W2-27 W6-39 W9-16 W6-14 W2-23 W1-17,0 0 0 0 0 0 0,PS
++-+6073,6.0,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,0,W1-18,0,PS
++-+
++-diff --git a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clustering-tmp.xml b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clustering-tmp.xml
++-index 710b97e..c9a99a8 100644
++---- a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clustering-tmp.xml
++-+++ b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clustering-tmp.xml
++-@@ -148,6 +148,7 @@ Available types of the data format:
++-   <parameter name="SparseClusterCut" type="float" value="0.0"/>
++-   <!--Minimum distance between sparsified pixel ( touching == sqrt(2)) -->
++-   <parameter name="SparseMinDistance" type="float" value="1"/>
++-+  <parameter name="SparseMinDistanceSquared" type="float" value="4"/>
++-   <!--Threshold in SNR for seed pixel contained in ZS data-->
++-   <parameter name="SparseSeedCut" type="float" value="0.0"/>
++-   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
++-diff --git a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/hotpixel-tmp.xml b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/hotpixel-tmp.xml
++-index 77ff7ce..669dd45 100644
++---- a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/hotpixel-tmp.xml
++-+++ b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/hotpixel-tmp.xml
++-@@ -64,14 +64,14 @@
++-     <!--This float number [0,1] represents the maximum allowed firing frequency
++-          within the selected number of event per cycle-->
++-   <!--parameter name="MaxAllowedFiringFreq" type="float" value="1"/-->
++--  <!--parameter name="MaxAllowedFiringFreq" type="float" value="0.001"/-->
++-+  <!--parameter name="MaxAllowedFiringFreq" type="float" value="0.01"/-->
++-   <parameter name="MaxAllowedFiringFreq" type="float" value="@MaxAllowedFiringFreq@"/>
++-     <!--The number of events to be considered for each update cycle-->
++-   <parameter name="NoOfEvents" type="int" value="@nEventsForHotpixel@"/>
++-     <!--The total number of hot pixel cycle-->
++- <!--  <parameter name="TotalNoOfCycle" type="int" value="0"/> -->
++-     <!--The sensorID for the generated collection (one per detector)-->
++--  <parameter name="SensorIDVec" type="IntVec"> 0 1 2 3 4 5 6 </parameter>
++-+  <parameter name="SensorIDVec" type="IntVec"> 0 </parameter>
++-     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
++-   <parameter name="Verbosity" type="string" value="MESSAGE6"/>
++- </processor>
++-diff --git a/processors/include/EUTelProcessorClusterAnalysis.h b/processors/include/EUTelProcessorClusterAnalysis.h
++-index 5ad63a3..d585de0 100644
++---- a/processors/include/EUTelProcessorClusterAnalysis.h
++-+++ b/processors/include/EUTelProcessorClusterAnalysis.h
++-@@ -55,6 +55,7 @@ protected:
++-   int _nNoiseMaskClusters;
++-   int _nDeadColumnClusters;
++-   int _sectorWidth;
++-+  int _chipVersion;
++-   double _energy;
++-   EVENT::StringVec _chipID;
++-   EVENT::StringVec _irradiation;
++-@@ -79,10 +80,14 @@ private:
++-   int _nLayer;
++-   int _xPixel;
++-   int _yPixel;
++-+	int _sparseMinDistanceSquaredComparison;
++-   std::map<int,TH1I*> clusterWidthXHisto;
++-   std::map<int,TH1I*> clusterWidthYHisto;
++-   std::map<int,TH1I*> clusterSizeHisto;
++-   TH1I* timeStampHisto;
++-+  TH1I* GeneratedClustersHisto;
++-+  TH1I* MissingClusterHisto;
++-+  TH1I* HowManyClusterGeneratedFromOneCluster;
++-   TH2I* hotpixelHisto;
++-   TH2I* deadColumnHisto;
++-   TH2I* circularClusterHistos;
++-diff --git a/processors/src/EUTelClusterSeparationProcessor.cc b/processors/src/EUTelClusterSeparationProcessor.cc
++-index 3390364..01edef8 100644
++---- a/processors/src/EUTelClusterSeparationProcessor.cc
++-+++ b/processors/src/EUTelClusterSeparationProcessor.cc
++-@@ -52,6 +52,7 @@ EUTelClusterSeparationProcessor::EUTelClusterSeparationProcessor () :Processor("
++-                            "Cluster collection name ",
++-                            _clusterCollectionName, string ("cluster"));
++- 
++-+
++-   // and the output collection
++-   registerOutputCollection (LCIO::TRACKERPULSE, "ClusterOutputCollectionName",
++-                             "Cluster output collection name",
++-@@ -100,6 +101,7 @@ void EUTelClusterSeparationProcessor::processEvent (LCEvent * event) {
++- 
++-   LCCollectionVec * clusterCollectionVec;
++- 
++-+
++-   try {
++-     clusterCollectionVec  =  dynamic_cast <LCCollectionVec *> (evt->getCollection(_clusterCollectionName));
++-   } catch (lcio::DataNotAvailableException& e ) {
++-diff --git a/processors/src/EUTelClusteringProcessor.cc b/processors/src/EUTelClusteringProcessor.cc
++-index f3cfecd..069ddce 100644
++---- a/processors/src/EUTelClusteringProcessor.cc
++-+++ b/processors/src/EUTelClusteringProcessor.cc
++-@@ -67,6 +67,7 @@ using namespace marlin;
++- using namespace eutelescope;
++- 
++- static const int  MAXCLUSTERSIZE = 4096;
++-+int akosexample=0;
++- 
++- 
++- EUTelClusteringProcessor::EUTelClusteringProcessor ()
++-@@ -213,6 +214,8 @@ EUTelClusteringProcessor::EUTelClusteringProcessor ()
++- 
++-     registerProcessorParameter("SparseMinDistanceSquared","Minimum distance squared between sparsified pixel ( touching == 2) ",
++-                                _sparseMinDistanceSquared, static_cast<int>(2) );
++-+	//_sparseMinDistanceSquared=4;
++-+    cout<<"_sparseMinDistanceSquared: "<<_sparseMinDistanceSquared<<endl;
++- 
++-     registerProcessorParameter("SparseMinDistance","Minimum distance between sparsified pixel ( touching == sqrt(2)) ",
++-                                _sparseMinDistance, static_cast<float > (0.0 ) );
++-@@ -2029,6 +2032,11 @@ void EUTelClusteringProcessor::sparseClustering(LCEvent* evt, LCCollectionVec* p
++-                         dY = y1 - y2;
++-                         int distance = dX*dX+dY*dY;
++-                         //if they pass the spatial and temporal cuts, we add them
++-+			if(akosexample==0)
++-+			{
++-+			cout<<"_sparseMinDistanceSquared(in real): "<<_sparseMinDistanceSquared<<endl;
++-+			akosexample++;
++-+			}
++-                         if( distance <= _sparseMinDistanceSquared )
++-                         {
++-                             //add them to the cluster as well as to the newly added ones
++-@@ -3370,6 +3378,7 @@ void EUTelClusteringProcessor::bookHistos() {
++-         _hitMapHistos.insert(make_pair(sensorID, hitMapHisto));
++-         hitMapHisto->setTitle("Hit map");
++- 
++-+
++-         tempHistoName = _eventMultiplicityHistoName + "_d" + to_string( sensorID );
++-         int     eventMultiNBin  = 60;
++-         double  eventMultiMin   =  0.;
++-diff --git a/processors/src/EUTelProcessorClusterAnalysis.cc b/processors/src/EUTelProcessorClusterAnalysis.cc
++-index 0b37868..d8aae37 100644
++---- a/processors/src/EUTelProcessorClusterAnalysis.cc
++-+++ b/processors/src/EUTelProcessorClusterAnalysis.cc
++-@@ -58,7 +58,9 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
++-   _hotPixelCollectionName(""),
++-   _nLayer(0),
++-   _xPixel(),
++--  _yPixel()
++-+  _yPixel(),
++-+  _chipVersion(4),
++-+  _sparseMinDistanceSquaredComparison(1)
++- 
++-   {
++-     _description="Analysing cluster properties such as cluster shape and average cluster size.";
++-@@ -97,15 +99,27 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
++-                              _irradiation, _stringVecExample );
++-     registerOptionalParameter("Rate","Data taking rate",
++-                              _rate, static_cast< string > ( "" ) );
++-+  registerOptionalParameter("ChipVersion", "Chip Version",
++-+                            _chipVersion, static_cast<int>(4) );
++-     _isFirstEvent = true;
++-   }
++- 
++- void EUTelProcessorClusterAnalysis::init() {
++-   _nLayer = geo::gGeometry().nPlanes();
++-   const std::vector<int>& _planeID = geo::gGeometry().sensorIDsVec();
++-+cout<<"Here I am."<<endl;
++-+
++-+cout<<_dutID<<endl;
++-   for(int iz=0; iz < _nLayer ; iz++)
++- 	  if(_planeID[iz]==_dutID)
++- 		  _layerIndex = iz;
++-+  if (_chipVersion < 3)     _nSectors = 4;
++-+  else if (_chipVersion==3) _nSectors = 8;
++-+  else if (_chipVersion==5) _nSectors = 4;
++-+  else                      _nSectors = 1;
++-+cout<<"Here I am."<<endl;
++-+cout<<_chipVersion<<endl;
++-+cout<<_nSectors<<endl;
++-  
++-   //beware, sometimes dutID is 3, sometimes it is 6
++-   int iLayer = _dutID;
++-@@ -320,6 +334,138 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
++- 					pix.push_back(Y[iPixel]);
++- 					pixVector.push_back(pix);
++- 				}
++-+
++-+				//This part is to analysis the effect of the distance square between the pixels in one cluste
++-+				if(true)
++-+				{		
++-+					bool samecluster(true);
++-+					int howmanyclustergeneratedfromonecluster(0);
++-+					int AllGeneratedPixel(0);
++-+					int AllMissingPixel(0);
++-+
++-+					//Cluster mycluster;
++-+			
++-+           				std::vector<EUTelGenericSparsePixel> hitPixelVec = sparseData.getPixels();
++-+
++-+				        std::vector<EUTelGenericSparsePixel> newlyAdded;
++-+
++-+					int firsthclustersize=hitPixelVec.size();
++-+			 	        //We now cluster those hits together
++-+            				while( !hitPixelVec.empty() )
++-+            				{
++-+
++-+	
++-+                				std::vector<EUTelGenericSparsePixel> cluCandidate;
++-+
++-+                				//First we need to take any pixel, so let's take the first one
++-+                				//Add it to the cluster as well as the newly added pixels
++-+                				newlyAdded.push_back( hitPixelVec.front() );
++-+                				//sparseCluster->push_back( &(hitPixelVec.front()) );
++-+                				cluCandidate.push_back( hitPixelVec.front() );
++-+                				//And remove it from the original collection
++-+                				hitPixelVec.erase( hitPixelVec.begin() );
++-+
++-+                				//Now process all newly added pixels, initially this is the just previously added one
++-+                				//but in the process of neighbour finding we continue to add new pixels
++-+                				while( !newlyAdded.empty() )
++-+                				{
++-+                    					bool newlyDone = true;
++-+                    					int  x1, x2, y1, y2, dX, dY;
++-+
++-+                    					//check against all pixels in the hitPixelVec
++-+                    					for( std::vector<EUTelGenericSparsePixel>::iterator hitVec = hitPixelVec.begin(); hitVec != hitPixelVec.end(); ++hitVec )
++-+                    					{
++-+      		                  				//get the relevant infos from the newly added pixel
++-+                	        				x1 = newlyAdded.front().getXCoord();
++-+                	        				y1 = newlyAdded.front().getYCoord();
++-+	
++-+                	        				//and the pixel we test against
++-+                	        				x2 = hitVec->getXCoord();
++-+                	        				y2 = hitVec->getYCoord();
++-+	
++-+                	        				dX = x1 - x2;
++-+                	        				dY = y1 - y2;
++-+                	        				int distance = dX*dX+dY*dY;
++-+                	        				//if they pass the spatial and temporal cuts, we add them
++-+	
++-+                	        				if( distance <= _sparseMinDistanceSquaredComparison )
++-+                	        				{
++-+                		            				//add them to the cluster as well as to the newly added ones
++-+                		           				newlyAdded.push_back( *hitVec );
++-+                		            				cluCandidate.push_back( *hitVec );
++-+                		          				//	sparseCluster->push_back( &(*hitVec) );
++-+                		            				//and remove it from the original collection
++-+                		            				hitPixelVec.erase( hitVec );
++-+                		            				//for the pixel we test there might be other neighbours, we still have to check
++-+                		            				newlyDone = false;
++-+                		            				break;
++-+                		        			}
++-+                		    			}
++-+
++-+       						        //if no neighbours are found, we can delete the pixel from the newly added
++-+					                //we tested against _ALL_ non cluster pixels, there are no other pixels
++-+ 					                //which could be neighbours
++-+                					if(newlyDone) 
++-+							{
++-+								newlyAdded.erase( newlyAdded.begin() );
++-+							}
++-+             					}
++-+
++-+						if(firsthclustersize!=cluCandidate.size())
++-+						{
++-+							samecluster=false;
++-+							howmanyclustergeneratedfromonecluster++;
++-+							AllGeneratedPixel+=cluCandidate.size();
++-+							GeneratedClustersHisto->Fill(cluCandidate.size());
++-+							//cout<<"I filled GeneratedClustersHisto with: "<<cluCandidate.size()<<endl;
++-+						}
++-+						/*
++-+						vector<int> X(clusterSize);
++-+						vector<int> Y(clusterSize);
++-+
++-+  						int iforX=0;
++-+                				while(!cluCandidate.empty())
++-+                				{
++-+							X[iforX]=cluCandidate.fornt()..getXCoord();
++-+							Y[iforX]=cluCandidate.fornt()..getYCoord();
++-+                    					cluCandidate.erase( cluCandidate.begin() );
++-+							iforX++;
++-+                				}
++-+
++-+						mycluster.set_values(clusterSize,X,Y);
++-+						*/
++-+
++-+					}
++-+			
++-+
++-+					if(!samecluster)
++-+					{
++-+						MissingClusterHisto->Fill(firsthclustersize);
++-+						HowManyClusterGeneratedFromOneCluster->Fill(howmanyclustergeneratedfromonecluster);
++-+						howmanyclustergeneratedfromonecluster=0;
++-+						AllMissingPixel=firsthclustersize;
++-+						//cout<<"I filled MissingClusterHisto with: "<<firsthclustersize<<endl;
++-+					}
++-+
++-+					//cout<<"I have done the "<<idetector<<"th cluster"<<endl;
++-+
++-+					if(AllGeneratedPixel!=AllMissingPixel)
++-+					{
++-+						cout<<"ERROR: AllMissingPixel!=AllMissingPixel"<<endl;
++-+						cout<<"AllMissingPixel: "<<AllMissingPixel<<endl;
++-+						cout<<"AllGeneratedPixel: "<<AllGeneratedPixel<<endl;
++-+					}
++-+					AllMissingPixel=0;
++-+					AllGeneratedPixel=0;
++-+				}
++-+
++-+
++-+				//The end of the part folr distance analysis
++-+
++-+
++-+
++-+
++-+
++- 				streamlog_out ( DEBUG5 ) << "This is a DEBUG output to see whether the program gets here. The number X[0] is " << X[0] << " and _sectorWidth is " << _sectorWidth << endl; 
++- 				//now, since all pixels are from the same sector, the sector number can be set.
++- 				int index = X[0]/_sectorWidth;
++-@@ -390,11 +536,14 @@ void EUTelProcessorClusterAnalysis::bookHistos()
++-       AIDAProcessor::tree(this)->mkdir(Form("Sector_%d",iSector));
++-       AIDAProcessor::tree(this)->cd(Form("Sector_%d",iSector));
++- 
++--      clusterWidthXHisto[iSector]  = new TH1I(Form("clusterWidthXHisto_%d",iSector),Form("Cluster width in X in sector %d;Cluster width X (pixel);a.u.",iSector),15,0.5,15.5);
++--      clusterWidthYHisto[iSector]  = new TH1I(Form("clusterWidthYHisto_%d",iSector),Form("Cluster width in Y in sector %d;Cluster width Y (pixel);a.u.",iSector),15,0.5,15.5);
++--      clusterSizeHisto[iSector]  = new TH1I(Form("clusterSizeHisto_%d",iSector),Form("Cluster size_%d;Cluster size (pixel);a.u.",iSector),20,0.5,20.5);
++-+      clusterWidthXHisto[iSector]  = new TH1I(Form("clusterWidthXHisto_%d",iSector),Form("Cluster width in X in sector %d;Cluster width X (pixel);a.u.",iSector),50,0.5,50.5);
++-+      clusterWidthYHisto[iSector]  = new TH1I(Form("clusterWidthYHisto_%d",iSector),Form("Cluster width in Y in sector %d;Cluster width Y (pixel);a.u.",iSector),50,0.5,50.5);
++-+      clusterSizeHisto[iSector]  = new TH1I(Form("clusterSizeHisto_%d",iSector),Form("Cluster size_%d;Cluster size (pixel);a.u.",iSector),200,0.5,200.5);
++-       clusterShapeHistoSector[iSector] = new TH1I(Form("clusterShapeHisto_%d",iSector),Form("Cluster shape (all rotations separately) Sector %d;Cluster shape ID;a.u.",iSector),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
++-       clusterShapeHistoGroupedSector[iSector] = new TH1I(Form("clusterShapeHistoGrouped_%d",iSector),Form("Cluster shape (all rotations treated together) Sector %d;Cluster shape ID;a.u.",iSector),symmetryGroups.size(),-0.5,symmetryGroups.size()-0.5);
++-+      GeneratedClustersHisto = new TH1I(Form("GeneratedClustersHisto"),Form("GeneratedClustersHisto;Cluster size (pixel);a.u."),200,0.5,200.5); 
++-+      MissingClusterHisto = new TH1I(Form("MissingClusterHisto"),Form("MissingClusterHisto;Cluster size (pixel);a.u."),200,0.5,200.5);
++-+      HowManyClusterGeneratedFromOneCluster = new TH1I(Form("HowManyClusterGeneratedFromOneCluster"),Form("HowManyClusterGeneratedFromOneCluster;Cluster size (pixel);a.u."),20,0.5,20.5);
++-     }
++-   streamlog_out ( DEBUG5 )  << "end of Booking histograms " << endl;
++- }
++diff --git a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clusterAnalysis-tmp.xml b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clusterAnalysis-tmp.xml
++index 7618721..fdd6caf 100644
++--- a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clusterAnalysis-tmp.xml
+++++ b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clusterAnalysis-tmp.xml
++@@ -108,21 +108,6 @@
++   <!--Data taking rate-->
++   <parameter name="Rate" type="string" value="@Rate@"/>
++   <!--parameter name="Verbosity" type="string" value="DEBUG"/-->
++-  <!--I_Need_Distance_Square_Analysis-->
++-  <parameter name="I_Need_Distance_Square_Analysis" type="bool" value="false"/>
++-  <!--I_Need_Empty_Middle_Analysis-->
++-  <parameter name="I_Need_Empty_Middle_Analysis" type="bool" value="false"/>
++-  <!--I_Need_Plote_Size_Cut_Hitmap-->
++-  <parameter name="I_Need_Plote_Size_Cut_Hitmap" type="bool" value="false"/>
++-  <!--I_Need_Plot_Example_Events-->
++-  <parameter name="I_Need_Plot_Example_Events" type="bool" value="false"/>
++-  <!--I_Need_Fireing_Probability_Analysis-->
++-  <parameter name="I_Need_Fireing_Probability_Analysis" type="bool" value="true"/>
++-  <!--I_Need_How_Many_Pixels_Fire_In_An_Event-->
++-  <parameter name="I_Need_How_Many_Pixels_Fire_In_An_Event" type="bool" value="true"/>
++-  <!--_sparseMinDistanceSquaredComparison-->
++-  <parameter name="_sparseMinDistanceSquaredComparison" type="int" value="1"/>
++-
++ </processor>
++ 
++ <processor name="MyEUTelUtilityPrintEventNumber" type="EUTelUtilityPrintEventNumber">
++diff --git a/processors/include/EUTelProcessorClusterAnalysis.h b/processors/include/EUTelProcessorClusterAnalysis.h
++index 2712b0f..3d3daac 100644
++--- a/processors/include/EUTelProcessorClusterAnalysis.h
+++++ b/processors/include/EUTelProcessorClusterAnalysis.h
++@@ -58,11 +58,6 @@ protected:
++   int _chipVersion;
++   int _numberofGeneratedInterestingCluster;
++   int _numberofMissingInterestingCluster;
++-  int _number_emptyMiddle;
++-  int cuttingSize;
++-  int numberRandomEvent;
++-  int number_fireing_event;
++-  std::vector<std::vector<int>>before_event_memory;
++   double _energy;
++   EVENT::StringVec _chipID;
++   EVENT::StringVec _irradiation;
++@@ -73,12 +68,6 @@ protected:
++   bool _noiseMaskAvailable;
++   bool _deadColumnAvailable;
++   bool samecluster;
++-  bool I_Need_Distance_Square_Analysis;
++-  bool I_Need_Empty_Middle_Analysis;
++-  bool I_Need_Plote_Size_Cut_Hitmap;
++-  bool I_Need_Plot_Example_Events;
++-  bool I_Need_Fireing_Probability_Analysis;
++-  bool I_Need_How_Many_Pixels_Fire_In_An_Event;
++   std::string _hotPixelCollectionName;
++   std::string _deadColumnCollectionName;
++   std::string _noiseMaskFileName;
++@@ -101,25 +90,16 @@ private:
++   std::map<int,TH1I*> clusterSizeHisto;
++   std::map<int,TH2I*> GeneratedInterestingCluster;
++   std::map<int,TH2I*> MissingInterestingCluster;
++-  std::map<int,TH2I*> emptyMiddleClusters;
++-  std::map<int,TH2I*> RandomEvent;
++-  std::map<int,TH2I*> Double_Fireing_Events_Hitmap;
++   TH1I* timeStampHisto;
++   TH1I* GeneratedClustersHisto;
++   TH1I* MissingClusterHisto;
++   TH1I* HowManyClusterGeneratedFromOneCluster;
++   TH1I* GeneratedClusterShapeHisto;
++   TH1I* MissingClusterShapeHisto;
++-  TH1I* emptyMiddleClustersHisto;
++-  TH1I* NumberOfHits;
++-  TH1I* TypeOfTheEvent;
++   TH2I* hotpixelHisto;
++   TH2I* deadColumnHisto;
++   TH2I* circularClusterHistos;
++   TH2I* largeClusterHistos;
++-  TH2I* smallerClustersHitmap;
++-  TH2I* biggerClustersHitmap;
++-  TH2I* Fireing_Probability;
++   TH3I* clusterShapeMap;
++   std::map<int,TH1I*> clusterShapeHistoSector;
++   std::map<int,TH1I*> clusterShapeHistoGroupedSector;
++diff --git a/processors/src/EUTelProcessorAnalysisPALPIDEfs.cc b/processors/src/EUTelProcessorAnalysisPALPIDEfs.cc
++index afef2e0..40da419 100644
++--- a/processors/src/EUTelProcessorAnalysisPALPIDEfs.cc
+++++ b/processors/src/EUTelProcessorAnalysisPALPIDEfs.cc
++@@ -1814,182 +1814,36 @@ int EUTelProcessorAnalysisPALPIDEfs::AddressToRow(int AAddress)
++ 
++ bool EUTelProcessorAnalysisPALPIDEfs::emptyMiddle(vector<vector<int> > pixVector)
++ {
++-	int type_of_emptyMiddle=3;
++-
++-	if(type_of_emptyMiddle==1)
++-	{
++-		bool holeX = false;
++-		bool holeY = false;
++-		for (size_t i=0; i<pixVector.size(); i++)
++-	  {
++-	    bool touchingX = false;
++-	    bool lastX = true;
++-	    for (size_t j=0; j<pixVector.size(); j++)
++-	    {
++-	      if (i==j) continue;
++-	      if (pixVector[i][1] != pixVector[j][1]) continue;
++-	      if (pixVector[i][0]+1 == pixVector[j][0]) { touchingX = true; break;}
++-	      if (pixVector[i][0] <  pixVector[j][0]) { lastX  = false;}
++-	    }
++-	    if (!touchingX && !lastX) { holeX = true; break;}
++-	  }
++-	  for (size_t i=0; i<pixVector.size(); i++)
++-	  {
++-	    bool touchingY = false;
++-	    bool lastY = true;
++-	    for (size_t j=0; j<pixVector.size(); j++)
++-	    {
++-	      if (i==j) continue;
++-	      if (pixVector[i][0] != pixVector[j][0]) continue;
++-	      if (pixVector[i][1]+1 == pixVector[j][1]) { touchingY = true; break;}
++-	      if (pixVector[i][1] <  pixVector[j][1]) { lastY  = false;}
++-	    }
++-	    if (!touchingY && !lastY) { holeY = true; break;}
++-	  }
++-	  if (holeX && holeY) return true;
++-	  else return false;
++-	}
++-
++-
++-	if(type_of_emptyMiddle==2)
++-	{
++-	  int xMax=0, yMax=0, xMin=10000, yMin=10000;
++-	  bool higherX=false, lowerX=false, higherY=false, lowerY=false;
++-	
++-	  for (size_t i=0; i<pixVector.size(); i++)
++-	  {
++-			if(pixVector[i][0]>xMax) xMax=pixVector[i][0];
++-			if(pixVector[i][0]<xMin) xMin=pixVector[i][0];
++-			if(pixVector[i][1]>yMax) yMax=pixVector[i][1];
++-			if(pixVector[i][1]<yMin) yMin=pixVector[i][1];
++-		}
++-	
++-	//cout<<"xMax: "<<xMax<<"xMin: "<<xMin<<"yMax: "<<yMax<<"yMin: "<<yMin<<endl;
++-		bool stop=false;
++-		for(int i=xMin; i<=xMax&&!stop; i++)
++-		{
++-			for(int j=yMin; j<=yMax&&!stop;j++)
++-			{
++-			higherX=false; lowerX=false; higherY=false; lowerY=false;
++-				for(int n=0; n<pixVector.size();n++)
++-				{
++-					if(pixVector[n][0]==i&&pixVector[n][1]==j) { higherX=false; lowerX=false; higherY=false; lowerY=false; break; }
++-					if(pixVector[n][0]==i&&pixVector[n][1]<j) lowerY=true;
++-					if(pixVector[n][0]==i&&pixVector[n][1]>j) higherY=true;
++-					if(pixVector[n][0]<i&&pixVector[n][1]==j) lowerX=true;
++-					if(pixVector[n][0]>i&&pixVector[n][1]==j) higherX=true;
++-				}
++-				if(higherX&&lowerX&&higherY&&lowerY) stop=true;
++-			}
++-		}
++-	if(higherX && lowerX && higherY && lowerY) return true;
++-	else return false;
++-	}
++-
++-
++-	if(type_of_emptyMiddle==3)
++-	{
++-
++-
++-           	std::vector<EUTelGenericSparsePixel> hitPixelVec;
++-
++-	        std::vector<EUTelGenericSparsePixel> newlyAdded;
++-
++-		//int firsthclustersize=hitPixelVec.size();
++-		int xMax=0, yMax=0, xMin=10000, yMin=10000;
++-		for (size_t i=0; i<pixVector.size(); i++)
++-		{
++-			if(pixVector[i][0]>xMax) xMax=pixVector[i][0];
++-			if(pixVector[i][0]<xMin) xMin=pixVector[i][0];
++-			if(pixVector[i][1]>yMax) yMax=pixVector[i][1];
++-			if(pixVector[i][1]<yMin) yMin=pixVector[i][1];
++-		}
++-		for(int n=xMin-1; n<=xMax+1; n++)
++-		{
++-			for(int m=yMin-1; m<=yMax+1; m++)
++-			{
++-				bool empty_pixel=true;
++-				for (size_t i=0; i<pixVector.size(); i++)
++-				{
++-					if(n==pixVector[i][0]&&m==pixVector[i][1]) { empty_pixel=false; break; }
++-				}
++-				if(empty_pixel)
++-				{
++-					EUTelGenericSparsePixel pixel;
++-					pixel.setXCoord(n);
++-					pixel.setYCoord(m);
++-					hitPixelVec.push_back(pixel);
++-				}
++-			}
++-		}
++-	
++-	        //We now cluster those hits together
++-		//while( !hitPixelVec.empty() )
++-            	{
++-
++-	
++-                	std::vector<EUTelGenericSparsePixel> cluCandidate;
++-
++-                	//First we need to take any pixel, so let's take the first one
++-                	//Add it to the cluster as well as the newly added pixels
++-                	newlyAdded.push_back( hitPixelVec.front() );
++-                	//sparseCluster->push_back( &(hitPixelVec.front()) );
++-                	cluCandidate.push_back( hitPixelVec.front() );
++-                	//And remove it from the original collection
++-                	hitPixelVec.erase( hitPixelVec.begin() );
++-
++-                	//Now process all newly added pixels, initially this is the just previously added one
++-                	//but in the process of neighbour finding we continue to add new pixels
++-                	while( !newlyAdded.empty() )
++-                	{
++-                    		bool newlyDone = true;
++-                    		int  x1, x2, y1, y2, dX, dY;
++-
++-                    		//check against all pixels in the hitPixelVec
++-                    		for( std::vector<EUTelGenericSparsePixel>::iterator hitVec = hitPixelVec.begin(); hitVec != hitPixelVec.end(); ++hitVec )
++-                    		{
++-      		                  	//get the relevant infos from the newly added pixel
++-                	        	x1 = newlyAdded.front().getXCoord();
++-                	        	y1 = newlyAdded.front().getYCoord();
++-	
++-                	        	//and the pixel we test against
++-                	        	x2 = hitVec->getXCoord();
++-                	        	y2 = hitVec->getYCoord();
++-	
++-                	        	dX = x1 - x2;
++-                	        	dY = y1 - y2;
++-                	        	int distance = dX*dX+dY*dY;
++-                	        	//if they pass the spatial and temporal cuts, we add them
++-					
++-					int _sparseMinDistanceSquaredComparison=1;
++-                	        	if( distance <= _sparseMinDistanceSquaredComparison )
++-                	        	{
++-                		            	//add them to the cluster as well as to the newly added ones
++-                		           	newlyAdded.push_back( *hitVec );
++-                		            	cluCandidate.push_back( *hitVec );
++-                		          	//	sparseCluster->push_back( &(*hitVec) );
++-                		            	hitPixelVec.erase( hitVec );
++-                		            	//for the pixel we test there might be other neighbours, we still have to check
++-                		            	newlyDone = false;
++-                		            	break;
++-                		        }
++-                		}
++-
++-       				//if no neighbours are found, we can delete the pixel from the newly added
++-				//we tested against _ALL_ non cluster pixels, there are no other pixels
++- 				//which could be neighbours
++-                		if(newlyDone) 
++-				{
++-					newlyAdded.erase( newlyAdded.begin() );
++-				}
++-             		}
++-		}
++-		if( !hitPixelVec.empty() ) return true;
++-		else return false;
++-
++-
++-
++-	}
+++  bool holeX = false;
+++  bool holeY = false;
+++  for (size_t i=0; i<pixVector.size(); i++)
+++  {
+++    bool touchingX = false;
+++    bool lastX = true;
+++    for (size_t j=0; j<pixVector.size(); j++)
+++    {
+++      if (i==j) continue;
+++      if (pixVector[i][1] != pixVector[j][1]) continue;
+++      if (pixVector[i][0]+1 == pixVector[j][0]) {/*cerr << "Touching in x" << endl;*/ touchingX = true; break;}
+++      if (pixVector[i][0] <  pixVector[j][0]) {/*cerr << "Smaller in x"  << endl;*/ lastX  = false;}
+++    }
+++    if (!touchingX && !lastX) {/*cerr << "Hole in X" << endl;*/ holeX = true; break;}
+++  }
+++  for (size_t i=0; i<pixVector.size(); i++)
+++  {
+++    bool touchingY = false;
+++    bool lastY = true;
+++    for (size_t j=0; j<pixVector.size(); j++)
+++    {
+++      if (i==j) continue;
+++      if (pixVector[i][0] != pixVector[j][0]) continue;
+++      if (pixVector[i][1]+1 == pixVector[j][1]) {/*cerr << "Touching in y" << endl;*/ touchingY = true; break;}
+++      if (pixVector[i][1] <  pixVector[j][1]) {/*cerr << "Smaller in y"  << endl;*/ lastY  = false;}
+++    }
+++    if (!touchingY && !lastY) {/*cerr << "Hole in Y" << endl;*/ holeY = true; break;}
+++  }
+++  if (holeX && holeY) return true;
+++  else return false;
++ }
++ 
++ bool EUTelProcessorAnalysisPALPIDEfs::RemoveAlign(LCCollectionVec * preAlignmentCollectionVec, LCCollectionVec * alignmentCollectionVec, LCCollectionVec * alignmentPAlpideCollectionVec, double* fitpos, double& xposfit, double& yposfit)
++diff --git a/processors/src/EUTelProcessorClusterAnalysis.cc b/processors/src/EUTelProcessorClusterAnalysis.cc
++index e5982f4..f84ec09 100644
++--- a/processors/src/EUTelProcessorClusterAnalysis.cc
+++++ b/processors/src/EUTelProcessorClusterAnalysis.cc
++@@ -64,17 +64,7 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
++   _sparseMinDistanceSquaredComparison(1),
++   howmanypdf(0),
++   _numberofGeneratedInterestingCluster(0),
++-  _numberofMissingInterestingCluster(0),
++-  _number_emptyMiddle(0),
++-  cuttingSize(5),
++-  numberRandomEvent(0),
++-  I_Need_Distance_Square_Analysis(true),
++-  I_Need_Empty_Middle_Analysis(true),
++-  I_Need_Plote_Size_Cut_Hitmap(true),
++-  I_Need_Plot_Example_Events(true),
++-  I_Need_Fireing_Probability_Analysis(true),
++-  I_Need_How_Many_Pixels_Fire_In_An_Event(true),
++-  number_fireing_event(0)
+++  _numberofMissingInterestingCluster(0)
++ 
++ 
++   {
++@@ -116,30 +106,15 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
++                              _rate, static_cast< string > ( "" ) );
++   registerOptionalParameter("ChipVersion", "Chip Version",
++                             _chipVersion, static_cast<int>(4) );
++-  registerOptionalParameter("I_Need_Distance_Square_Analysis", "I Need Distance Square Analysis",
++-                            I_Need_Distance_Square_Analysis, static_cast<bool>(true) );
++-  registerOptionalParameter("I_Need_Empty_Middle_Analysis", "I Need Empty Middle Analysis",
++-                            I_Need_Empty_Middle_Analysis, static_cast<bool>(true) );
++-  registerOptionalParameter("I_Need_Plote_Size_Cut_Hitmap", "I Need Plote Size Cut Hitmap",
++-                            I_Need_Plote_Size_Cut_Hitmap, static_cast<bool>(true) );
++-  registerOptionalParameter("I_Need_Plot_Example_Events", "I Need Plot Example Events",
++-                            I_Need_Plot_Example_Events, static_cast<bool>(true) );
++-  registerOptionalParameter("I_Need_Fireing_Probability_Analysis", "I Need Fireing Probability Analysis",
++-                            I_Need_Fireing_Probability_Analysis, static_cast<bool>(true) );
++-  registerOptionalParameter("I_Need_How_Many_Pixels_Fire_In_An_Event", "I Need How Many Pixels Fire In An Event",
++-                            I_Need_How_Many_Pixels_Fire_In_An_Event, static_cast<bool>(true) );
++-  registerOptionalParameter("_sparseMinDistanceSquaredComparison", "Sparse Min Distance Squared Comparison",
++-                            _sparseMinDistanceSquaredComparison, static_cast<int>(1) );
++     _isFirstEvent = true;
++-
++   }
++ 
++ void EUTelProcessorClusterAnalysis::init() {
++   _nLayer = geo::gGeometry().nPlanes();
++   const std::vector<int>& _planeID = geo::gGeometry().sensorIDsVec();
++-//cout<<"Here I am."<<endl;
+++cout<<"Here I am."<<endl;
++ 
++-//cout<<_dutID<<endl;
+++cout<<_dutID<<endl;
++   for(int iz=0; iz < _nLayer ; iz++)
++ 	  if(_planeID[iz]==_dutID)
++ 		  _layerIndex = iz;
++@@ -147,9 +122,9 @@ void EUTelProcessorClusterAnalysis::init() {
++   else if (_chipVersion==3) _nSectors = 8;
++   else if (_chipVersion==5) _nSectors = 4;
++   else                      _nSectors = 1;
++-/*cout<<"Here I am."<<endl;
+++cout<<"Here I am."<<endl;
++ cout<<_chipVersion<<endl;
++-cout<<_nSectors<<endl;*/
+++cout<<_nSectors<<endl;
++  
++   //beware, sometimes dutID is 3, sometimes it is 6
++   int iLayer = _dutID;
++@@ -174,19 +149,8 @@ cout<<_nSectors<<endl;*/
++   settingsFile.open (_outputSettingsFileName.c_str(), ios::out | ios::app );
++   if (newFile) settingsFile << "Run number;Energy;Chip ID;Chip Version;Irradiation level(0-nonIrradiated,1-2.5e12,2-1e13,3-700krad,4-combined:1e13+700krad);Rate;BB;Ithr;Idb;Vcasn;Vcasn2;Vclip;Vcasp;VresetP;VresetD;Threshold and their RMS for all eight sectors;Noise and their RMS for all eight sectors;Readout delay;Trigger delay;Strobe length;StrobeB length;Data (1) or noise (0);Number of events;Efficiency,Number of tracks,Number of tracks with associated hit for all sectors" << endl;
++ 
++-	//cerr<<"I_Need_Distance_Square_Analysis: "<<I_Need_Distance_Square_Analysis<<endl<<"I_Need_Empty_Middle_Analysis: "<<I_Need_Empty_Middle_Analysis<<endl<<"I_Need_Plote_Size_Cut_Hitmap: "<<I_Need_Plote_Size_Cut_Hitmap<<endl<<"I_Need_Plot_Example_Events: "<<I_Need_Plot_Example_Events<<endl<<"I_Need_Fireing_Probability_Analysis: "<<I_Need_Fireing_Probability_Analysis<<endl<<"I_Need_How_Many_Pixels_Fire_In_An_Event: "<<I_Need_How_Many_Pixels_Fire_In_An_Event<<endl;
++-
++-
++ }
++ 
++-
++-
++-
++-EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
++-
++-
++-
++-
++ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
++ {
++ // INIT, DEAD COLOUMN AND HOT PIXEL CHECKS -----------------------------------------------------------------------------------------------------------------
++@@ -274,14 +238,8 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
++ 
++   if (_clusterAvailable)
++   {
++-	int numberOfHitsInAnEvent=0;
++-	int numberOfSmallClusters=0;
++-	int numberOfBigClusters=0;
++-	std::vector<std::vector<int>>event_memory;
++-//cerr<<"IDETECTOR"<<endl;
++ 	for ( size_t idetector=0 ; idetector<zsInputDataCollectionVec->size(); idetector++)
++ 	{
++-//cerr<<"idetector: "<<idetector<<endl;
++ 		CellIDDecoder<TrackerDataImpl> cellDecoder( zsInputDataCollectionVec );
++ 		TrackerDataImpl * zsData = dynamic_cast< TrackerDataImpl * > ( zsInputDataCollectionVec->getElementAt(idetector) );
++ 		SparsePixelType   type   = static_cast<SparsePixelType> ( static_cast<int> (cellDecoder( zsData )["sparsePixelType"]) );
++@@ -383,7 +341,7 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
++ 				}
++ 
++ 				//This part is to analysis the effect of the distance square between the pixels in one cluste
++-				if(I_Need_Distance_Square_Analysis)
+++				if(true)
++ 				{		
++ 					samecluster=true;
++ 					int howmanyclustergeneratedfromonecluster(0);
++@@ -561,84 +519,8 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
++ 
++ 				//The end of the part folr distance analysis
++ 
++-				//This par looking for holey clusters
++-
++-				//EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
++-
++-				if(I_Need_Empty_Middle_Analysis)
++-				{
++-					//The next line check, if the cluster empty middled
++-					if(mypalpide->emptyMiddle(pixVector))
++-					{
++-						//It fill, the holey clusters histo
++-						emptyMiddleClustersHisto->Fill(clusterSize);
++-						//It select holey clusters, to see them.
++-						int xMin = *min_element(X.begin(), X.end());
++-						int xMax = *max_element(X.begin(), X.end());
++-						int yMin = *min_element(Y.begin(), Y.end());
++-						int yMax = *max_element(Y.begin(), Y.end());
++-						int Xshift= (xMin+xMax)/2 - 50/2;
++-						int Yshift= (yMin+yMax)/2 - 50/2;
++-						for(int i_emptyMiddle=0; i_emptyMiddle<pixVector.size()&&_number_emptyMiddle<100; i_emptyMiddle++)
++-						{
++-							emptyMiddleClusters[_number_emptyMiddle]->Fill(pixVector[i_emptyMiddle][0]-Xshift, pixVector[i_emptyMiddle][1]-Yshift);
++-						}
++-						_number_emptyMiddle++;
++-					}
++-				}
++-
++-				//The end of the holey clusters part
++-
++-				//This plot the clusters withe a cut in size
++ 
++-				if(I_Need_Plote_Size_Cut_Hitmap)
++-				{
++-					if(pixVector.size()<cuttingSize) numberOfSmallClusters++;
++-					if(pixVector.size()>=cuttingSize) numberOfBigClusters++;
++-					for(int i_cuttingSize=0; pixVector.size()<cuttingSize&&i_cuttingSize<pixVector.size(); i_cuttingSize++)
++-					{
++-						smallerClustersHitmap->Fill(pixVector[i_cuttingSize][0], pixVector[i_cuttingSize][1]);
++-					}
++-
++-					for(int i_cuttingSize=0; pixVector.size()>=cuttingSize&&i_cuttingSize<pixVector.size(); i_cuttingSize++)
++-					{
++-						biggerClustersHitmap->Fill(pixVector[i_cuttingSize][0], pixVector[i_cuttingSize][1]);
++-					}
++-
++-				}
++-
++-				//This part to plot events to see, the events.
++-
++-				if(I_Need_Plot_Example_Events)
++-				{
++-					bool INeedThisEvent=false;
++-					int nRandomEvent=0;
++-					if(numberRandomEvent<10) { INeedThisEvent=true; nRandomEvent=numberRandomEvent; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
++-					if(numberRandomEvent>=1000000&&numberRandomEvent<1000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-1000000+10; cerr<<"I save the event: "<<numberRandomEvent<<" the number of plot: "<<nRandomEvent<<")"<<endl; }
++-					if(numberRandomEvent>=2000000&&numberRandomEvent<2000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-2000000+20; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
++-					if(numberRandomEvent>=3000000&&numberRandomEvent<3000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-3000000+30; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
++-					if(numberRandomEvent>=4000000&&numberRandomEvent<4000010) { INeedThisEvent=true; nRandomEvent=numberRandomEvent-4000000+40; cerr<<"I save the event: "<<numberRandomEvent<<" (the number of plot: "<<nRandomEvent<<")"<<endl; }
++-
++-					for(int nnRandomEvent=0; nnRandomEvent<pixVector.size()&&INeedThisEvent; nnRandomEvent++)
++-					{
++-						RandomEvent[nRandomEvent]->Fill(pixVector[nnRandomEvent][0], pixVector[nnRandomEvent][1]);
++-					}
++-				}
++-
++-
++-
++-				//This part is to analysis if a pixel fires, will it fire higher probability the nex event?
++-				
++-				if(I_Need_Fireing_Probability_Analysis)
++-				{
++-					for(int i_event_memory=0; i_event_memory<pixVector.size(); i_event_memory++)
++-					{					
++-						event_memory.push_back(pixVector[i_event_memory]);
++-					}
++-				}
++ 
++-				//This line is to check how many pixel fired in an event.
++-				if(I_Need_How_Many_Pixels_Fire_In_An_Event) numberOfHitsInAnEvent+=pixVector.size();
++ 
++ 
++ 				streamlog_out ( DEBUG5 ) << "This is a DEBUG output to see whether the program gets here. The number X[0] is " << X[0] << " and _sectorWidth is " << _sectorWidth << endl; 
++@@ -682,66 +564,6 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
++ 	nextCluster: ;
++ 	//End cluster for loop  
++ 	}
++-
++-	//How many pixel fired in one event
++-	if(I_Need_How_Many_Pixels_Fire_In_An_Event) NumberOfHits->Fill(numberOfHitsInAnEvent);
++-
++-	//What type of event
++-	if(I_Need_Plote_Size_Cut_Hitmap)
++-	{
++-		if(numberOfSmallClusters==0&&numberOfBigClusters==0) TypeOfTheEvent->Fill(0);
++-		if(numberOfSmallClusters>0&&numberOfBigClusters==0) TypeOfTheEvent->Fill(1);
++-		if(numberOfSmallClusters>0&&numberOfBigClusters==1) TypeOfTheEvent->Fill(2);
++-		if(numberOfSmallClusters>0&&numberOfBigClusters>1) TypeOfTheEvent->Fill(3);
++-		if(numberOfSmallClusters==0&&numberOfBigClusters>0) TypeOfTheEvent->Fill(4);
++-		//cerr<<"BigClusters: "<<numberOfBigClusters<<", SmallClusters: "<<numberOfSmallClusters<<endl;
++-	}
++-
++-	//It is for genereat some hitmap for an exsample event
++-	if(I_Need_Plot_Example_Events)
++-	{
++-		numberRandomEvent++;
++-	}
++-
++-	//This part is to analysis if a pixel fires, will it fire higher probability the nex event?
++-	if(I_Need_Fireing_Probability_Analysis)
++-	{
++-		//int xMax=0, yMax=0, xMin=10000, yMin=10000;
++-		bool interestin_event=false;
++-		for(int i_event_memory=0; i_event_memory<event_memory.size(); i_event_memory++)
++-		{
++-			bool there_is_a_double_fireing=false;
++-			for(int j_event_memory=0; j_event_memory<before_event_memory.size(); j_event_memory++)
++-			{
++-				if(event_memory[i_event_memory][0]==before_event_memory[j_event_memory][0]&&event_memory[i_event_memory][1]==before_event_memory[j_event_memory][1]) { there_is_a_double_fireing=true; interestin_event=true; break; }
++-			}
++-			if(there_is_a_double_fireing)
++-			{
++-				Fireing_Probability->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
++-				//if(event_memory[i_event_memory][0]>xMax) xMax=event_memory[i_event_memory][0];
++-				//if(event_memory[i_event_memory][0]<xMin) xMin=event_memory[i_event_memory][0];
++-				//if(event_memory[i_event_memory][1]>yMax) yMax=event_memory[i_event_memory][1];
++-				//if(event_memory[i_event_memory][1]>yMin) yMin=event_memory[i_event_memory][1];
++-			}
++-		}
++-		if(interestin_event)
++-		{
++-			for(int i_event_memory=0; i_event_memory<event_memory.size()&&number_fireing_event<100; i_event_memory++)
++-			{
++-				Double_Fireing_Events_Hitmap[number_fireing_event]->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
++-				Double_Fireing_Events_Hitmap[number_fireing_event]->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
++-			}
++-			for(int i_event_memory=0; i_event_memory<before_event_memory.size()&&number_fireing_event<100; i_event_memory++)
++-			{
++-				Double_Fireing_Events_Hitmap[number_fireing_event]->Fill(before_event_memory[i_event_memory][0], before_event_memory[i_event_memory][1]);
++-			}
++-			//Double_Fireing_Events_Hitmap[number_fireing_event]->Draw("colz");
++-			//Double_Fireing_Events_Hitmap[number_fireing_event]->GetYaxis()->SetRange(22,23);
++-			//Double_Fireing_Events_Hitmap[number_fireing_event]->SetAxisRange(yMin, yMax,"Y");
++-			number_fireing_event++;
++-		}
++-		before_event_memory=event_memory;
++-	}
++   }
++ 
++   //write the end event expression to the file, which is a linebreak
++@@ -777,57 +599,19 @@ void EUTelProcessorClusterAnalysis::bookHistos()
++       clusterShapeHistoSector[iSector] = new TH1I(Form("clusterShapeHisto_%d",iSector),Form("Cluster shape (all rotations separately) Sector %d;Cluster shape ID;a.u.",iSector),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
++       clusterShapeHistoGroupedSector[iSector] = new TH1I(Form("clusterShapeHistoGrouped_%d",iSector),Form("Cluster shape (all rotations treated together) Sector %d;Cluster shape ID;a.u.",iSector),symmetryGroups.size(),-0.5,symmetryGroups.size()-0.5);
++       GeneratedClustersHisto = new TH1I(Form("GeneratedClustersHisto"),Form("GeneratedClustersHisto;Cluster size (pixel);a.u."),200,0.5,200.5); 
++-	if(I_Need_Distance_Square_Analysis)
++-	{
++-      		MissingClusterHisto = new TH1I(Form("MissingClusterHisto"),Form("MissingClusterHisto;Cluster size (pixel);a.u."),200,0.5,200.5);
++-      		HowManyClusterGeneratedFromOneCluster = new TH1I(Form("HowManyClusterGeneratedFromOneCluster"),Form("HowManyClusterGeneratedFromOneCluster;Cluster size (pixel);a.u."),20,0.5,20.5);
++-      		GeneratedClusterShapeHisto = new TH1I(Form("GeneratedClusterShapeHisto"),Form("GeneratedClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
++-      		MissingClusterShapeHisto = new TH1I(Form("MissingClusterShapeHisto"),Form("MissingClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
++-	}
++-	if(I_Need_Empty_Middle_Analysis) emptyMiddleClustersHisto = new TH1I(Form("emptyMiddleClustersHisto"),Form("emptyMiddleClustersHisto;Cluster size (pixel);Number of Clusters"),200,0.5,200.5);
++-	if(I_Need_Plote_Size_Cut_Hitmap) smallerClustersHitmap = new TH2I(Form("smallerClustersHitmap"),Form("smallerClustersHitmap;X (pixel);Y (pixel)"),1024,0,1024,512,0,512);
++-	if(I_Need_Plote_Size_Cut_Hitmap) biggerClustersHitmap = new TH2I(Form("biggerClustersHitmap"),Form("biggerClustersHitmap;X (pixel);Y (pixel)"),1024,0,1024,512,0,512);
++-	if(I_Need_How_Many_Pixels_Fire_In_An_Event) NumberOfHits = new TH1I(Form("NumberOfHits"),Form("NumberOfHits;n_Hits;Number"),500,0.5,500.5);
++-	if(I_Need_Plote_Size_Cut_Hitmap) TypeOfTheEvent = new TH1I(Form("TypeOfTheEvent"),Form("TypeOfTheEvent;Type;Number"),5,-0.5,4.5);
++-	if(I_Need_Plote_Size_Cut_Hitmap) TypeOfTheEvent->SetMarkerStyle(21);
++-	if(I_Need_Fireing_Probability_Analysis) Fireing_Probability = new TH2I(Form("Fireing_Probability"),Form("Double fireing pixels;X (pixel);Y (pixel)"),1024,0,1024,512,0,512);
++-
++-
+++      MissingClusterHisto = new TH1I(Form("MissingClusterHisto"),Form("MissingClusterHisto;Cluster size (pixel);a.u."),200,0.5,200.5);
+++      HowManyClusterGeneratedFromOneCluster = new TH1I(Form("HowManyClusterGeneratedFromOneCluster"),Form("HowManyClusterGeneratedFromOneCluster;Cluster size (pixel);a.u."),20,0.5,20.5);
+++      GeneratedClusterShapeHisto = new TH1I(Form("GeneratedClusterShapeHisto"),Form("GeneratedClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
+++      MissingClusterShapeHisto = new TH1I(Form("MissingClusterShapeHisto"),Form("MissingClusterShapeHisto;Cluster size (pixel);a.u."),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
++ 	for(int nInterestingCluster=0; nInterestingCluster<100; nInterestingCluster++)
++ 	{
++-		if(I_Need_Distance_Square_Analysis)
++-		{
++-		      	AIDAProcessor::tree(this)->mkdir(Form("GeneratedInterestingCluster%d",iSector));
++-	      		AIDAProcessor::tree(this)->cd(Form("GeneratedInterestingCluster%d",iSector));
++-			GeneratedInterestingCluster[nInterestingCluster]  = new TH2I(Form("GeneratedInterestingCluster%		d",nInterestingCluster),Form(" Generated cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
++-	      		AIDAProcessor::tree(this)->mkdir(Form("MissingInterestingCluster%d",iSector));
++-	      		AIDAProcessor::tree(this)->cd(Form("MissingInterestingCluster%d",iSector));
++-			MissingInterestingCluster[nInterestingCluster]  = new TH2I(Form("MissingInterestingCluster%d",nInterestingCluster),Form	(" Missing cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
++-		}
++-		if(I_Need_Empty_Middle_Analysis)
++-		{
++-		      	AIDAProcessor::tree(this)->mkdir(Form("emptyMiddleClusters%d",iSector));
++-	      		AIDAProcessor::tree(this)->cd(Form("emptyMiddleClusters%d",iSector));
++-			emptyMiddleClusters[nInterestingCluster]  = new TH2I(Form("emptyMiddleClusters%d",nInterestingCluster),Form(" Holey cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
++-		}
++-	}
++-
++-	for(int nRandomEvent=0; nRandomEvent<50&&I_Need_Plot_Example_Events; nRandomEvent++)
++-	{
++-      		AIDAProcessor::tree(this)->mkdir(Form("RandomEvent%d",iSector));
++-	      	AIDAProcessor::tree(this)->cd(Form("RandomEvent%d",iSector));
++-		RandomEvent[nRandomEvent]  = new TH2I(Form("RandomEvent%d",nRandomEvent),Form(" An Event for Demonstration %d;Cluster width X (pixel);Cluster width Y (pixel)",nRandomEvent),1024,0,1024,512,0,512);
++-		//cerr<<"I SAVE an event"<<endl;
+++      AIDAProcessor::tree(this)->mkdir(Form("GeneratedInterestingCluster%d",iSector));
+++      AIDAProcessor::tree(this)->cd(Form("GeneratedInterestingCluster%d",iSector));
+++		GeneratedInterestingCluster[nInterestingCluster]  = new TH2I(Form("GeneratedInterestingCluster%d",nInterestingCluster),Form(" Generated cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
+++      AIDAProcessor::tree(this)->mkdir(Form("MissingInterestingCluster%d",iSector));
+++      AIDAProcessor::tree(this)->cd(Form("MissingInterestingCluster%d",iSector));
+++		MissingInterestingCluster[nInterestingCluster]  = new TH2I(Form("MissingInterestingCluster%d",nInterestingCluster),Form(" Missing cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
++ 	}
++-
++-	for(int nRandomEvent=0; nRandomEvent<100&&I_Need_Fireing_Probability_Analysis; nRandomEvent++)
++-	{
++-      		AIDAProcessor::tree(this)->mkdir(Form("Double_Fireing_Events_Hitmap%d",iSector));
++-	      	AIDAProcessor::tree(this)->cd(Form("Double_Fireing_Events_Hitmap%d",iSector));
++-		Double_Fireing_Events_Hitmap[nRandomEvent]  = new TH2I(Form("Double_Fireing_Events_Hitmap%d",nRandomEvent),Form(" Double Fireing Events Hitmap %d;Cluster width X (pixel);Cluster width Y (pixel)",nRandomEvent),1024,0,1024,512,0,512);
++-		//cerr<<"I SAVE an event"<<endl;
++-	}
++-
++     }
++   streamlog_out ( DEBUG5 )  << "end of Booking histograms " << endl;
++ }
+diff --git a/jobsub/examples/pALPIDEfs/config_pALPIDEfs_7.cfg b/jobsub/examples/pALPIDEfs/config_pALPIDEfs_7.cfg
+index 7cc7165..84d29fe 100644
+--- a/jobsub/examples/pALPIDEfs/config_pALPIDEfs_7.cfg
++++ b/jobsub/examples/pALPIDEfs/config_pALPIDEfs_7.cfg
+@@ -34,7 +34,6 @@ GearFile    	        = @GearGeoFile@
+ # Path to the GEAR files
+ GearFilePath    	= %(BasePath)s
+ 
+-
+ # The XML file with histogram information
+ HistoInfoFile   	= %(TemplatePath)s/histoinfo.xml
+ 
+@@ -49,7 +48,7 @@ HotpixelRunNumber	= @RunNumber@
+ SkipNEvents		= 0
+ 
+ # Limit processing of a run to a certain number of events
+-MaxRecordNumber		= 10000000
++MaxRecordNumber		= 11000
+ 
+ # The verbosity used by the EUTelescope producers (i.e. MESSAGE, DEBUG, ERROR
+ # with appended level from 0..9, e.g. MESSAGE5). If you set this to DEBUG0 but
+@@ -114,7 +113,7 @@ DistanceMax		= 10000
+ 
+ # Planes to consider as fixed in alignment (these planes are included in the
+ # alignment but with fixed positions)
+-FixedPlanes		= 0 6
++FixedPlanes		= 0
+ ResolutionX             = 64.38 64.38 64.38 64.38 64.38 64.38 64.38
+ ResolutionY             = 64.38 64.38 64.38 64.38 64.38 64.38 64.38
+ #ResolutionX             = 22.1 22.1 22.1 22.1 22.1  
+@@ -129,7 +128,7 @@ ResolutionY             = 64.38 64.38 64.38 64.38 64.38 64.38 64.38
+ # TestFitter options
+ AllowedSkipHits		= 0
+ SkipHitPenalty		= 0 
+-AllowedMissingHits	= 2
++AllowedMissingHits	= 0
+ MissingHitPenalty	= 0 
+ Chi2Max			= 30.0 # was 1000
+ #PassiveLayerIDs		= @dutID@
+diff --git a/jobsub/examples/pALPIDEfs/gear_ALPIDE_oldsetup.xml b/jobsub/examples/pALPIDEfs/gear_ALPIDE_oldsetup.xml
+index 916afc6..d4ec1f8 100644
+--- a/jobsub/examples/pALPIDEfs/gear_ALPIDE_oldsetup.xml
++++ b/jobsub/examples/pALPIDEfs/gear_ALPIDE_oldsetup.xml
+@@ -30,7 +30,7 @@
+ 	<!--pALPIDEfs Plane 1 -->
+ 	<layer>
+ 	  <ladder 	ID="1" 
+-			positionX="0"		positionY="0"		positionZ="19.7" 
++			positionX="0"		positionY="0"		positionZ="19.6" 
+ 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
+ 			sizeX="28.672"		sizeY="14.336"		thickness="1.6" 
+ 			radLength="159.225"
+@@ -48,7 +48,7 @@
+ 	<!--pALPIDEfs Plane 2 -->
+ 	<layer>
+ 	  <ladder 	ID="2" 
+-			positionX="0"		positionY="0"		positionZ="39.4" 
++			positionX="0"		positionY="0"		positionZ="39.2" 
+ 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
+ 			sizeX="28.672"		sizeY="14.336"		thickness="1.6" 
+ 			radLength="159.225"
+@@ -66,7 +66,7 @@
+ 	<!--pALPIDEfs Plane 3 position : 71.9 correct-->
+ 	<layer> 
+ 	  <ladder 	ID="3" 
+-			positionX="0"		positionY="0"		positionZ="68.9" 
++			positionX="0"		positionY="0"		positionZ="58.8" 
+ 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
+ 			sizeX="29.94176"	sizeY="13.76256"	thickness="1.6" 
+ 			radLength="159.225"
+@@ -84,7 +84,7 @@
+ 	<!--pALPIDEfs Plane 4 -->
+ 	<layer>
+ 	  <ladder 	ID="4" 
+-			positionX="0"		positionY="0"		positionZ="104.4" 
++			positionX="0"		positionY="0"		positionZ="78.4" 
+ 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
+ 			sizeX="28.672"		sizeY="14.336"		thickness="1.6" 
+ 			radLength="159.225"
+@@ -102,7 +102,7 @@
+ 	<!--pALPIDEfs Plane 5 -->
+ 	<layer>
+ 	  <ladder 	ID="5" 
+-	  		positionX="0"		positionY="0"		positionZ="124.1" 
++	  		positionX="0"		positionY="0"		positionZ="98" 
+ 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
+ 			sizeX="28.672"		sizeY="14.336"		thickness="1.6" 
+ 			radLength="159.225"
+@@ -120,7 +120,7 @@
+ 	<!--pALPIDEfs Plane 6 -->
+ 	<layer>
+ 	  <ladder 	ID="6" 
+-			positionX="0"		positionY="0"		positionZ="143.8" 
++			positionX="0"		positionY="0"		positionZ="117,6" 
+ 			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
+ 			sizeX="28.672"	sizeY="14.336"	thickness="1.6" 
+ 			radLength="159.225"
+@@ -138,4 +138,4 @@
+       </layers>
+     </detector>
+   </detectors>
+-</gear>
++</gear>	
+diff --git a/jobsub/examples/pALPIDEfs/gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml b/jobsub/examples/pALPIDEfs/gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml
+new file mode 100644
+index 0000000..67c4f34
+--- /dev/null
++++ b/jobsub/examples/pALPIDEfs/gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml
+@@ -0,0 +1,69 @@
++<gear>
++  <!--GEAR file for ITS upgrade pALPIDEfs usual setup (18 mm spacers between layers, meaning 19.6 mm distance not including material of carrier card) -->
++  <global detectorName="EUTelescope"/>
++  <BField type="ConstantBField" x="0.0" y="0.0" z="0.0"/>
++  <detectors>
++    <detector name="SiPlanes" geartype="SiPlanesParameters">
++      <siplanesID ID="0"/>
++      <siplanesType type="TelescopeWithoutDUT"/>
++      <siplanesNumber number="3"/>
++      <!-- z along beam -->
++      <layers>
++	<!--pALPIDEfs Plane 0 -->
++	<layer>
++	  <ladder 	ID="0" 
++			positionX="0.00"	positionY="0.00"	positionZ="0" 
++			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++			sizeX="29.94176"	sizeY="13.76256"	thickness="0.432" 
++			radLength="93.660734"
++			/>
++	  <sensitive 	ID="0" 
++			positionX="0.00"	positionY="0.00"	positionZ="0" 
++			sizeX="29.94176"	sizeY="13.76256"	thickness="0.018"
++			npixelX="1024"		npixelY="512"
++			pitchX="0.02924"	pitchY="0.02688" 	resolution="0.0055"
++			rotation1="-1.0"	rotation2="0.0"
++			rotation3="0.0" 	rotation4="-1.0" 
++			radLength="93.660734"
++			/>
++	</layer>
++	<!--pALPIDEfs Plane 1 -->
++	<layer>
++	  <ladder 	ID="1" 
++			positionX="0"		positionY="0"		positionZ="26.0" 
++			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++			sizeX="29.94176"	sizeY="13.76256"	thickness="0.032" 
++			radLength="93.660734"
++			/>
++	  <sensitive 	ID="1" 
++			positionX="0"		positionY="0"		positionZ="26.0" 
++			sizeX="29.94176"	sizeY="13.76256"	thickness="0.018"
++			npixelX="1024"		npixelY="512"
++			pitchX="0.02924"	pitchY="0.02688" 	resolution="0.0055"
++			rotation1="-1.0"	rotation2="0.0"
++			rotation3="0.0" 	rotation4="-1.0" 
++			radLength="93.660734"
++			/>
++	</layer>
++	<!--pALPIDEfs Plane 2 -->
++	<layer>
++	  <ladder 	ID="2" 
++			positionX="0"		positionY="0"		positionZ="52.0" 
++			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++			sizeX="29.94176"	sizeY="13.76256"	thickness="0.032" 
++			radLength="93.660734"
++			/>
++	  <sensitive 	ID="2" 
++			positionX="0"		positionY="0"		positionZ="52.0" 
++			sizeX="29.94176"	sizeY="13.76256"	thickness="0.018"
++			npixelX="1024"		npixelY="512"
++			pitchX="0.02924"	pitchY="0.02688" 	resolution="0.0055"
++			rotation1="-1.0"	rotation2="0.0"
++			rotation3="0.0" 	rotation4="-1.0" 
++			radLength="93.660734"
++			/>
++	</layer>
++      </layers>
++    </detector>
++  </detectors>
++</gear>
+diff --git a/jobsub/examples/pALPIDEfs/gear_pALPIDEfs_example_withoutCarrierMaterial.xml b/jobsub/examples/pALPIDEfs/gear_pALPIDEfs_example_withoutCarrierMaterial.xml
+new file mode 100644
+index 0000000..3ed9404
+--- /dev/null
++++ b/jobsub/examples/pALPIDEfs/gear_pALPIDEfs_example_withoutCarrierMaterial.xml
+@@ -0,0 +1,141 @@
++<gear>
++  <!--GEAR file for ITS upgrade pALPIDEfs usual setup (18 mm spacers between layers, meaning 19.6 mm distance not including material of carrier card) -->
++  <global detectorName="EUTelescope"/>
++  <BField type="ConstantBField" x="0.0" y="0.0" z="0.0"/>
++  <detectors>
++    <detector name="SiPlanes" geartype="SiPlanesParameters">
++      <siplanesID ID="0"/>
++      <siplanesType type="TelescopeWithoutDUT"/>
++      <siplanesNumber number="7"/>
++      <!-- z along beam -->
++      <layers>
++	<!--pALPIDEfs Plane 0 -->
++	<layer>
++	  <ladder 	ID="0" 
++			positionX="0.00"	positionY="0.00"	positionZ="0" 
++			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.432" 
++			radLength="93.660734"
++			/>
++	  <sensitive 	ID="0" 
++			positionX="0.00"	positionY="0.00"	positionZ="0" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++			npixelX="1024"		npixelY="512"
++			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++			rotation1="-1.0"	rotation2="0.0"
++			rotation3="0.0" 	rotation4="-1.0" 
++			radLength="93.660734"
++			/>
++	</layer>
++	<!--pALPIDEfs Plane 1 -->
++	<layer>
++	  <ladder 	ID="1" 
++			positionX="0"		positionY="0"		positionZ="19.6" 
++			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.032" 
++			radLength="93.660734"
++			/>
++	  <sensitive 	ID="1" 
++			positionX="0"		positionY="0"		positionZ="19.6" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++			npixelX="1024"		npixelY="512"
++			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++			rotation1="-1.0"	rotation2="0.0"
++			rotation3="0.0" 	rotation4="-1.0" 
++			radLength="93.660734"
++			/>
++	</layer>
++	<!--pALPIDEfs Plane 2 -->
++	<layer>
++	  <ladder 	ID="2" 
++			positionX="0"		positionY="0"		positionZ="39.2" 
++			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.032" 
++			radLength="93.660734"
++			/>
++	  <sensitive 	ID="2" 
++			positionX="0"		positionY="0"		positionZ="39.2" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++			npixelX="1024"		npixelY="512"
++			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++			rotation1="-1.0"	rotation2="0.0"
++			rotation3="0.0" 	rotation4="-1.0" 
++			radLength="93.660734"
++			/>
++	</layer>
++	<!--pALPIDEfs Plane 3 -->
++	<layer>
++	  <ladder 	ID="3" 
++			positionX="0"		positionY="0"		positionZ="58.8" 
++			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.032" 
++			radLength="93.660734"
++			/>
++	  <sensitive 	ID="3" 
++			positionX="0"   	positionY="0"		positionZ="58.8" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++			npixelX="1024"		npixelY="512"
++			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++			rotation1="-1.0"	rotation2="0.0"
++			rotation3="0.0" 	rotation4="-1.0" 
++			radLength="93.660734"
++			/>
++	</layer>
++	<!--pALPIDEfs Plane 4 -->
++	<layer>
++	  <ladder 	ID="4" 
++			positionX="0"		positionY="0"		positionZ="78.4" 
++			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.032" 
++			radLength="93.660734"
++			/>
++	  <sensitive 	ID="4" 
++			positionX="0"		positionY="0"		positionZ="78.4" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++			npixelX="1024"		npixelY="512"
++			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++			rotation1="-1.0"	rotation2="0.0"
++			rotation3="0.0" 	rotation4="-1.0" 
++			radLength="93.660734"
++			/>
++	</layer>
++	<!--pALPIDEfs Plane 5 -->
++	<layer>
++	  <ladder 	ID="5" 
++			positionX="0"		positionY="0"		positionZ="98" 
++			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.032" 
++			radLength="93.660734"
++			/>
++	  <sensitive 	ID="5" 
++			positionX="0"		positionY="0"		positionZ="98" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++			npixelX="1024"		npixelY="512"
++			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++			rotation1="-1.0"	rotation2="0.0"
++			rotation3="0.0" 	rotation4="-1.0" 
++			radLength="93.660734"
++			/>
++	</layer>
++	<!--pALPIDEfs Plane 6 -->
++	<layer>
++	  <ladder 	ID="6" 
++			positionX="0"		positionY="0"		positionZ="117.6" 
++			rotationZY="0.0"	rotationZX="0.0"	rotationXY="0.0" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.432" 
++			radLength="93.660734"
++			/>
++	  <sensitive 	ID="6" 
++			positionX="0"		positionY="0"		positionZ="117.6" 
++			sizeX="28.672"		sizeY="14.336"		thickness="0.018"
++			npixelX="1024"		npixelY="512"
++			pitchX="0.028"		pitchY="0.028" 		resolution="0.0055"
++			rotation1="-1.0"	rotation2="0.0"
++			rotation3="0.0" 	rotation4="-1.0" 
++			radLength="93.660734"
++			/>
++	</layer>
++      </layers>
++    </detector>
++  </detectors>
++</gear>
+diff --git a/jobsub/examples/pALPIDEfs/runlist_example.csv b/jobsub/examples/pALPIDEfs/runlist_example.csv
+index 9ce8afd..471595b 100644
+--- a/jobsub/examples/pALPIDEfs/runlist_example.csv
++++ b/jobsub/examples/pALPIDEfs/runlist_example.csv
+@@ -1,2 +1,6 @@
+ RunNumber,BeamEnergy,GearGeoFile,DUTNumbers,ChipIDs,IrradiationLevel,Rate
+-23,6.0,gear_pALPIDEfs3_example_withCarrierMaterial_data.xml,3,W1-18 W2-27 W6-39 W9-16 W6-14 W2-23 W1-17,0 0 0 0 0 0 0,PS
++467,0.22106,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
++468,0.20011,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
++469,0.04812,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
++440,0.15011,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
++6073,6.0,gear_pALPIDE-3_example_withoutCarrierMaterial_Xe_1_plane.xml,0,W1-18,0,PS
+diff --git a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/align-tmp.xml b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/align-tmp.xml
+index d9f7e7c..3feb9f0 100644
+--- a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/align-tmp.xml
++++ b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/align-tmp.xml
+@@ -213,14 +213,14 @@
+ 1 - shifts in the X and Y directions and a rotation around the Z axis,
+ 2 - only shifts in the X and Y directions
+ 3 - (EXPERIMENTAL) shifts in the X,Y and Z directions and rotations around all three axis-->
+-  <parameter name="AlignMode" type="int" value="1"/>
++  <parameter name="AlignMode" type="int" value="3"/>
+   <!--This is the name of the alignment collection to be saved into the slcio file-->
+   <!--parameter name="AlignmentConstantCollectionName" type="string" value="alignment"/-->
+   <!--This is the name of the LCIO file name with the output alignmentconstants (add .slcio)-->
+   <parameter name="AlignmentConstantLCIOFile" type="string" value="@DatabasePath@/@FilePrefix@-alignment.slcio"/>
+   <!--parameter name="AlignmentConstantLCIOFile" type="string" value="@DatabasePath@/run23-28-alignment.slcio"/-->
+   <!--Set how many hits (=planes) can be missing on a track candidate.-->
+-  <parameter name="AllowedMissingHits" type="int" value="2"/>
++  <parameter name="AllowedMissingHits" type="int" value="0"/>
+   <!--Do you want the reference hit collection to be corrected by the shifts and tilts from the alignment collection?-->
+   <!--parameter name="ApplyToReferenceCollection" type="bool" value="false"/-->
+   <!--Name of the Millepede binary file.-->
+@@ -232,7 +232,7 @@
+   <!--Exclude planes from fit according to their sensor ids.-->
+   <parameter name="ExcludePlanes" type="IntVec" value="@ExcludePlanes@"/>
+   <!--Fixes the given alignment parameters in the fit if alignMode==3 is used. For each sensor an integer must be specified (If no value is given, then all parameters will be free). bit 0 = x shift, bit 1 = y shift, bit 2 = z shift, bit 3 = alpha, bit 4 = beta, bit 5 = gamma. Note: these numbers are ordered according to the z position of the sensors and NOT according to the sensor id.-->
+-  <parameter name="FixParameter" type="IntVec"> 28 28 28 60 28 28 28 </parameter>
++  <parameter name="FixParameter" type="IntVec"> 63 0 63 </parameter>
+   <!--Fix sensor planes in the fit according to their sensor ids.-->
+   <parameter name="FixedPlanes" type="IntVec" value="@FixedPlanes@"/>
+   <!--Generate a steering file for the pede program.-->
+diff --git a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/analysis-tmp.xml b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/analysis-tmp.xml
+index cb2f3c1..617f2de 100644
+--- a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/analysis-tmp.xml
++++ b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/analysis-tmp.xml
+@@ -159,7 +159,7 @@
+   <!--This is the maximum number of planes that can have more than one hit-->
+   <parameter name="nPlanesWithMoreHits" type="int" value="3"/>
+   <!--More tracks are allowed in one event-->
+-  <parameter name="MoreTracks" type="bool" value="false"/>
++  <parameter name="MoreTracks" type="bool" value="true"/>
+   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+   <!--parameter name="Verbosity" type="string" value="MESSAGE2"/-->
+     <!--This is the name of the hotpixel collection-->
+diff --git a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clusterAnalysis-tmp.xml b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clusterAnalysis-tmp.xml
+index fdd6caf..b09cb5c 100644
+--- a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clusterAnalysis-tmp.xml
++++ b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clusterAnalysis-tmp.xml
+@@ -108,6 +108,29 @@
+   <!--Data taking rate-->
+   <parameter name="Rate" type="string" value="@Rate@"/>
+   <!--parameter name="Verbosity" type="string" value="DEBUG"/-->
++  <!--I_Need_Distance_Square_Analysis-->
++  <parameter name="I_Need_Distance_Square_Analysis" type="bool" value="true"/>
++  <!--I_Need_Empty_Middle_Analysis-->
++  <parameter name="I_Need_Empty_Middle_Analysis" type="bool" value="true"/>
++  <!--I_Need_Plote_Size_Cut_Hitmap-->
++  <parameter name="I_Need_Plote_Size_Cut_Hitmap" type="bool" value="true"/>
++  <!--I_Need_Plot_Example_Events-->
++  <parameter name="I_Need_Plot_Example_Events" type="bool" value="true"/>
++  <!--I_Need_Double_Fireing_Analysis-->
++  <parameter name="I_Need_Double_Fireing_Analysis" type="bool" value="true"/>
++  <!--I_Need_How_Many_Pixels_Fire_In_An_Event-->
++  <parameter name="I_Need_How_Many_Pixels_Fire_In_An_Event" type="bool" value="true"/>
++  <!--I_need_a_hitmap-->
++  <parameter name="I_need_a_hitmap" type="bool" value="true"/>
++  <!--_sparseMinDistanceSquaredComparison-->
++  <parameter name="_sparseMinDistanceSquaredComparison" type="int" value="1"/>
++  <!--_chipVersion-->
++  <parameter name="ChipVersion" type="int" value="@whichChip@"/>
++  <!--This cluster size is the border between the small and the big clusters-->
++  <parameter name="cuttingSize" type="int" value="5"/>
++
++
++
+ </processor>
+ 
+ <processor name="MyEUTelUtilityPrintEventNumber" type="EUTelUtilityPrintEventNumber">
+diff --git a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clustering-tmp.xml b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clustering-tmp.xml
+index 710b97e..7e5c173 100644
+--- a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clustering-tmp.xml
++++ b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/clustering-tmp.xml
+@@ -148,6 +148,7 @@ Available types of the data format:
+   <parameter name="SparseClusterCut" type="float" value="0.0"/>
+   <!--Minimum distance between sparsified pixel ( touching == sqrt(2)) -->
+   <parameter name="SparseMinDistance" type="float" value="1"/>
++  <parameter name="SparseMinDistanceSquared" type="float" value="2"/>
+   <!--Threshold in SNR for seed pixel contained in ZS data-->
+   <parameter name="SparseSeedCut" type="float" value="0.0"/>
+   <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+diff --git a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/hotpixel-tmp.xml b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/hotpixel-tmp.xml
+index 77ff7ce..4981a48 100644
+--- a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/hotpixel-tmp.xml
++++ b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/hotpixel-tmp.xml
+@@ -64,14 +64,14 @@
+     <!--This float number [0,1] represents the maximum allowed firing frequency
+          within the selected number of event per cycle-->
+   <!--parameter name="MaxAllowedFiringFreq" type="float" value="1"/-->
+-  <!--parameter name="MaxAllowedFiringFreq" type="float" value="0.001"/-->
++  <!--parameter name="MaxAllowedFiringFreq" type="float" value="0.01"/-->
+   <parameter name="MaxAllowedFiringFreq" type="float" value="@MaxAllowedFiringFreq@"/>
+     <!--The number of events to be considered for each update cycle-->
+   <parameter name="NoOfEvents" type="int" value="@nEventsForHotpixel@"/>
+     <!--The total number of hot pixel cycle-->
+ <!--  <parameter name="TotalNoOfCycle" type="int" value="0"/> -->
+     <!--The sensorID for the generated collection (one per detector)-->
+-  <parameter name="SensorIDVec" type="IntVec"> 0 1 2 3 4 5 6 </parameter>
++  <parameter name="SensorIDVec" type="IntVec"> 0</parameter>
+     <!--verbosity level of this processor ("DEBUG0-4,MESSAGE0-4,WARNING0-4,ERROR0-4,SILENT")-->
+   <parameter name="Verbosity" type="string" value="MESSAGE6"/>
+ </processor>
+diff --git a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/prealign-tmp.xml b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/prealign-tmp.xml
+index d7004ab..44bc110 100644
+--- a/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/prealign-tmp.xml
++++ b/jobsub/examples/pALPIDEfs/steering-templates_pALPIDEfs_7/prealign-tmp.xml
+@@ -96,7 +96,7 @@
+   <!--This is the name of the hot pixel collection to be saved into the output slcio file-->
+   <!--parameter name="HotPixelCollectionName" type="string" value="hotpixel_apix"/-->
+   <!--If there are more then this number of correlated hits (planes->track candidate) (default=5)-->
+-  <parameter name="MinNumberOfCorrelatedHits" type="int" value="6"/>
++  <parameter name="MinNumberOfCorrelatedHits" type="int" value="3"/>
+   <!--reference hit collection name -->
+   <parameter name="ReferenceCollection" type="string" value="refhit"/>
+   <!--Maximal values of the hit residuals in the X direction for a correlation band. Note: these numbers are ordered according to the z position of the sensors and NOT according to the sensor id.-->
+diff --git a/processors/include/EUTelProcessorClusterAnalysis.h b/processors/include/EUTelProcessorClusterAnalysis.h
+index 5ad63a3..07abe5b 100644
+--- a/processors/include/EUTelProcessorClusterAnalysis.h
++++ b/processors/include/EUTelProcessorClusterAnalysis.h
+@@ -55,6 +55,13 @@ protected:
+   int _nNoiseMaskClusters;
+   int _nDeadColumnClusters;
+   int _sectorWidth;
++  int _chipVersion;
++  int _numberofGeneratedInterestingCluster;
++  int _numberofMissingInterestingCluster;
++  int _number_emptyMiddle;
++  int cuttingSize;
++  int number_firing_event;
++  std::vector<std::vector<int>>before_event_memory;
+   double _energy;
+   EVENT::StringVec _chipID;
+   EVENT::StringVec _irradiation;
+@@ -64,6 +71,14 @@ protected:
+   bool _hotpixelAvailable;
+   bool _noiseMaskAvailable;
+   bool _deadColumnAvailable;
++  bool samecluster;
++  bool I_Need_Distance_Square_Analysis;
++  bool I_Need_Empty_Middle_Analysis;
++  bool I_Need_Plote_Size_Cut_Hitmap;
++  bool I_Need_Plot_Example_Events;
++  bool I_Need_Double_Firing_Analysis;
++  bool I_Need_How_Many_Pixels_Fire_In_An_Event;
++  bool I_need_a_hitmap;
+   std::string _hotPixelCollectionName;
+   std::string _deadColumnCollectionName;
+   std::string _noiseMaskFileName;
+@@ -79,14 +94,35 @@ private:
+   int _nLayer;
+   int _xPixel;
+   int _yPixel;
++  int howmanypdf;
++  int _sparseMinDistanceSquaredComparison;
++  int savedRandomEvents;
+   std::map<int,TH1I*> clusterWidthXHisto;
+   std::map<int,TH1I*> clusterWidthYHisto;
+   std::map<int,TH1I*> clusterSizeHisto;
++  std::map<int,TH2I*> GeneratedInterestingCluster;
++  std::map<int,TH2I*> MissingInterestingCluster;
++  std::map<int,TH2I*> emptyMiddleClusters;
++  std::map<int,TH2I*> RandomEvent;
++  std::map<int,TH2I*> Double_Firing_Events_Hitmap;
+   TH1I* timeStampHisto;
++  std::map<int,TH1I*> GeneratedClustersHisto;
++  std::map<int,TH1I*> MissingClusterHisto;
++  std::map<int,TH1I*> HowManyClusterGeneratedFromOneCluster;
++  std::map<int,TH1I*> GeneratedClusterShapeHisto;
++  std::map<int,TH1I*> MissingClusterShapeHisto;
++  std::map<int,TH1I*> emptyMiddleClustersHisto;
++  TH1I* NumberOfHits;
++  TH1I* TypeOfTheEvent;
++  TH1I* CLUSTER_SIZE;
+   TH2I* hotpixelHisto;
+   TH2I* deadColumnHisto;
+   TH2I* circularClusterHistos;
+   TH2I* largeClusterHistos;
++  TH2I* smallerClustersHitmap;
++  TH2I* biggerClustersHitmap;
++  TH2I* doubleFiringPixels;
++  TH2I* HIT_MAP;
+   TH3I* clusterShapeMap;
+   std::map<int,TH1I*> clusterShapeHistoSector;
+   std::map<int,TH1I*> clusterShapeHistoGroupedSector;
+diff --git a/processors/src/EUTelClusterSeparationProcessor.cc b/processors/src/EUTelClusterSeparationProcessor.cc
+index 3390364..01edef8 100644
+--- a/processors/src/EUTelClusterSeparationProcessor.cc
++++ b/processors/src/EUTelClusterSeparationProcessor.cc
+@@ -52,6 +52,7 @@ EUTelClusterSeparationProcessor::EUTelClusterSeparationProcessor () :Processor("
+                            "Cluster collection name ",
+                            _clusterCollectionName, string ("cluster"));
+ 
++
+   // and the output collection
+   registerOutputCollection (LCIO::TRACKERPULSE, "ClusterOutputCollectionName",
+                             "Cluster output collection name",
+@@ -100,6 +101,7 @@ void EUTelClusterSeparationProcessor::processEvent (LCEvent * event) {
+ 
+   LCCollectionVec * clusterCollectionVec;
+ 
++
+   try {
+     clusterCollectionVec  =  dynamic_cast <LCCollectionVec *> (evt->getCollection(_clusterCollectionName));
+   } catch (lcio::DataNotAvailableException& e ) {
+diff --git a/processors/src/EUTelClusteringProcessor.cc b/processors/src/EUTelClusteringProcessor.cc
+index f3cfecd..069ddce 100644
+--- a/processors/src/EUTelClusteringProcessor.cc
++++ b/processors/src/EUTelClusteringProcessor.cc
+@@ -67,6 +67,7 @@ using namespace marlin;
+ using namespace eutelescope;
+ 
+ static const int  MAXCLUSTERSIZE = 4096;
++int akosexample=0;
+ 
+ 
+ EUTelClusteringProcessor::EUTelClusteringProcessor ()
+@@ -213,6 +214,8 @@ EUTelClusteringProcessor::EUTelClusteringProcessor ()
+ 
+     registerProcessorParameter("SparseMinDistanceSquared","Minimum distance squared between sparsified pixel ( touching == 2) ",
+                                _sparseMinDistanceSquared, static_cast<int>(2) );
++	//_sparseMinDistanceSquared=4;
++    cout<<"_sparseMinDistanceSquared: "<<_sparseMinDistanceSquared<<endl;
+ 
+     registerProcessorParameter("SparseMinDistance","Minimum distance between sparsified pixel ( touching == sqrt(2)) ",
+                                _sparseMinDistance, static_cast<float > (0.0 ) );
+@@ -2029,6 +2032,11 @@ void EUTelClusteringProcessor::sparseClustering(LCEvent* evt, LCCollectionVec* p
+                         dY = y1 - y2;
+                         int distance = dX*dX+dY*dY;
+                         //if they pass the spatial and temporal cuts, we add them
++			if(akosexample==0)
++			{
++			cout<<"_sparseMinDistanceSquared(in real): "<<_sparseMinDistanceSquared<<endl;
++			akosexample++;
++			}
+                         if( distance <= _sparseMinDistanceSquared )
+                         {
+                             //add them to the cluster as well as to the newly added ones
+@@ -3370,6 +3378,7 @@ void EUTelClusteringProcessor::bookHistos() {
+         _hitMapHistos.insert(make_pair(sensorID, hitMapHisto));
+         hitMapHisto->setTitle("Hit map");
+ 
++
+         tempHistoName = _eventMultiplicityHistoName + "_d" + to_string( sensorID );
+         int     eventMultiNBin  = 60;
+         double  eventMultiMin   =  0.;
+diff --git a/processors/src/EUTelProcessorAnalysisPALPIDEfs.cc b/processors/src/EUTelProcessorAnalysisPALPIDEfs.cc
+index 40da419..d64d43a 100644
+--- a/processors/src/EUTelProcessorAnalysisPALPIDEfs.cc
++++ b/processors/src/EUTelProcessorAnalysisPALPIDEfs.cc
+@@ -1814,36 +1814,104 @@ int EUTelProcessorAnalysisPALPIDEfs::AddressToRow(int AAddress)
+ 
+ bool EUTelProcessorAnalysisPALPIDEfs::emptyMiddle(vector<vector<int> > pixVector)
+ {
+-  bool holeX = false;
+-  bool holeY = false;
+-  for (size_t i=0; i<pixVector.size(); i++)
+-  {
+-    bool touchingX = false;
+-    bool lastX = true;
+-    for (size_t j=0; j<pixVector.size(); j++)
+-    {
+-      if (i==j) continue;
+-      if (pixVector[i][1] != pixVector[j][1]) continue;
+-      if (pixVector[i][0]+1 == pixVector[j][0]) {/*cerr << "Touching in x" << endl;*/ touchingX = true; break;}
+-      if (pixVector[i][0] <  pixVector[j][0]) {/*cerr << "Smaller in x"  << endl;*/ lastX  = false;}
+-    }
+-    if (!touchingX && !lastX) {/*cerr << "Hole in X" << endl;*/ holeX = true; break;}
+-  }
+-  for (size_t i=0; i<pixVector.size(); i++)
+-  {
+-    bool touchingY = false;
+-    bool lastY = true;
+-    for (size_t j=0; j<pixVector.size(); j++)
+-    {
+-      if (i==j) continue;
+-      if (pixVector[i][0] != pixVector[j][0]) continue;
+-      if (pixVector[i][1]+1 == pixVector[j][1]) {/*cerr << "Touching in y" << endl;*/ touchingY = true; break;}
+-      if (pixVector[i][1] <  pixVector[j][1]) {/*cerr << "Smaller in y"  << endl;*/ lastY  = false;}
+-    }
+-    if (!touchingY && !lastY) {/*cerr << "Hole in Y" << endl;*/ holeY = true; break;}
+-  }
+-  if (holeX && holeY) return true;
+-  else return false;
++
++//In this step we use an invers clustering process. Firt, we create a rectangle, which is bigger than the cluster in every direction. Second, we fill the hitPixelVec with pixels, which did not fired. Third, we run the clustering process with this hitPixelVec. Forth, if when this process find one cluster, and hitPixelVec is not empty, we find an emty middle cluster, if the hitPixeVec is empty our cluster is not empty middle.
++
++        std::vector<EUTelGenericSparsePixel> hitPixelVec;
++
++	std::vector<EUTelGenericSparsePixel> newlyAdded;
++
++	int xMax=0, yMax=0, xMin=1000000, yMin=1000000;
++
++	for (size_t i=0; i<pixVector.size(); i++)
++	{
++		if(pixVector[i][0]>xMax) xMax=pixVector[i][0];
++		if(pixVector[i][0]<xMin) xMin=pixVector[i][0];
++		if(pixVector[i][1]>yMax) yMax=pixVector[i][1];
++		if(pixVector[i][1]<yMin) yMin=pixVector[i][1];
++	}
++	for(int n=xMin-1; n<=xMax+1; n++)
++	{
++		for(int m=yMin-1; m<=yMax+1; m++)
++		{
++			bool empty_pixel=true;
++			for (int i=0; i<pixVector.size(); i++)
++			{
++				if(n==pixVector[i][0]&&m==pixVector[i][1]) { empty_pixel=false; break; }
++			}
++			if(empty_pixel)
++			{
++				EUTelGenericSparsePixel pixel;
++				pixel.setXCoord(n);
++				pixel.setYCoord(m);
++				hitPixelVec.push_back(pixel);
++			}
++		}
++	}
++	
++        //We now cluster those hits together
++	//while( !hitPixelVec.empty() )
++ 	{
++
++	
++               	std::vector<EUTelGenericSparsePixel> cluCandidate;
++
++               	//First we need to take any pixel, so let's take the first one
++               	//Add it to the cluster as well as the newly added pixels
++               	newlyAdded.push_back( hitPixelVec.front() );
++               	//sparseCluster->push_back( &(hitPixelVec.front()) );
++               	cluCandidate.push_back( hitPixelVec.front() );
++               	//And remove it from the original collection
++               	hitPixelVec.erase( hitPixelVec.begin() );
++
++               	//Now process all newly added pixels, initially this is the just previously added one
++               	//but in the process of neighbour finding we continue to add new pixels
++               	while( !newlyAdded.empty() )
++               	{
++               		bool newlyDone = true;
++               		int  x1, x2, y1, y2, dX, dY;
++
++               		//check against all pixels in the hitPixelVec
++               		for( std::vector<EUTelGenericSparsePixel>::iterator hitVec = hitPixelVec.begin(); hitVec != hitPixelVec.end(); ++hitVec )
++               		{
++	                  	//get the relevant infos from the newly added pixel
++             	        	x1 = newlyAdded.front().getXCoord();
++              	        	y1 = newlyAdded.front().getYCoord();
++	
++               	        	//and the pixel we test against
++               	        	x2 = hitVec->getXCoord();
++               	        	y2 = hitVec->getYCoord();
++
++               	        	dX = x1 - x2;
++               	        	dY = y1 - y2;
++               	        	int distance = dX*dX+dY*dY;
++               	        	//if they pass the spatial and temporal cuts, we add them
++				
++				int _sparseMinDistanceSquaredComparison=1;
++               	        	if( distance <= _sparseMinDistanceSquaredComparison )
++               	        	{
++               		            	//add them to the cluster as well as to the newly added ones
++               		           	newlyAdded.push_back( *hitVec );
++               		            	cluCandidate.push_back( *hitVec );
++               		          	//	sparseCluster->push_back( &(*hitVec) );
++               		            	hitPixelVec.erase( hitVec );
++               		            	//for the pixel we test there might be other neighbours, we still have to check
++               		            	newlyDone = false;
++              		            	break;
++               		        }
++               		}
++			//if no neighbours are found, we can delete the pixel from the newly added
++			//we tested against _ALL_ non cluster pixels, there are no other pixels
++			//which could be neighbours
++               		if(newlyDone) 
++			{
++				newlyAdded.erase( newlyAdded.begin() );
++			}
++       		}
++	}
++	// If the hitPixelVec is not empty there is a empty middle cluster, because there must be an area inside the cluster, which is not connected to the area outside the cluster.
++	if( !hitPixelVec.empty() ) return true;
++	else return false;
+ }
+ 
+ bool EUTelProcessorAnalysisPALPIDEfs::RemoveAlign(LCCollectionVec * preAlignmentCollectionVec, LCCollectionVec * alignmentCollectionVec, LCCollectionVec * alignmentPAlpideCollectionVec, double* fitpos, double& xposfit, double& yposfit)
+diff --git a/processors/src/EUTelProcessorClusterAnalysis.cc b/processors/src/EUTelProcessorClusterAnalysis.cc
+index 0b37868..83c6c6d 100644
+--- a/processors/src/EUTelProcessorClusterAnalysis.cc
++++ b/processors/src/EUTelProcessorClusterAnalysis.cc
+@@ -3,6 +3,7 @@
+ #include "EUTelAlignmentConstant.h"
+ #include "EUTelGeometryTelescopeGeoDescription.h"
+ #include "EUTelTrackerDataInterfacerImpl.h"
++#include "EUTelProcessorAnalysisPALPIDEfs.h"
+ 
+ #include "marlin/Global.h"
+ #include "marlin/AIDAProcessor.h"
+@@ -58,7 +59,25 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
+   _hotPixelCollectionName(""),
+   _nLayer(0),
+   _xPixel(),
+-  _yPixel()
++  _yPixel(),
++  _chipVersion(4),
++  _sparseMinDistanceSquaredComparison(1),
++  howmanypdf(0),
++  _numberofGeneratedInterestingCluster(0),
++  _numberofMissingInterestingCluster(0),
++  _number_emptyMiddle(0),
++  cuttingSize(5),
++  I_Need_Distance_Square_Analysis(true),
++  I_Need_Empty_Middle_Analysis(true),
++  I_Need_Plote_Size_Cut_Hitmap(true),
++  I_Need_Plot_Example_Events(true),
++  I_Need_Double_Firing_Analysis(true),
++  I_Need_How_Many_Pixels_Fire_In_An_Event(true),
++  I_need_a_hitmap(true),
++  number_firing_event(0),
++  _layerIndex(-1),
++  savedRandomEvents(0)
++
+ 
+   {
+     _description="Analysing cluster properties such as cluster shape and average cluster size.";
+@@ -97,15 +116,46 @@ EUTelProcessorClusterAnalysis::EUTelProcessorClusterAnalysis()
+                              _irradiation, _stringVecExample );
+     registerOptionalParameter("Rate","Data taking rate",
+                              _rate, static_cast< string > ( "" ) );
++  registerOptionalParameter("ChipVersion", "Chip Version",
++                            _chipVersion, static_cast<int>(4) );
++  registerOptionalParameter("I_Need_Distance_Square_Analysis", "I Need Distance Square Analysis",
++                            I_Need_Distance_Square_Analysis, static_cast<bool>(true) );
++  registerOptionalParameter("I_Need_Empty_Middle_Analysis", "I Need Empty Middle Analysis",
++                            I_Need_Empty_Middle_Analysis, static_cast<bool>(true) );
++  registerOptionalParameter("I_Need_Plote_Size_Cut_Hitmap", "I Need Plote Size Cut Hitmap",
++                            I_Need_Plote_Size_Cut_Hitmap, static_cast<bool>(true) );
++  registerOptionalParameter("I_Need_Plot_Example_Events", "I Need Plot Example Events",
++                            I_Need_Plot_Example_Events, static_cast<bool>(true) );
++  registerOptionalParameter("I_Need_Double_Firing_Analysis", "I Need Double Firing Analysis",
++                            I_Need_Double_Firing_Analysis, static_cast<bool>(true) );
++  registerOptionalParameter("I_Need_How_Many_Pixels_Fire_In_An_Event", "I Need How Many Pixels Fire In An Event",
++                            I_Need_How_Many_Pixels_Fire_In_An_Event, static_cast<bool>(true) );
++  registerOptionalParameter("I_need_a_hitmap", "I Need A Hitmap",
++                            I_need_a_hitmap, static_cast<bool>(true) );
++  registerOptionalParameter("_sparseMinDistanceSquaredComparison", "Sparse Min Distance Squared Comparison",
++                            _sparseMinDistanceSquaredComparison, static_cast<int>(1) );
++  // This cluster size is the border between the small and the big clusters:
++  registerOptionalParameter("cuttingSize", "cuttingSize",
++                            cuttingSize, static_cast<int>(5) );
+     _isFirstEvent = true;
++
+   }
+ 
+ void EUTelProcessorClusterAnalysis::init() {
+   _nLayer = geo::gGeometry().nPlanes();
+   const std::vector<int>& _planeID = geo::gGeometry().sensorIDsVec();
++
+   for(int iz=0; iz < _nLayer ; iz++)
+ 	  if(_planeID[iz]==_dutID)
+ 		  _layerIndex = iz;
++  if(_layerIndex==-1) { cerr<<"Wrong DUT ID. Exiting."<<endl; return; }
++  
++  
++  if (_chipVersion < 3)     _nSectors = 4;
++  else if (_chipVersion==3) _nSectors = 8;
++  else if (_chipVersion==5) _nSectors = 4;
++  else                      _nSectors = 1;
++
+  
+   //beware, sometimes dutID is 3, sometimes it is 6
+   int iLayer = _dutID;
+@@ -130,14 +180,23 @@ void EUTelProcessorClusterAnalysis::init() {
+   settingsFile.open (_outputSettingsFileName.c_str(), ios::out | ios::app );
+   if (newFile) settingsFile << "Run number;Energy;Chip ID;Chip Version;Irradiation level(0-nonIrradiated,1-2.5e12,2-1e13,3-700krad,4-combined:1e13+700krad);Rate;BB;Ithr;Idb;Vcasn;Vcasn2;Vclip;Vcasp;VresetP;VresetD;Threshold and their RMS for all eight sectors;Noise and their RMS for all eight sectors;Readout delay;Trigger delay;Strobe length;StrobeB length;Data (1) or noise (0);Number of events;Efficiency,Number of tracks,Number of tracks with associated hit for all sectors" << endl;
+ 
++	//cerr<<"I_Need_Distance_Square_Analysis: "<<I_Need_Distance_Square_Analysis<<endl<<"I_Need_Empty_Middle_Analysis: "<<I_Need_Empty_Middle_Analysis<<endl<<"I_Need_Plote_Size_Cut_Hitmap: "<<I_Need_Plote_Size_Cut_Hitmap<<endl<<"I_Need_Plot_Example_Events: "<<I_Need_Plot_Example_Events<<endl<<"I_Need_Double_Firing_Analysis: "<<I_Need_Double_Firing_Analysis<<endl<<"I_Need_How_Many_Pixels_Fire_In_An_Event: "<<I_Need_How_Many_Pixels_Fire_In_An_Event<<endl;
++
++
+ }
+ 
++
++//This line is needed, because EUTelProcessorAnalysisPALPIDEfs will check if the cluster is empty middle, or not.
++//EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
++
++
++
+ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
+ {
+ // INIT, DEAD COLOUMN AND HOT PIXEL CHECKS -----------------------------------------------------------------------------------------------------------------
+ //
+ //
+-
++  if(_layerIndex==-1) { return; }
+   int nClusterPerEvent = 0;
+   if (_isFirstEvent)
+   {
+@@ -219,8 +278,14 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
+ 
+   if (_clusterAvailable)
+   {
++	int numberOfHitsInAnEvent=0;
++	int numberOfSmallClusters=0;
++	int numberOfBigClusters=0;
++	std::vector<std::vector<int>>event_memory;
++//cerr<<"IDETECTOR"<<endl;
+ 	for ( size_t idetector=0 ; idetector<zsInputDataCollectionVec->size(); idetector++)
+ 	{
++//cerr<<"idetector: "<<idetector<<endl;
+ 		CellIDDecoder<TrackerDataImpl> cellDecoder( zsInputDataCollectionVec );
+ 		TrackerDataImpl * zsData = dynamic_cast< TrackerDataImpl * > ( zsInputDataCollectionVec->getElementAt(idetector) );
+ 		SparsePixelType   type   = static_cast<SparsePixelType> ( static_cast<int> (cellDecoder( zsData )["sparsePixelType"]) );
+@@ -320,9 +385,278 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
+ 					pix.push_back(Y[iPixel]);
+ 					pixVector.push_back(pix);
+ 				}
++
+ 				streamlog_out ( DEBUG5 ) << "This is a DEBUG output to see whether the program gets here. The number X[0] is " << X[0] << " and _sectorWidth is " << _sectorWidth << endl; 
+ 				//now, since all pixels are from the same sector, the sector number can be set.
+ 				int index = X[0]/_sectorWidth;
++
++				//This part is to analysis the effect of the distance square between the pixels in one cluste
++				if(I_Need_Distance_Square_Analysis)
++				{		
++					samecluster=true;
++					int howmanyclustergeneratedfromonecluster(0);
++					int AllGeneratedPixel(0);
++					int AllMissingPixel(0);
++
++					//Cluster mycluster;
++			
++           				std::vector<EUTelGenericSparsePixel> hitPixelVec = sparseData.getPixels();
++           				std::vector<EUTelGenericSparsePixel> hitPixelVec2 = sparseData.getPixels();
++
++				        std::vector<EUTelGenericSparsePixel> newlyAdded;
++
++
++
++					int firsthclustersize=hitPixelVec.size();
++			 	        //We now cluster those hits together
++            				while( !hitPixelVec.empty() )
++            				{
++
++	
++                				std::vector<EUTelGenericSparsePixel> cluCandidate;
++
++                				//First we need to take any pixel, so let's take the first one
++                				//Add it to the cluster as well as the newly added pixels
++                				newlyAdded.push_back( hitPixelVec.front() );
++                				//sparseCluster->push_back( &(hitPixelVec.front()) );
++                				cluCandidate.push_back( hitPixelVec.front() );
++                				//And remove it from the original collection
++                				hitPixelVec.erase( hitPixelVec.begin() );
++
++                				//Now process all newly added pixels, initially this is the just previously added one
++                				//but in the process of neighbour finding we continue to add new pixels
++                				while( !newlyAdded.empty() )
++                				{
++                    					bool newlyDone = true;
++                    					int  x1, x2, y1, y2, dX, dY;
++
++                    					//check against all pixels in the hitPixelVec
++                    					for( std::vector<EUTelGenericSparsePixel>::iterator hitVec = hitPixelVec.begin(); hitVec != hitPixelVec.end(); ++hitVec )
++                    					{
++      		                  				//get the relevant infos from the newly added pixel
++                	        				x1 = newlyAdded.front().getXCoord();
++                	        				y1 = newlyAdded.front().getYCoord();
++	
++                	        				//and the pixel we test against
++                	        				x2 = hitVec->getXCoord();
++                	        				y2 = hitVec->getYCoord();
++	
++                	        				dX = x1 - x2;
++                	        				dY = y1 - y2;
++                	        				int distance = dX*dX+dY*dY;
++                	        				//if they pass the spatial and temporal cuts, we add them
++	
++                	        				if( distance <= _sparseMinDistanceSquaredComparison )
++                	        				{
++                		            				//add them to the cluster as well as to the newly added ones
++                		           				newlyAdded.push_back( *hitVec );
++                		            				cluCandidate.push_back( *hitVec );
++                		          				//	sparseCluster->push_back( &(*hitVec) );
++                		            				hitPixelVec.erase( hitVec );
++                		            				//for the pixel we test there might be other neighbours, we still have to check
++                		            				newlyDone = false;
++                		            				break;
++                		        			}
++                		    			}
++
++       						        //if no neighbours are found, we can delete the pixel from the newly added
++					                //we tested against _ALL_ non cluster pixels, there are no other pixels
++ 					                //which could be neighbours
++                					if(newlyDone) 
++							{
++								newlyAdded.erase( newlyAdded.begin() );
++							}
++             					}
++
++						if(firsthclustersize!=cluCandidate.size())
++						{
++							samecluster=false;
++							howmanyclustergeneratedfromonecluster++;
++							AllGeneratedPixel+=cluCandidate.size();
++							GeneratedClustersHisto[index]->Fill(cluCandidate.size());
++							//cout<<"I filled GeneratedClustersHisto with: "<<cluCandidate.size()<<endl;
++						
++
++
++							int intrestingClusterSize=cluCandidate.size();
++							Cluster interestingCluster;
++							vector<int> X(intrestingClusterSize);
++							vector<int> Y(intrestingClusterSize);
++
++
++  							int iforX=0, Xmax=0,Ymax=0,Xmin=1000000,Ymin=1000000,Xshift=0,Yshift=0;
++                					while(!cluCandidate.empty())
++                					{
++								X[iforX]=cluCandidate.front().getXCoord();
++								Y[iforX]=cluCandidate.front().getYCoord();
++                    						cluCandidate.erase( cluCandidate.begin() );
++								if(X[iforX]<Xmin) Xmin=X[iforX];
++								if(Y[iforX]<Ymin) Ymin=Y[iforX];
++								if(X[iforX]>Xmax) Xmax=X[iforX];
++								if(Y[iforX]>Ymax) Ymax=Y[iforX];
++
++								iforX++;
++                					}
++
++							interestingCluster.set_values(intrestingClusterSize,X,Y);
++							GeneratedClusterShapeHisto[index]->Fill(interestingCluster.WhichClusterShape(interestingCluster, clusterVec));
++
++							Xshift=(Xmax+Xmin)/2-50/2;
++							Yshift=(Ymax+Ymin)/2-50/2;
++							for(int iforY=0; iforY<Y.size()&&_numberofGeneratedInterestingCluster<100; iforY++)
++							{
++								GeneratedInterestingCluster[_numberofGeneratedInterestingCluster]->Fill(X[iforY]-Xshift, Y[iforY]-Yshift);
++							//cout<<"_numberofGeneratedInterestingCluster: "<<_numberofGeneratedInterestingCluster<<" X: "<<X[iforY]-Xshift<<" Y: "<<Y[iforY]-Yshift<<endl;
++							}
++							_numberofGeneratedInterestingCluster++;
++
++							
++
++
++
++
++
++
++
++
++						}
++						
++
++					}
++			
++
++					if(!samecluster)
++					{
++						MissingClusterHisto[index]->Fill(firsthclustersize);
++						HowManyClusterGeneratedFromOneCluster[index]->Fill(howmanyclustergeneratedfromonecluster);
++						howmanyclustergeneratedfromonecluster=0;
++						AllMissingPixel=firsthclustersize;
++
++						//cout<<"I filled MissingClusterHisto with: "<<firsthclustersize<<endl;
++
++	  					int Xmax=0,Ymax=0,Xmin=1000000,Ymin=1000000,Xshift=0,Yshift=0;					
++						
++						for( std::vector<EUTelGenericSparsePixel>::iterator hitVecSparseData = hitPixelVec2.begin(); hitVecSparseData != hitPixelVec2.end()&&_numberofMissingInterestingCluster<100; ++hitVecSparseData )
++						{
++							if(hitVecSparseData->getXCoord()<Xmin) Xmin=hitVecSparseData->getXCoord();
++							if(hitVecSparseData->getYCoord()<Ymin) Ymin=hitVecSparseData->getYCoord();
++							if(hitVecSparseData->getXCoord()>Xmax) Xmax=hitVecSparseData->getXCoord();
++							if(hitVecSparseData->getYCoord()>Ymax) Ymax=hitVecSparseData->getYCoord();
++						}
++						Xshift=(Xmax+Xmin)/2-50/2;
++						Yshift=(Ymax+Ymin)/2-50/2;
++
++						for( std::vector<EUTelGenericSparsePixel>::iterator hitVecSparseData = hitPixelVec2.begin(); hitVecSparseData != hitPixelVec2.end()&&_numberofMissingInterestingCluster<100; ++hitVecSparseData )
++						{
++							MissingInterestingCluster[_numberofMissingInterestingCluster]->Fill(hitVecSparseData->getXCoord()-Xshift, hitVecSparseData->getYCoord()-Yshift);
++						}
++						_numberofMissingInterestingCluster++;
++
++					}
++
++					//cout<<"I have done the "<<idetector<<"th cluster"<<endl;
++
++					if(AllGeneratedPixel!=AllMissingPixel)
++					{
++						cerr<<"AllMissingPixel!=AllMissingPixel"<<endl;
++						cerr<<"AllMissingPixel: "<<AllMissingPixel<<endl;
++						cerr<<"AllGeneratedPixel: "<<AllGeneratedPixel<<endl;
++					}
++					AllMissingPixel=0;
++					AllGeneratedPixel=0;
++				}
++
++
++				//The end of the part folr distance analysis
++
++				//This par looking for holey clusters
++
++				if(I_Need_Empty_Middle_Analysis)
++				{
++
++					//This line is needed, because EUTelProcessorAnalysisPALPIDEfs will check if the cluster is empty middle, or not.
++					EUTelProcessorAnalysisPALPIDEfs* mypalpide= new EUTelProcessorAnalysisPALPIDEfs();
++
++					//The next line check, if the cluster empty middled
++					if(mypalpide->emptyMiddle(pixVector))
++					{
++						//It fill, the holey clusters histo
++						emptyMiddleClustersHisto[index]->Fill(pixVector.size());
++						//It select holey clusters, to see them.
++						int xMin = *min_element(X.begin(), X.end());
++						int xMax = *max_element(X.begin(), X.end());
++						int yMin = *min_element(Y.begin(), Y.end());
++						int yMax = *max_element(Y.begin(), Y.end());
++						int Xshift= (xMin+xMax)/2 - 50/2;
++						int Yshift= (yMin+yMax)/2 - 50/2;
++						for(int i_emptyMiddle=0; i_emptyMiddle<pixVector.size()&&_number_emptyMiddle<100; i_emptyMiddle++)
++						{
++							emptyMiddleClusters[_number_emptyMiddle]->Fill(pixVector[i_emptyMiddle][0]-Xshift, pixVector[i_emptyMiddle][1]-Yshift);
++						}
++						_number_emptyMiddle++;
++					}
++					delete mypalpide;
++				}
++
++				//The end of the holey clusters part
++
++				//This plot the clusters withe a cut in size
++
++				if(I_Need_Plote_Size_Cut_Hitmap)
++				{
++					if(pixVector.size()<cuttingSize) numberOfSmallClusters++;
++					if(pixVector.size()>=cuttingSize) numberOfBigClusters++;
++					for(int i_cuttingSize=0; pixVector.size()<cuttingSize&&i_cuttingSize<pixVector.size(); i_cuttingSize++)
++					{
++						smallerClustersHitmap->Fill(pixVector[i_cuttingSize][0], pixVector[i_cuttingSize][1]);
++					}
++
++					for(int i_cuttingSize=0; pixVector.size()>=cuttingSize&&i_cuttingSize<pixVector.size(); i_cuttingSize++)
++					{
++						biggerClustersHitmap->Fill(pixVector[i_cuttingSize][0], pixVector[i_cuttingSize][1]);
++					}
++
++				}
++
++				//This part is for the hitmap
++
++				if(I_need_a_hitmap)
++				{
++					for(int i_HITMAP=0; i_HITMAP<pixVector.size(); i_HITMAP++)
++					{
++						HIT_MAP->Fill(pixVector[i_HITMAP][0],pixVector[i_HITMAP][1]);
++					}
++				}
++
++				//This part to plots random events to see.
++
++				if(I_Need_Plot_Example_Events)
++				{
++					for(int i_random=0; i_random<pixVector.size()&&savedRandomEvents<100; i_random++)
++					{
++						RandomEvent[savedRandomEvents]->Fill(pixVector[i_random][0], pixVector[i_random][1]);
++					}
++				}
++
++
++
++				//This part is to analysis if a pixel fires, will it fire higher probability the nex event?
++				
++				if(I_Need_Double_Firing_Analysis)
++				{
++					for(int i_event_memory=0; i_event_memory<pixVector.size(); i_event_memory++)
++					{					
++						event_memory.push_back(pixVector[i_event_memory]);
++					}
++				}
++
++				//This line is to check how many pixel fired in an event.
++				if(I_Need_How_Many_Pixels_Fire_In_An_Event) numberOfHitsInAnEvent+=pixVector.size();
++
++
++
++
++
+ 				
+ 				//set the cluster
+ 				cluster.set_values(clusterSize,X,Y);
+@@ -361,11 +695,70 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
+ 	nextCluster: ;
+ 	//End cluster for loop  
+ 	}
++
++	//How many pixel fired in one event
++	if(I_Need_How_Many_Pixels_Fire_In_An_Event) NumberOfHits->Fill(numberOfHitsInAnEvent);
++
++	//What type of event
++	if(I_Need_Plote_Size_Cut_Hitmap)
++	{
++		if(numberOfSmallClusters==0&&numberOfBigClusters==0) TypeOfTheEvent->Fill(0);
++		if(numberOfSmallClusters>0&&numberOfBigClusters==0) TypeOfTheEvent->Fill(1);
++		if(numberOfSmallClusters>0&&numberOfBigClusters==1) TypeOfTheEvent->Fill(2);
++		if(numberOfSmallClusters>0&&numberOfBigClusters>1) TypeOfTheEvent->Fill(3);
++		if(numberOfSmallClusters==0&&numberOfBigClusters>0) TypeOfTheEvent->Fill(4);
++		//cerr<<"BigClusters: "<<numberOfBigClusters<<", SmallClusters: "<<numberOfSmallClusters<<endl;
++	}
++
++	//It is for genereat some hitmap for an exsample event
++	if(I_Need_Plot_Example_Events)
++	{
++		savedRandomEvents++;
++	}
++
++	//This part is to analysis if a pixel fires, will it fire higher probability the nex event?
++	if(I_Need_Double_Firing_Analysis)
++	{
++		bool interestin_event=false;
++		for(int i_event_memory=0; i_event_memory<event_memory.size(); i_event_memory++)
++		{
++			bool there_is_a_double_firing=false;
++			for(int j_event_memory=0; j_event_memory<before_event_memory.size(); j_event_memory++)
++			{
++				if(event_memory[i_event_memory][0]==before_event_memory[j_event_memory][0]&&event_memory[i_event_memory][1]==before_event_memory[j_event_memory][1]) { there_is_a_double_firing=true; interestin_event=true; break; }
++			}
++			if(there_is_a_double_firing)
++			{
++				doubleFiringPixels->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
++			}
++		}
++		//In the next step, it is going to create some hitmap from the double firing event couples. If you see a pixel in the hitmap, which has:
++		// 1 entrie, it just fired in the firsth event.
++		// 2 entries, it just fired in the second event.
++		// 3 entries, it fired in both of the events.
++
++		if(interestin_event)
++		{
++
++			for(int i_event_memory=0; i_event_memory<event_memory.size()&&number_firing_event<100; i_event_memory++)
++			{
++				Double_Firing_Events_Hitmap[number_firing_event]->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
++				Double_Firing_Events_Hitmap[number_firing_event]->Fill(event_memory[i_event_memory][0], event_memory[i_event_memory][1]);
++			}
++			for(int i_event_memory=0; i_event_memory<before_event_memory.size()&&number_firing_event<100; i_event_memory++)
++			{
++				Double_Firing_Events_Hitmap[number_firing_event]->Fill(before_event_memory[i_event_memory][0], before_event_memory[i_event_memory][1]);
++			}
++			number_firing_event++;
++		}
++		before_event_memory=event_memory;
++	}
+   }
+ 
+   //write the end event expression to the file, which is a linebreak
+   clusterAnalysisOutput << endl;
+   //Increment number of events
++	//cerr<<"getEventNumber(): "<<evt->getEventNumber()<<endl;
+   _nEvents++;
+ }
+ 
+@@ -390,17 +783,83 @@ void EUTelProcessorClusterAnalysis::bookHistos()
+       AIDAProcessor::tree(this)->mkdir(Form("Sector_%d",iSector));
+       AIDAProcessor::tree(this)->cd(Form("Sector_%d",iSector));
+ 
+-      clusterWidthXHisto[iSector]  = new TH1I(Form("clusterWidthXHisto_%d",iSector),Form("Cluster width in X in sector %d;Cluster width X (pixel);a.u.",iSector),15,0.5,15.5);
+-      clusterWidthYHisto[iSector]  = new TH1I(Form("clusterWidthYHisto_%d",iSector),Form("Cluster width in Y in sector %d;Cluster width Y (pixel);a.u.",iSector),15,0.5,15.5);
+-      clusterSizeHisto[iSector]  = new TH1I(Form("clusterSizeHisto_%d",iSector),Form("Cluster size_%d;Cluster size (pixel);a.u.",iSector),20,0.5,20.5);
++      clusterWidthXHisto[iSector]  = new TH1I(Form("clusterWidthXHisto_%d",iSector),Form("Cluster width in X in sector %d;Cluster width X (pixel);a.u.",iSector),50,0.5,50.5);
++      clusterWidthYHisto[iSector]  = new TH1I(Form("clusterWidthYHisto_%d",iSector),Form("Cluster width in Y in sector %d;Cluster width Y (pixel);a.u.",iSector),50,0.5,50.5);
++      clusterSizeHisto[iSector]  = new TH1I(Form("clusterSizeHisto_%d",iSector),Form("Cluster size_%d;Cluster size (pixel);a.u.",iSector),200,0.5,200.5);
+       clusterShapeHistoSector[iSector] = new TH1I(Form("clusterShapeHisto_%d",iSector),Form("Cluster shape (all rotations separately) Sector %d;Cluster shape ID;a.u.",iSector),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
+-      clusterShapeHistoGroupedSector[iSector] = new TH1I(Form("clusterShapeHistoGrouped_%d",iSector),Form("Cluster shape (all rotations treated together) Sector %d;Cluster shape ID;a.u.",iSector),symmetryGroups.size(),-0.5,symmetryGroups.size()-0.5);
++      clusterShapeHistoGroupedSector[iSector] = new TH1I(Form("clusterShapeHistoGrouped_%d",iSector),Form("Cluster shape (all rotations treated together) Sector %d;Cluster shape ID;a.u.",iSector),symmetryGroups.size(),-0.5,symmetryGroups.size()-0.5); 
++	if(I_Need_Distance_Square_Analysis)
++	{
++		AIDAProcessor::tree(this)->mkdir(Form("Sector_%d/CompareHistogramsIfReduced_sparseMinDistanceSquared=%d",iSector,_sparseMinDistanceSquaredComparison));
++      		AIDAProcessor::tree(this)->cd(Form("Sector_%d/CompareHistogramsIfReduced_sparseMinDistanceSquared=%d",iSector,_sparseMinDistanceSquaredComparison));
++      		GeneratedClustersHisto[iSector] = new TH1I(Form("GeneratidClustersFromAnother_%d",iSector),Form("Generated clusters, if reduced _sparseMinDistanceSquared=%d, Sector %d;Cluster size (pixel);Number of clusters", _sparseMinDistanceSquaredComparison , iSector),200,0.5,200.5);
++      		MissingClusterHisto[iSector] = new TH1I(Form("DisintegratingClusters_%d",iSector),Form("Disintegrating clusters, if reduced _sparseMinDistanceSquared=%d, Sector %d;Cluster size (pixel);Number of clusters", _sparseMinDistanceSquaredComparison , iSector),200,0.5,200.5);
++      		HowManyClusterGeneratedFromOneCluster[iSector] = new TH1I(Form("HowManyClusterGeneratedFromOneCluster_%d",iSector),Form("How many cluster generated from one cluster if reduce _sparseMinDistanceSquared=%d, Sector %d;Number of generated clusters from one disintegrating cluster; number of missing clusters",_sparseMinDistanceSquaredComparison),20,0.5,20.5);
++      		GeneratedClusterShapeHisto[iSector] = new TH1I(Form("GeneratedClustersShape_%d",iSector),Form("These clusters generated, if reduced _sparseMinDistanceSquared=%d, Sector %d;Cluster size (pixel);Number of clusters", _sparseMinDistanceSquaredComparison , iSector),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
++		//The next line will use, if the Cluster Shape finder process can work with clusters, which have pixels touch with corner.
++      		//MissingClusterShapeHisto[iSector] = new TH1I(Form("MissingClusterShapeHisto_%d",iSector),Form("MissingClusterShapeHisto;Type of the cluster shape;Number of clusters"),clusterVec.size()+1,-0.5,clusterVec.size()+0.5);
++	}
++      	AIDAProcessor::tree(this)->cd(Form("Sector_%d",iSector));
++	if(I_Need_Empty_Middle_Analysis) emptyMiddleClustersHisto[iSector] = new TH1I(Form("emptyMiddleClustersHisto_%d",iSector),Form("Empty middle clusters histo in sector %d;Cluster size (pixel);Number of Clusters", iSector),200,0.5,200.5);
++
++    }
++    AIDAProcessor::tree(this)->cd("");
++    if(I_Need_Plote_Size_Cut_Hitmap) smallerClustersHitmap = new TH2I(Form("smallerClustersHitmap"),Form("This hitmap is filled withe clusters, which smaller than %d;X (pixel);Y (pixel)",cuttingSize),1024,0,1024,512,0,512);
++    if(I_Need_Plote_Size_Cut_Hitmap) biggerClustersHitmap = new TH2I(Form("biggerClustersHitmap"),Form("This hitmap is filled withe clusters, which equal or bigger than %d;X (pixel);Y (pixel)",cuttingSize),1024,0,1024,512,0,512);
++    if(I_Need_How_Many_Pixels_Fire_In_An_Event) NumberOfHits = new TH1I(Form("NumberOfHits"),Form("Number of hits in an event;n_Hits;Number of events"),500,0.5,500.5);
++    //0: There was no hit.
++    //1: There was just smaller clusters than cuttingSize.
++    //2: There was one cluster bigger or equal than cuttingSize and there was smaller clusters than cuttingSize.
++    //3: There was more than one cluster bigger or equal than cuttingSize and there was smaller clusters than cuttingSize.
++    //4: There was just bigger or equal clusters than cuttingSize.
++    if(I_Need_Plote_Size_Cut_Hitmap) TypeOfTheEvent = new TH1I(Form("TypeOfTheEvent"),Form("Type of the event;Type;Number of events"),5,-0.5,4.5);
++    //if(I_Need_Plote_Size_Cut_Hitmap) TypeOfTheEvent->SetMarkerStyle(21);
++    if(I_Need_Double_Firing_Analysis) doubleFiringPixels = new TH2I(Form("doubleFiringPixels"),Form("Double firing pixels;X (pixel);Y (pixel)"),1024,0,1024,512,0,512);
++    if(I_need_a_hitmap) HIT_MAP = new TH2I("hitMap",Form("HitMap;X (pixel); Y(pixel)"),1024,0,1024,512,0,512);
++
++    AIDAProcessor::tree(this)->mkdir(Form("First100Example"));
++    for(int nInterestingCluster=0; nInterestingCluster<100; nInterestingCluster++)
++    {
++    	if(I_Need_Distance_Square_Analysis)
++	{
++      		AIDAProcessor::tree(this)->mkdir(Form("First100Example/GeneratedClustersFromADisintegratingCluster"));
++      		AIDAProcessor::tree(this)->cd(Form("First100Example/GeneratedClustersFromADisintegratingCluster"));
++		GeneratedInterestingCluster[nInterestingCluster]  = new TH2I(Form("GeneratedClustersFromADisintegratingCluster_%d",nInterestingCluster),Form(" Generated cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
++      		AIDAProcessor::tree(this)->mkdir(Form("First100Example/DisintegratingCluster"));
++      		AIDAProcessor::tree(this)->cd(Form("First100Example/DisintegratingCluster"));
++		MissingInterestingCluster[nInterestingCluster]  = new TH2I(Form("MissingInterestingCluster_%d",nInterestingCluster),Form	(" Missing cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
++	}
++	if(I_Need_Empty_Middle_Analysis)
++	{
++	      	AIDAProcessor::tree(this)->mkdir(Form("First100Example/emptyMiddleClusters"));
++      		AIDAProcessor::tree(this)->cd(Form("First100Example/emptyMiddleClusters"));
++		emptyMiddleClusters[nInterestingCluster]  = new TH2I(Form("emptyMiddleClusters_%d",nInterestingCluster),Form(" Holey cluster, example %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),50,0,50,50,0,50);
++	} 
++        if(I_Need_Plot_Example_Events)
++        {
++            AIDAProcessor::tree(this)->mkdir(Form("First100Example/RandomEvent"));
++	    AIDAProcessor::tree(this)->cd(Form("First100Example/RandomEvent"));
++	    RandomEvent[nInterestingCluster]  = new TH2I(Form("RandomEvent_%d",nInterestingCluster),Form(" An Event for Demonstration %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),1024,0,1024,512,0,512);
++	    //cerr<<"I SAVE an event"<<endl;
++        }
++	//In the next step, it is going to create some hitmap from the double firing event couples. If you see a pixel in the hitmap, which has:
++	// 1 entrie, it just fired in the firsth event.
++	// 2 entries, it just fired in the second event.
++	// 3 entries, it fired in both of the events.
++        if(I_Need_Double_Firing_Analysis)
++        {
++            AIDAProcessor::tree(this)->mkdir(Form("First100Example/Double_Firing_Events"));
++      	    AIDAProcessor::tree(this)->cd(Form("First100Example/Double_Firing_Events"));
++	    Double_Firing_Events_Hitmap[nInterestingCluster]  = new TH2I(Form("Double_Firing_Events_Hitmap_%d",nInterestingCluster),Form(" Double Firing Events Hitmap %d;Cluster width X (pixel);Cluster width Y (pixel)",nInterestingCluster),1024,0,1024,512,0,512);
++	    //cerr<<"I SAVE an event"<<endl;
++        }
+     }
+   streamlog_out ( DEBUG5 )  << "end of Booking histograms " << endl;
+ }
+ 
+ void EUTelProcessorClusterAnalysis::end()
+ {
++  if(_layerIndex==-1) { return; }
+   for (int iSector=0; iSector<_nSectors; iSector++)
+     {		
+       for (unsigned int i=0; i<symmetryGroups.size(); i++)
+@@ -425,6 +884,19 @@ void EUTelProcessorClusterAnalysis::end()
+     }
+   }
+   //
++  if(true)
++  {
++    bool DistanceSquareWarning=true;
++    for(int i_sector=0; i_sector<_nSectors; i_sector++)
++    {
++      if(GeneratedClustersHisto[i_sector]->GetEntries()!=0)  DistanceSquareWarning=false;
++      if(MissingClusterHisto[i_sector]->GetEntries()!=0)  DistanceSquareWarning=false;
++    }
++    if(DistanceSquareWarning)
++    {
++      streamlog_out ( WARNING ) << "The histograms of the analysis disintegrating clusters are empty! It could mean you runned the clusterAnalysis with same, or higher _sparseMinDistanceSquaredComparison than the _sparseMinDistanceSquared was in clustering." << endl;
++    }
++  }
+   streamlog_out ( MESSAGE4 ) << "The amount of processed events was " << _nEvents << endl;
+   streamlog_out ( MESSAGE4 ) << "The amount of ignored clusters, because they were at an x-border of a sector were: " << _nTouchingBorderSectorClusters << endl;
+   streamlog_out ( MESSAGE4 ) << "The amount of ignored clusters, because they were at a y-border of the chip were: " << _nTouchingBorderYClusters << endl;
+diff --git a/processors/src/EUTelTestFitter.cc b/processors/src/EUTelTestFitter.cc
+index 15263e5..354e4df 100644
+--- a/processors/src/EUTelTestFitter.cc
++++ b/processors/src/EUTelTestFitter.cc
+@@ -1899,12 +1899,12 @@ if(jhit>=0){
+ 	//no slope of beam, only extrapolation in z-direction
+ 	double slopevec[3]={0,0,1};
+ 
+-	/*if(!_isActive[ipl]){
+-		cerr << "Slope for DUT applied." << endl;
++	if(!_isActive[ipl]){
++		//cerr << "Slope for DUT applied." << endl;
+ 		slopevec[0] = fittedX[_nTelPlanes*ifit+(ipl+1)]-fittedX[_nTelPlanes*ifit+(ipl-1)];
+ 		slopevec[1] = fittedY[_nTelPlanes*ifit+(ipl+1)]-fittedY[_nTelPlanes*ifit+(ipl-1)];
+ 		slopevec[2] = _siPlaneCenter[ipl+1][2]-_siPlaneCenter[ipl-1][2];
+-	}//this gives the possibility of inserting a proper slope*/
++	}//this gives the possibility of inserting a proper slope
+ 
+         getImpactPoint(pos[0], pos[1], pos[2], slopevec[0], slopevec[1], slopevec[2]);
+         //getFastTrackImpactPoint(pos[0], pos[1], pos[2], 0, 0); // old function, does the same as new one, new one is numerically more stable

@@ -1,0 +1,6 @@
+RunNumber,BeamEnergy,GearGeoFile,DUTNumbers,ChipIDs,IrradiationLevel,Rate
+467,0.22106,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+468,0.20011,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+469,0.04812,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+440,0.15011,gear_pALPIDE-3_example_withoutCarrierMaterial_copy.xml,1,W1-18 W2-18 W3-18,0 0 0,PS
+6073,6.0,gear_pALPIDE-3_example_withoutCarrierMaterial_Xe_1_plane.xml,0,W1-18,0,PS

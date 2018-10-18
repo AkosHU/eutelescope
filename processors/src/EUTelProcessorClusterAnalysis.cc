@@ -275,9 +275,10 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 //
 //
 // END INIT, DEAD COLUMN AND HOTPIXELS -------------------------------------------------------------------------------------------------------------------------
-
+  cout<<_nEvents<<endl;
   if (_clusterAvailable)
   {
+	  cout<<"Available"<<endl;
 	int numberOfHitsInAnEvent=0;
 	int numberOfSmallClusters=0;
 	int numberOfBigClusters=0;
@@ -632,9 +633,9 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 
 				if(I_Need_Plot_Example_Events)
 				{
-					for(int i_random=0; i_random<pixVector.size()&&savedRandomEvents<100; i_random++)
+					for(int i_random=0; i_random<pixVector.size()&&/*savedRandomEvents*/_nEvents<100; i_random++)
 					{
-						RandomEvent[savedRandomEvents]->Fill(pixVector[i_random][0], pixVector[i_random][1]);
+						RandomEvent[_nEvents/*savedRandomEvents*/]->Fill(pixVector[i_random][0], pixVector[i_random][1]);
 					}
 				}
 

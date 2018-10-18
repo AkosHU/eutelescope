@@ -54,6 +54,7 @@ namespace eutelescope {
     LCCollectionVec *zsInputDataCollectionVec;
     std::string _zsDataCollectionName;
     std::vector<std::vector<std::vector<std::vector<int>>>>PixelsOfEvents;
+    std::vector<std::vector<std::vector<std::vector<int>>>>PixelsOfEventsAfterShift;
     int _nDeep;
     float _Range;
 
@@ -89,6 +90,7 @@ namespace eutelescope {
 
     virtual void filter();
 
+
     
 
 
@@ -119,13 +121,24 @@ namespace eutelescope {
      */
     std::string _noiseCollectionName;
 
+
+
     //
     //! noise Collection
     LCCollectionVec *noiseCollectionVec;
 
+    std::string _sparseClusterCollectionName;
+
     int allCluster;
     int notDouvbleCluster;
     int ID;
+    int _nShift;
+    bool _shiftedRun;
+    int _nLayers;
+    int _noOfDetector;
+    bool _isGeometryReady;
+    std::map< int, int > _totClusterMap;
+    int _NoEvent;
 
   private:
 

@@ -131,6 +131,9 @@ EUTelProcessorAnalysisPALPIDEfs::EUTelProcessorAnalysisPALPIDEfs()
                              _histoInfoFileName, string( "histoinfo.xml" ) );
   registerProcessorParameter("Limit", "This is allowed distance between the track and the hit",
                              limit, static_cast<double>( 0.05 ) );
+//cerr<<"limit: "<<limit<<endl;
+//limit=0.2;
+//cerr<<"limit2: "<<limit<<endl;
   registerProcessorParameter("dutID", "This is the ID of the DUT",
                              _dutID, static_cast<int>( 6 ) );
   registerProcessorParameter("MaxNumberOfPixels", "This is the maximum number of pixels in one cluster for the clustershape analysis",
@@ -244,6 +247,7 @@ void EUTelProcessorAnalysisPALPIDEfs::init() {
       nTracksFake[iSector] = 0;
       nTracksPAlpideFake[iSector] = 0;
     }
+    cerr<<"limit: "<<limit<<endl;
   }
   bool newFile = false;
   string _outputSettingsFileName = _outputSettingsFolderName + Form("settings_DUT%d",_dutID) + ".txt";
@@ -1456,8 +1460,8 @@ void EUTelProcessorAnalysisPALPIDEfs::bookHistos()
     AIDAProcessor::tree(this)->cd(Form("Sector_%d",iSector));
     for (size_t i=0; i<chi2Max.size();i++)
     {
-      residualXPAlpide[chi2Max[i]][iSector] = new TH1I(Form("residualXPAlpide_%.1f_%d",chi2Max[i],iSector),Form("Residual X (Max chi2 = %.1f), sector %d;X (mm);a.u.",chi2Max[i],iSector),300,-0.2,0.2);
-      residualYPAlpide[chi2Max[i]][iSector] = new TH1I(Form("residualYPAlpide_%.1f_%d",chi2Max[i],iSector),Form("Residual Y (Max chi2 = %.1f), sector %d;Y (mm);a.u.",chi2Max[i],iSector),300,-0.2,0.2);
+      residualXPAlpide[chi2Max[i]][iSector] = new TH1I(Form("residualXPAlpide_%.1f_%d",chi2Max[i],iSector),Form("Residual X (Max chi2 = %.1f), sector %d;X (mm);a.u.",chi2Max[i],iSector),1500,-1,1);
+      residualYPAlpide[chi2Max[i]][iSector] = new TH1I(Form("residualYPAlpide_%.1f_%d",chi2Max[i],iSector),Form("Residual Y (Max chi2 = %.1f), sector %d;Y (mm);a.u.",chi2Max[i],iSector),1500,-1,1);
       residualZPAlpide[chi2Max[i]][iSector] = new TH1I(Form("residualZPAlpide_%.1f_%d",chi2Max[i],iSector),Form("Residual Z (Max chi2 = %.1f), sector %d;Z (mm);a.u.",chi2Max[i],iSector),100,-0.3,0.3);
       residualXPCBPAlpide[chi2Max[i]][iSector] = new TH1I(Form("residualXPCBPAlpide_%.1f_%d",chi2Max[i],iSector),Form("Residual X not uner the hole (Max chi2 = %.1f), sector %d;X (mm);a.u.",chi2Max[i],iSector),300,-0.2,0.2);
       residualYPCBPAlpide[chi2Max[i]][iSector] = new TH1I(Form("residualYPCBPAlpide_%.1f_%d",chi2Max[i],iSector),Form("Residual Y not uner the hole (Max chi2 = %.1f), sector %d;Y (mm);a.u.",chi2Max[i],iSector),300,-0.2,0.2);
