@@ -90,6 +90,8 @@ namespace eutelescope {
 
     virtual void filter();
 
+    virtual void effOfALPIDE();
+
 
     
 
@@ -139,6 +141,10 @@ namespace eutelescope {
     bool _isGeometryReady;
     std::map< int, int > _totClusterMap;
     int _NoEvent;
+    int _nOfAll;
+    int _nOfNoise;
+    int _nOfGood;
+    int _nOfFalse;
 
   private:
 

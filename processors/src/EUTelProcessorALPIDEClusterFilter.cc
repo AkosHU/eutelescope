@@ -86,7 +86,7 @@ EUTelProcessorALPIDEClusterFilter::EUTelProcessorALPIDEClusterFilter () : Proces
 _nzsDataCollectionName(""),
 _zsDataCollectionName(""),
 _noiseCollectionName(""),
-_nDeep(5),
+_nDeep(2),
 _nShift(10),
 _Range(0.1),
 _pulseCollectionName(""),
@@ -98,7 +98,11 @@ _sparseClusterCollectionName(""),
 _noOfDetector(0),
 _isGeometryReady(),
 _totClusterMap(),
-_NoEvent()
+_NoEvent(),
+_nOfAll(0),
+_nOfGood(0),
+_nOfFalse(0),
+_nOfNoise(0)
 
 {
 
@@ -140,9 +144,9 @@ bool EUTelProcessorALPIDEClusterFilter::SameCluster(int iEvent, int iCluster, in
 		for(int jPixel=0; jPixel<PixelsOfEvents[jEvent][jCluster].size(); jPixel++)
 		{
 			if(PixelsOfEvents[iEvent][iCluster][iPixel][0]==PixelsOfEvents[jEvent][jCluster][jPixel][0] && 
-			PixelsOfEvents[iEvent][iCluster][iPixel][0]==PixelsOfEvents[jEvent][jCluster][jPixel][1] &&
-			PixelsOfEvents[iEvent][iCluster][iPixel][0]==PixelsOfEvents[jEvent][jCluster][jPixel][2] &&
-			PixelsOfEvents[iEvent][iCluster][iPixel][0]==PixelsOfEvents[jEvent][jCluster][jPixel][3])
+			PixelsOfEvents[iEvent][iCluster][iPixel][1]==PixelsOfEvents[jEvent][jCluster][jPixel][1] &&
+			PixelsOfEvents[iEvent][iCluster][iPixel][2]==PixelsOfEvents[jEvent][jCluster][jPixel][2] &&
+			PixelsOfEvents[iEvent][iCluster][iPixel][3]==PixelsOfEvents[jEvent][jCluster][jPixel][3])
 			{
 				nSame++;
 				break;
@@ -161,9 +165,9 @@ void EUTelProcessorALPIDEClusterFilter::AddCluster(int iEvent, int iCluster, int
 		for(int iPixel=0; iPixel<PixelsOfEvents[iEvent][iCluster].size(); iPixel++)
 		{
 			if(PixelsOfEvents[iEvent][iCluster][iPixel][0]==PixelsOfEvents[jEvent][jCluster][jPixel][0] && 
-			PixelsOfEvents[iEvent][iCluster][iPixel][0]==PixelsOfEvents[jEvent][jCluster][jPixel][1] &&
-			PixelsOfEvents[iEvent][iCluster][iPixel][0]==PixelsOfEvents[jEvent][jCluster][jPixel][2] &&
-			PixelsOfEvents[iEvent][iCluster][iPixel][0]==PixelsOfEvents[jEvent][jCluster][jPixel][3])
+			PixelsOfEvents[iEvent][iCluster][iPixel][1]==PixelsOfEvents[jEvent][jCluster][jPixel][1] &&
+			PixelsOfEvents[iEvent][iCluster][iPixel][2]==PixelsOfEvents[jEvent][jCluster][jPixel][2] &&
+			PixelsOfEvents[iEvent][iCluster][iPixel][3]==PixelsOfEvents[jEvent][jCluster][jPixel][3])
 			{
 				samePixel=true;
 				break;
@@ -289,14 +293,14 @@ void EUTelProcessorALPIDEClusterFilter::filter () {
 		for(int iCluster=0; iCluster<PixelsOfEvents[0].size();iCluster++)
 		{
 			//notDouvbleCluster++;
-			for(int jEvent=1; jEvent<_nDeep; jEvent++)
+			for(int jEvent=1; jEvent<=_nDeep; jEvent++)
 			{
 				bool wasSameCluster=false;
 				for(int jCluster=0; jCluster<PixelsOfEvents[jEvent].size(); jCluster++)
 				{
 					if(SameCluster(0,iCluster,jEvent,jCluster))
 					{
-						AddCluster(0,iCluster,jEvent,jCluster);
+						//AddCluster(0,iCluster,jEvent,jCluster);
 						DeletCluster(jEvent,jCluster);
 						wasSameCluster=true;
 					}
@@ -307,7 +311,29 @@ void EUTelProcessorALPIDEClusterFilter::filter () {
 	}
 }
 
+void EUTelProcessorALPIDEClusterFilter::effOfALPIDE () {
+	int zero=0, one=0, two=0;
+	for(int iEff=0; iEff<PixelsOfEvents[0].size(); iEff++)
+	{
+		if(PixelsOfEvents[0][iEff][0][2]==0) zero++;
+		else if(PixelsOfEvents[0][iEff][0][2]==1) one++;
+		else if(PixelsOfEvents[0][iEff][0][2]==2) two++;
+	}
+	if(zero==1 && two==1)
+	{
+		_nOfAll++;
+		if(one==0) _nOfFalse++;
+		else if(one==1) _nOfGood++;
+		else if(one>1) _nOfNoise++;
+	}
+	else
+	{
+		PixelsOfEvents.erase(PixelsOfEvents.begin());
+	}
+}
+
 void EUTelProcessorALPIDEClusterFilter::processEvent (LCEvent * evt) {
+	//cout<<_nDeep<<endl;
 	EUTelEventImpl * event = static_cast<EUTelEventImpl*> (evt);
 	if ( event->getEventType() == kEORE )
     {
@@ -323,7 +349,7 @@ void EUTelProcessorALPIDEClusterFilter::processEvent (LCEvent * evt) {
 	_noOfDetector =0;
   	_clusterAvailable = true;
   	try {
-	    zsInputDataCollectionVec = dynamic_cast< LCCollectionVec * > ( evt->getCollection( "original_zsdata" ) ) ;
+	    zsInputDataCollectionVec = dynamic_cast< LCCollectionVec * > ( evt->getCollection( _zsDataCollectionName ) ) ;
 	    streamlog_out ( DEBUG5 ) << "zsInputDataCollectionVec: " << _zsDataCollectionName.c_str() << " found " << endl;
 		//cerr<<"zsInputDataCollectionVec AVAILABLE!"<<endl;
 		_noOfDetector += zsInputDataCollectionVec->getNumberOfElements();
@@ -350,8 +376,8 @@ void EUTelProcessorALPIDEClusterFilter::processEvent (LCEvent * evt) {
     }
 	bool isDummyAlreadyExisting = false;
   	LCCollectionVec * sparseClusterCollectionVec = NULL;
-  	ID = 0;
-  	int TYPE=0;
+  	//ID = 0;
+  	//int TYPE=0;
     try
     {
         sparseClusterCollectionVec = dynamic_cast< LCCollectionVec* > ( evt->getCollection( _sparseClusterCollectionName ) );
@@ -391,6 +417,7 @@ void EUTelProcessorALPIDEClusterFilter::processEvent (LCEvent * evt) {
 	if(_clusterAvailable) {
 		readCollections(zsInputDataCollectionVec);
 		filter();
+		//effOfALPIDE();
 		writeCollection(sparseClusterCollectionVec, pulseCollection);
 	}
 	if ( ! isDummyAlreadyExisting )
@@ -398,7 +425,7 @@ void EUTelProcessorALPIDEClusterFilter::processEvent (LCEvent * evt) {
 		//cerr<<"CHECK POINT ! isDummyAlreadyExisting"<<endl;
         if ( sparseClusterCollectionVec->size() != 0 )
         {
-			//notDouvbleCluster+=1;
+			notDouvbleCluster+=1;
 			//cerr<<"CHECK POINT sparseClusterCollectionVec"<<endl;
             evt->addCollection( sparseClusterCollectionVec, _sparseClusterCollectionName );
         }
@@ -411,7 +438,7 @@ void EUTelProcessorALPIDEClusterFilter::processEvent (LCEvent * evt) {
 	// if the pulseCollection is not empty add it to the event
     if ( ! pulseCollectionExists && ( pulseCollection->size() != _initialPulseCollectionSize ))
     {
-		notDouvbleCluster+=1;
+		//notDouvbleCluster+=1;
         evt->addCollection( pulseCollection, _pulseCollectionName );
 		//cout<<_pulseCollectionName<<endl;
     }
@@ -426,7 +453,11 @@ void EUTelProcessorALPIDEClusterFilter::processEvent (LCEvent * evt) {
 void EUTelProcessorALPIDEClusterFilter::end() 
 {
 	cerr<<"IN END"<<endl;
-	cerr<<allCluster<<"; "<<notDouvbleCluster<<endl;
+	//cerr<<allCluster<<"; "<<notDouvbleCluster<<endl;
+	cerr<<"____________________________________________________"<<endl;
+	cerr<<"_nOfAll: "<<_nOfAll<<"_nOfFalse: "<<_nOfFalse<<"_nOfGood: "<<_nOfGood<<"_nOfNoise: "<<_nOfNoise<<endl;
+	cerr<<"____________________________________________________"<<endl;
+
 	map< int, int >::iterator iter = _totClusterMap.begin();
 	while ( iter != _totClusterMap.end() ) {
     	streamlog_out ( MESSAGE2 ) << "Found " << iter->second << " clusters on detector " << iter->first << endl;
