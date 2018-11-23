@@ -275,10 +275,10 @@ void EUTelProcessorClusterAnalysis::processEvent(LCEvent *evt)
 //
 //
 // END INIT, DEAD COLUMN AND HOTPIXELS -------------------------------------------------------------------------------------------------------------------------
-  cout<<_nEvents<<endl;
+//cout<<_nEvents<<endl;
   if (_clusterAvailable)
   {
-	  cout<<"Available"<<endl;
+	  //cout<<"Available"<<endl;
 	int numberOfHitsInAnEvent=0;
 	int numberOfSmallClusters=0;
 	int numberOfBigClusters=0;
